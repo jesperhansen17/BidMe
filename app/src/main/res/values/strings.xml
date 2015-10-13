@@ -2,5 +2,12 @@
     <string name="app_name">BidMe</string>
 
     <!-- Add ItemFragment -->
-    <string name="itemFragmentName">Add item</string>
+    <string name="itemFragmentHeader">Add item</string>
+    <string name="itemFragmentTitle">Title</string>
+    <string name="itemFragmentName">Name</string>
+    <string name="itemFragmentDesc">Description</string>
+    <string name="itemFragmentPrice">Price</string>
+    <string name="itemFragmentAuthor">Author</string>
+    <string name="itemFragmentAddItemBtn">Add Item</string>
+    <string name="itemFragmenCancelItemBtn">Cancel</string>
 </resources>
