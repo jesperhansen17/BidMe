@@ -1,6 +1,11 @@
 <resources>
     <string name="app_name">BidMe</string>
 
+    <!-- Main menu Fragment -->
+    <string name="mainMenuFragmentHeader">Menu</string>
+    <string name="mainMenuFragmentAddItem">Add item</string>
+    <string name="mainMenuFragmentBidItem">Bid</string>
+
     <!-- Add ItemFragment -->
     <string name="itemFragmentHeader">Add item</string>
     <string name="itemFragmentTitle">Title</string>
@@ -10,4 +15,5 @@
     <string name="itemFragmentAuthor">Author</string>
     <string name="itemFragmentAddItemBtn">Add Item</string>
     <string name="itemFragmenCancelItemBtn">Cancel</string>
+
 </resources>

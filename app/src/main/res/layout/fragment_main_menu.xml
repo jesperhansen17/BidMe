@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="mah.bidme.MainMenuFragment" android:orientation="vertical">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/menuTitle"
+        android:textSize="18sp"
+        android:text="@string/mainMenuFragmentHeader"
+        android:gravity="center"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/menuButtonAddItem"
+        android:text="@string/mainMenuFragmentAddItem"
+        android:layout_below="@id/menuTitle"
+        android:gravity="center"/>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/menuButtonBidItem"
+        android:text="@string/mainMenuFragmentBidItem"
+        android:layout_below="@id/menuButtonAddItem"/>
+
+</RelativeLayout>
