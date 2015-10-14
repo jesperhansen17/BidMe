@@ -6,13 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+
 import com.firebase.client.Firebase;
-
-import java.util.HashMap;
-import java.util.Map;
-
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +31,8 @@ public class ItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Get a reference to the right child in Firebase
-        final Firebase firebaseAddItem = Constants.myFirebaseRef.child("User").child("Mario").child("Items").child("Book");
+        Constants.loggedInName = "Jesper Hansen";
+        final Firebase firebaseAddItem = Constants.myFirebaseRef.child("User").child(Constants.loggedInName).child("Items").child("Book");
 
         // Retreive the EditText from the XML
         final EditText itemTitle = (EditText) view.findViewById(R.id.input_item);
@@ -43,6 +43,15 @@ public class ItemFragment extends Fragment {
         // Retrieve the Buttons from the XML
         Button okBtn = (Button) view.findViewById(R.id.okBtn);
         Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
+
+        // Retreive the Spinner
+        Spinner categorySpinner = (Spinner) view.findViewById(R.id.input_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(), R.array.items_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the Spinner
+        categorySpinner.setAdapter(adapter);
 
         // Add a listener to okBtn
         okBtn.setOnClickListener(new View.OnClickListener() {

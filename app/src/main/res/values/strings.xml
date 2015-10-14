@@ -16,4 +16,12 @@
     <string name="itemFragmentAddItemBtn">Add Item</string>
     <string name="itemFragmenCancelItemBtn">Cancel</string>
 
+    <!-- String for spinner int ItemFragment -->
+    <string-array name="items_array">
+        <item>Book</item>
+        <item>Movies</item>
+        <item>Bicycles</item>
+        <item>Phones</item>
+    </string-array>
+
 </resources>
