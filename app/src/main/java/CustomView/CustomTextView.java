@@ -3,24 +3,23 @@ package CustomView;
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.EditText;
+import android.widget.TextView;
 
 /**
- * Created by JesperHansen on 2015-10-14.
+ * Created by Jesper Hansen on 2015-10-16.
  */
-public class CustomEditText extends EditText {
-
-    public CustomEditText(Context context) {
+public class CustomTextView extends TextView {
+    public CustomTextView(Context context) {
         super(context);
         setFont();
     }
 
-    public CustomEditText(Context context, AttributeSet attrs) {
+    public CustomTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFont();
     }
 
-    public CustomEditText(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setFont();
     }
