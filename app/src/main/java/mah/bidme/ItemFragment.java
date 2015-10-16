@@ -5,22 +5,24 @@ import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
-
+import android.widget.Toast;
 import com.firebase.client.Firebase;
-
-import org.w3c.dom.Text;
+import com.firebase.client.FirebaseError;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import CustomAdapter.CustomSpinnerAdapter;
 
@@ -65,7 +67,6 @@ public class ItemFragment extends Fragment {
 
         mItemPrice = (EditText) view.findViewById(R.id.input_price);
         mItemPrice.setHintTextColor(Color.GRAY);
-        mItemPrice.addTextChangedListener(new MyTextWatcher(mItemPrice));
 
         // Retrieve the Buttons from the XML
         Button okBtn = (Button) view.findViewById(R.id.okBtn);
@@ -89,50 +90,45 @@ public class ItemFragment extends Fragment {
         return view;
     }
 
-    private void validatePrice() {
-
-    }
-
     private class AddItemToFirebase implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            // Convert the input from EditText to a String
-            String title = mItemTitle.getText().toString();
-            String desc = mItemDesc.getText().toString();
+            if (mItemTitle.getText().toString().isEmpty()) {
+                mItemTitle.setError("Enter a title");
+            }
+            if (mItemDesc.getText().toString().isEmpty()) {
+                mItemDesc.setError("Enter a description");
+            }
+            if (mItemPrice.getText().toString().isEmpty()) {
+                mItemPrice.setError("Enter a price");
+            }
+            if (mCategorySpinner.getSelectedItemPosition() == 0) {
+                Toast.makeText(getContext(), "Choose an category", Toast.LENGTH_SHORT).show();
+            }
+            if ((!mItemTitle.getText().toString().isEmpty()) && (!mItemDesc.getText().toString().isEmpty()) && (!mItemPrice.getText().toString().isEmpty())){
+                // Convert the input from EditText to a String
+                String title = mItemTitle.getText().toString();
+                String desc = mItemDesc.getText().toString();
 
-            // Convert the input from EditText to a String, then parse the String to a Integer
-            int price = Integer.parseInt(mItemPrice.getText().toString());
+                // Convert the input from EditText to a String, then parse the String to a Integer
+                int price = Integer.parseInt(mItemPrice.getText().toString());
 
-            // Update Firebase with the information the user had added
-            mFirebaseAddItem.child(mTypeOfItem).child(title).child("Title").setValue(title);
-            mFirebaseAddItem.child(mTypeOfItem).child(title).child("Description").setValue(desc);
-            mFirebaseAddItem.child(mTypeOfItem).child(title).child("Price").setValue(price);
-        }
-    }
 
-    private class MyTextWatcher implements TextWatcher {
-        private View view;
+                Map<String, Object> itemInfo = new HashMap<String, Object>();
+                itemInfo.put("Title", title);
+                itemInfo.put("Description", desc);
+                itemInfo.put("Price", price);
 
-        private MyTextWatcher(View view) {
-            this.view = view;
-        }
-
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-        }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-            switch (view.getId()) {
-                case R.id.input_price:
-                    validatePrice();
-                    break;
+                mFirebaseAddItem.child(mTypeOfItem).child(title).setValue(itemInfo, new Firebase.CompletionListener() {
+                    @Override
+                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
+                        if (firebaseError != null) {
+                            Toast.makeText(getContext(), "Item not added to auction, please try again", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(getContext(), "Item added to auction", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
             }
         }
     }
