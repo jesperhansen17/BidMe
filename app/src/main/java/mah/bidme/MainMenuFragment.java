@@ -32,7 +32,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
         Button bidItemButton = (Button) v.findViewById(R.id.menuButtonBidItem);
 
         addItemButton.setOnClickListener(this);
-
+        bidItemButton.setOnClickListener(this);
 
         return v;
     }
@@ -42,9 +42,20 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         FragmentManager fm = getFragmentManager();
 
-        fm.beginTransaction()
-                .replace(R.id.fragment_container, new ItemFragment())
-                .addToBackStack("")
-                .commit();
+        switch (v.getId()){
+            case R.id.menuButtonAddItem:
+                fm.beginTransaction()
+                        .replace(R.id.fragment_container, new ItemFragment())
+                        .addToBackStack("")
+                        .commit();
+                break;
+            case R.id.menuButtonBidItem:
+                fm.beginTransaction()
+                        .replace(R.id.fragment_container, new BidFragment())
+                        .addToBackStack("")
+                        .commit();
+                break;
+        }
+
     }
 }

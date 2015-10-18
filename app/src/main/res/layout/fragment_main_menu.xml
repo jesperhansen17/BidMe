@@ -11,8 +11,7 @@
         android:textSize="50sp"
         android:text="@string/mainMenuFragmentHeader"
         android:gravity="center"
-        android:layout_alignBaseline="@+id/menuButtonBidItem"
-        android:layout_alignBottom="@+id/menuButtonBidItem"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
