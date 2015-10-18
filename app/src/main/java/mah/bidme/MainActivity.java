@@ -22,5 +22,11 @@ public class MainActivity extends AppCompatActivity {
 
         MainMenuFragment mainMenuFragment = new MainMenuFragment();
         getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainMenuFragment).commit();
+
+        BidFragment bidFrag = new BidFragment();
+        FragmentManager fM = getSupportFragmentManager();
+        FragmentTransaction fT = fM.beginTransaction();
+        fT.add(R.id.fragment_container, bidFrag);
+        fT.commit();
     }
 }
