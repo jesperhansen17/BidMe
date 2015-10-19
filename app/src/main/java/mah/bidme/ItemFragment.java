@@ -71,7 +71,6 @@ public class ItemFragment extends Fragment {
                 firebaseAddItem.child(title).child("Description").setValue(desc);
                 firebaseAddItem.child(title).child("Author").setValue(author);
                 firebaseAddItem.child(title).child("Price").setValue(price);
-                firebaseAddItem.child(title).child("Price").setValue(price);
             }
         });
         return view;

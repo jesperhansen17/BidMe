@@ -2,7 +2,7 @@
     <string name="app_name">BidMe</string>
 
     <!-- Main menu Fragment -->
-    <string name="mainMenuFragmentHeader">Logo</string>
+    <string name="mainMenuFragmentHeader">Menu</string>
     <string name="mainMenuFragmentAddItem">Add item</string>
     <string name="mainMenuFragmentBidItem">Bid</string>
 
@@ -15,5 +15,13 @@
     <string name="itemFragmentAuthor">Author</string>
     <string name="itemFragmentAddItemBtn">Add Item</string>
     <string name="itemFragmenCancelItemBtn">Cancel</string>
+
+    <!-- String for spinner int ItemFragment -->
+    <string-array name="items_array">
+        <item>Book</item>
+        <item>Movies</item>
+        <item>Bicycles</item>
+        <item>Phones</item>
+    </string-array>
 
 </resources>
