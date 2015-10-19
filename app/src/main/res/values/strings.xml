@@ -2,7 +2,7 @@
     <string name="app_name">BidMe</string>
 
     <!-- Main menu Fragment -->
-    <string name="mainMenuFragmentHeader">Menu</string>
+    <string name="mainMenuFragmentHeader">Logo</string>
     <string name="mainMenuFragmentAddItem">Add item</string>
     <string name="mainMenuFragmentBidItem">Bid</string>
 
