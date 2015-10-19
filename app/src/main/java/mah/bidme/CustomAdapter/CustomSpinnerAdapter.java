@@ -1,4 +1,4 @@
-package CustomAdapter;
+package mah.bidme.CustomAdapter;
 
 import android.content.Context;
 import android.graphics.Color;

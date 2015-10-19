@@ -2,11 +2,7 @@ package mah.bidme;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,13 +14,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-import CustomAdapter.CustomSpinnerAdapter;
+import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +26,7 @@ import CustomAdapter.CustomSpinnerAdapter;
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
-    private TextInputLayout mInputLayoutTitle, mInputLayoutDesc, mInputLayoutPrice;
+    private Button mOkBtn, mCancelBtn;
     private String mTypeOfItem;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
@@ -54,10 +48,6 @@ public class ItemFragment extends Fragment {
         // Retrieve the Title textView
         mTitleOfView = (TextView) view.findViewById(R.id.titleOfView);
 
-        mInputLayoutTitle = (TextInputLayout) view.findViewById(R.id.input_layout_title);
-        mInputLayoutDesc = (TextInputLayout) view.findViewById(R.id.input_layout_desc);
-        mInputLayoutPrice = (TextInputLayout) view.findViewById(R.id.input_layout_price);
-
         // Retreive the EditText from the XML and set the text color of the Hint to GRAY
         mItemTitle = (EditText) view.findViewById(R.id.input_title);
         mItemTitle.setHintTextColor(Color.GRAY);
@@ -69,8 +59,8 @@ public class ItemFragment extends Fragment {
         mItemPrice.setHintTextColor(Color.GRAY);
 
         // Retrieve the Buttons from the XML
-        Button okBtn = (Button) view.findViewById(R.id.okBtn);
-        Button cancelBtn = (Button) view.findViewById(R.id.cancelBtn);
+        mOkBtn = (Button) view.findViewById(R.id.okBtn);
+        mCancelBtn = (Button) view.findViewById(R.id.cancelBtn);
 
         // Retreive the Spinner
         mCategorySpinner = (Spinner) view.findViewById(R.id.input_spinner);
@@ -84,15 +74,32 @@ public class ItemFragment extends Fragment {
         // Add an OnItemSelectedListener to the spinner
         mCategorySpinner.setOnItemSelectedListener(new SpinnerSelected());
 
-        // Add a listener to okBtn
-        okBtn.setOnClickListener(new AddItemToFirebase());
+        // Add a listener to the buttons
+        mOkBtn.setOnClickListener(new AddItemListener());
+        mCancelBtn.setOnClickListener(new AddItemListener());
+
 
         return view;
     }
 
-    private class AddItemToFirebase implements View.OnClickListener {
+    // Private class that implements an OnClickListener that handles the two buttons
+    private class AddItemListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.okBtn:
+                    addItemToFirebase();
+                    break;
+                case R.id.cancelBtn:
+                    cancelAddItemFragment();
+                    break;
+            }
+        }
+
+        // Private method that checks if the user has added the correct information.
+        // If so the item will be added to Firebase otherwise the screen will tell the user
+        // that the information was not correctly added
+        private void addItemToFirebase() {
             if (mItemTitle.getText().toString().isEmpty()) {
                 mItemTitle.setError("Enter a title");
             }
@@ -105,7 +112,7 @@ public class ItemFragment extends Fragment {
             if (mCategorySpinner.getSelectedItemPosition() == 0) {
                 Toast.makeText(getContext(), "Choose an category", Toast.LENGTH_SHORT).show();
             }
-            if ((!mItemTitle.getText().toString().isEmpty()) && (!mItemDesc.getText().toString().isEmpty()) && (!mItemPrice.getText().toString().isEmpty())){
+            if ((!mItemTitle.getText().toString().isEmpty()) && (!mItemDesc.getText().toString().isEmpty()) && (!mItemPrice.getText().toString().isEmpty()) && mCategorySpinner.getSelectedItemPosition() != 0){
                 // Convert the input from EditText to a String
                 String title = mItemTitle.getText().toString();
                 String desc = mItemDesc.getText().toString();
@@ -113,12 +120,13 @@ public class ItemFragment extends Fragment {
                 // Convert the input from EditText to a String, then parse the String to a Integer
                 int price = Integer.parseInt(mItemPrice.getText().toString());
 
-
+                // Add the information to a HashMap before sending it to Firebase
                 Map<String, Object> itemInfo = new HashMap<String, Object>();
                 itemInfo.put("Title", title);
                 itemInfo.put("Description", desc);
                 itemInfo.put("Price", price);
 
+                // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 mFirebaseAddItem.child(mTypeOfItem).child(title).setValue(itemInfo, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
@@ -131,13 +139,21 @@ public class ItemFragment extends Fragment {
                 });
             }
         }
+
+        private void cancelAddItemFragment() {
+            getActivity().getSupportFragmentManager().popBackStack();
+        }
     }
 
     private class SpinnerSelected implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             mTypeOfItem = parent.getItemAtPosition(position).toString();
-            mTitleOfView.setText("Add " + mTypeOfItem);
+            if (parent.getSelectedItemPosition() == 0) {
+                mTitleOfView.setText(mTypeOfItem);
+            } else {
+                mTitleOfView.setText("Add " + mTypeOfItem);
+            }
         }
 
         @Override

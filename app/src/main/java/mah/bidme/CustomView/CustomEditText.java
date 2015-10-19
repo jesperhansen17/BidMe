@@ -1,25 +1,26 @@
-package CustomView;
+package mah.bidme.CustomView;
 
 import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
-import android.widget.TextView;
+import android.widget.EditText;
 
 /**
- * Created by Jesper Hansen on 2015-10-16.
+ * Created by JesperHansen on 2015-10-14.
  */
-public class CustomTextView extends TextView {
-    public CustomTextView(Context context) {
+public class CustomEditText extends EditText {
+
+    public CustomEditText(Context context) {
         super(context);
         setFont();
     }
 
-    public CustomTextView(Context context, AttributeSet attrs) {
+    public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
         setFont();
     }
 
-    public CustomTextView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CustomEditText(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         setFont();
     }
