@@ -1,4 +1,4 @@
-package CustomView;
+package mah.bidme.CustomView;
 
 import android.content.Context;
 import android.graphics.Typeface;
@@ -26,7 +26,7 @@ public class CustomEditText extends EditText {
     }
 
     private void setFont() {
-        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Black.ttf");
+        Typeface font = Typeface.createFromAsset(getContext().getAssets(), "fonts/Roboto-Regular.ttf");
         setTypeface(font);
     }
 }
