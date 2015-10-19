@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
+        
+        
 
         if (findViewById(R.id.fragment_container) != null){
             if(savedInstanceState != null){

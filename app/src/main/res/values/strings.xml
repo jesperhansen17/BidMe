@@ -2,7 +2,7 @@
     <string name="app_name">BidMe</string>
 
     <!-- Main menu Fragment -->
-    <string name="mainMenuFragmentHeader">Logo</string>
+    <string name="mainMenuFragmentHeader">Menu</string>
     <string name="mainMenuFragmentAddItem">Add item</string>
     <string name="mainMenuFragmentBidItem">Bid</string>
 
@@ -15,8 +15,5 @@
     <string name="itemFragmentAuthor">Author</string>
     <string name="itemFragmentAddItemBtn">Add Item</string>
     <string name="itemFragmenCancelItemBtn">Cancel</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

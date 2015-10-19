@@ -16,7 +16,7 @@
         android:id="@+id/input_items"
         android:layout_below="@+id/addBookTitle">
         
-        <EditText
+        <CustomView.CustomEditText
             android:id="@+id/input_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,7 +31,7 @@
         android:id="@+id/input_authors"
         android:layout_below="@+id/input_items">
 
-        <EditText
+        <CustomView.CustomEditText
             android:id="@+id/input_author"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,12 +41,12 @@
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:id="@+id/input_descriptions"
-        android:layout_below="@+id/input_authors">
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/input_authors"
+        android:id="@+id/input_descriptions">
 
-        <EditText
+        <CustomView.CustomEditText
             android:id="@+id/input_desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -61,7 +61,7 @@
         android:id="@+id/input_prices"
         android:layout_below="@+id/input_descriptions">
 
-        <EditText
+        <CustomView.CustomEditText
             android:id="@+id/input_price"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -70,12 +70,21 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/input_spinner"
+        android:layout_below="@+id/input_prices"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="31dp" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
         <Button
+            android:id="@+id/cancelBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="90dp"
@@ -83,6 +92,7 @@
 
 
         <Button
+            android:id="@+id/okBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="40dp"
