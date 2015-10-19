@@ -18,6 +18,7 @@
 
     <!-- String for spinner int ItemFragment -->
     <string-array name="items_array">
+        <item>Select an item...</item>
         <item>Book</item>
         <item>Movies</item>
         <item>Bicycles</item>
