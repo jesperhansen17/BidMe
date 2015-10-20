@@ -1,19 +1,31 @@
 package mah.bidme;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,10 +38,11 @@ import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
-    private Button mOkBtn, mCancelBtn;
-    private String mTypeOfItem;
+    private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn;
+    private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
+    private ImageView mItemImageView;
 
     public ItemFragment() {
         // Required empty public constructor
@@ -43,7 +56,7 @@ public class ItemFragment extends Fragment {
 
         // Get a reference to the right child in Firebase
         Constants.loggedInName = "Jesper Hansen";
-        mFirebaseAddItem = Constants.myFirebaseRef.child("User").child(Constants.loggedInName).child("Items");
+        mFirebaseAddItem = Constants.myFirebaseRef.child("Items");
 
         // Retrieve the Title textView
         mTitleOfView = (TextView) view.findViewById(R.id.titleOfView);
@@ -61,6 +74,8 @@ public class ItemFragment extends Fragment {
         // Retrieve the Buttons from the XML
         mOkBtn = (Button) view.findViewById(R.id.okBtn);
         mCancelBtn = (Button) view.findViewById(R.id.cancelBtn);
+        mPhotoBtn = (Button) view.findViewById(R.id.takePhotoBtn);
+        mShowPhotoBtn = (Button) view.findViewById(R.id.showTakenPhotoBtn);
 
         // Retreive the Spinner
         mCategorySpinner = (Spinner) view.findViewById(R.id.input_spinner);
@@ -71,15 +86,51 @@ public class ItemFragment extends Fragment {
         // Apply the adapter to the Spinner
         mCategorySpinner.setAdapter(adapter);
 
+        // Retreive the imageView that is gonna hold the captured image
+        //mItemImageView = (ImageView) view.findViewById(R.id.imageItem);
+
+        // Check if the running device has a camera
+        if (!hasCamera())
+            mPhotoBtn.setEnabled(false);
+
         // Add an OnItemSelectedListener to the spinner
         mCategorySpinner.setOnItemSelectedListener(new SpinnerSelected());
 
         // Add a listener to the buttons
         mOkBtn.setOnClickListener(new AddItemListener());
         mCancelBtn.setOnClickListener(new AddItemListener());
+        mPhotoBtn.setOnClickListener(new AddItemListener());
+        mShowPhotoBtn.setOnClickListener(new AddItemListener());
 
 
         return view;
+    }
+
+    // Returns true if the running device has a camera
+    private boolean hasCamera() {
+        return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
+    }
+
+    // Method that returns the taken picture from the camera application and
+    // convert the Bitmap to a String and store the String in a private variable
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap photo = (Bitmap) extras.get("data");
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            //mItemImageView.setImageBitmap(getPhotoImage());
+        }
+    }
+
+    public Bitmap getPhotoImage() {
+        byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 
     // Private class that implements an OnClickListener that handles the two buttons
@@ -92,6 +143,12 @@ public class ItemFragment extends Fragment {
                     break;
                 case R.id.cancelBtn:
                     cancelAddItemFragment();
+                    break;
+                case R.id.takePhotoBtn:
+                    launchCamera(getView());
+                    break;
+                case R.id.showTakenPhotoBtn:
+                    showTakenImage();
                     break;
             }
         }
@@ -125,9 +182,13 @@ public class ItemFragment extends Fragment {
                 itemInfo.put("Title", title);
                 itemInfo.put("Description", desc);
                 itemInfo.put("Price", price);
+                itemInfo.put("Seller", Constants.loggedInName);
+                itemInfo.put("Sold", false);
+                itemInfo.put("Type", mTypeOfItem);
+                itemInfo.put("Image", mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
-                mFirebaseAddItem.child(mTypeOfItem).child(title).setValue(itemInfo, new Firebase.CompletionListener() {
+                mFirebaseAddItem.child(title).setValue(itemInfo, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         if (firebaseError != null) {
@@ -143,6 +204,24 @@ public class ItemFragment extends Fragment {
         private void cancelAddItemFragment() {
             getActivity().getSupportFragmentManager().popBackStack();
         }
+
+        // Starts the camera application using an Intent
+        private void launchCamera(View view) {
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            startActivityForResult(intent, 1);
+        }
+
+        private void showTakenImage() {
+            AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
+            photoDialog.setTitle("Taken Photo");
+            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+            final View view = layoutInflater.inflate(R.layout.image_dialog, null);
+            ImageView imageView = (ImageView) view.findViewById(R.id.showPhoto);
+            imageView.setImageBitmap(getPhotoImage());
+            photoDialog.setView(view);
+            photoDialog.show();
+        }
+
     }
 
     private class SpinnerSelected implements AdapterView.OnItemSelectedListener {
