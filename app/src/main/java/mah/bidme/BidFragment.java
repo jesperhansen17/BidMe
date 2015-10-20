@@ -21,6 +21,7 @@ public class BidFragment extends android.support.v4.app.Fragment {
     private int currBid = 50;//Change to value of current bid.
     private int yourBid = 0;//Change to value of current bid.
     private String itemName;
+    private Firebase mFirebase;
 
     public BidFragment() {
         // Required empty public constructor
@@ -29,6 +30,11 @@ public class BidFragment extends android.support.v4.app.Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        // Get a reference to the right child in Firebase
+        Constants.loggedInName = "Jesper Hansen";
+        mFirebase = Constants.myFirebaseRef.child("User").child(Constants.loggedInName).child("Items");
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
 
@@ -44,6 +50,8 @@ public class BidFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 addition();
+
+                mFirebase.child("Bids").setValue(yourBid);
                 newPrice.setText(""+yourBid+"");
                 Log.i("Math:", "" + yourBid + "");
             }

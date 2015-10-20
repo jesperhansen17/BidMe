@@ -8,5 +8,7 @@ import com.firebase.client.Firebase;
 public class Constants {
     //Since this is static it will be instansiated  at startup of the App
     //Use static for variables that you want to reach from anywhere in the app...
+    public static int id;
+    public static String loggedInName;
     public static Firebase myFirebaseRef = new Firebase("https://biddme.firebaseio.com/");
 }
