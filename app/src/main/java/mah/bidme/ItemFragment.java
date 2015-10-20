@@ -4,10 +4,12 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
+
+import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,7 +37,7 @@ public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
     private Button mOkBtn, mCancelBtn, mPhotoBtn;
-    private String mTypeOfItem;
+    private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
     private ImageView mItemImageView;
@@ -109,8 +113,19 @@ public class ItemFragment extends Fragment {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap photo = (Bitmap) extras.get("data");
-            mItemImageView.setImageBitmap(photo);
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+            photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+            byte[] byteArray = byteArrayOutputStream.toByteArray();
+            mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
+
+            mItemImageView.setImageBitmap(getPhotoImage());
         }
+    }
+
+    public Bitmap getPhotoImage() {
+        byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 
     // Private class that implements an OnClickListener that handles the two buttons
@@ -162,6 +177,7 @@ public class ItemFragment extends Fragment {
                 itemInfo.put("Seller", Constants.loggedInName);
                 itemInfo.put("Sold", false);
                 itemInfo.put("Type", mTypeOfItem);
+                itemInfo.put("Image", mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 mFirebaseAddItem.child(title).setValue(itemInfo, new Firebase.CompletionListener() {
