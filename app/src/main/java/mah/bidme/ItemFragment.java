@@ -50,7 +50,6 @@ public class ItemFragment extends Fragment {
 
         // Get a reference to the right child in Firebase
         Constants.loggedInName = "Jesper Hansen";
-        //mFirebaseAddItem = Constants.myFirebaseRef.child("User").child(Constants.loggedInName).child("Items");
         mFirebaseAddItem = Constants.myFirebaseRef.child("Items");
 
         // Retrieve the Title textView
@@ -80,12 +79,12 @@ public class ItemFragment extends Fragment {
         // Apply the adapter to the Spinner
         mCategorySpinner.setAdapter(adapter);
 
+        // Retreive the imageView that is gonna hold the captured image
         mItemImageView = (ImageView) view.findViewById(R.id.imageItem);
 
+        // Check if the running device has a camera
         if (!hasCamera())
             mPhotoBtn.setEnabled(false);
-
-
 
         // Add an OnItemSelectedListener to the spinner
         mCategorySpinner.setOnItemSelectedListener(new SpinnerSelected());
@@ -99,10 +98,12 @@ public class ItemFragment extends Fragment {
         return view;
     }
 
+    // Returns true if the running device has a camera
     private boolean hasCamera() {
         return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 
+    // Method that returns the taken picture from the camera application
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
@@ -180,6 +181,7 @@ public class ItemFragment extends Fragment {
             getActivity().getSupportFragmentManager().popBackStack();
         }
 
+        // Starts the camera application using an Intent
         private void launchCamera(View view) {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, 1);
