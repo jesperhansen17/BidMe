@@ -84,18 +84,24 @@
 
             <Button
                 android:id="@+id/takePhotoBtn"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Take Photo"/>
+                android:text="@string/itemFragmentTakePhotoBtn"/>
 
+            <android.widget.Space
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content" />
 
-
-            <ImageView
-                android:id="@+id/imageItem"
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/showTakenPhotoBtn"
+                android:layout_width="0dp"
+                android:layout_weight="2"
                 android:layout_height="wrap_content"
-                android:layout_gravity="fill_horizontal"/>
+                android:layout_gravity="center"
+                android:text="@string/itemFragmentShowPhotoBtn"/>
         </LinearLayout>
 
         <LinearLayout
