@@ -1,6 +1,7 @@
 package mah.bidme;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -8,6 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -56,7 +58,7 @@ public class ItemFragment extends Fragment {
 
         // Get a reference to the right child in Firebase
         Constants.loggedInName = "Jesper Hansen";
-        mFirebaseAddItem = Constants.myFirebaseRef.child("Items");
+        mFirebaseAddItem = Constants.myFirebaseRef.child("items");
 
         // Retrieve the Title textView
         mTitleOfView = (TextView) view.findViewById(R.id.titleOfView);
@@ -180,14 +182,14 @@ public class ItemFragment extends Fragment {
 
                 // Add the information to a HashMap before sending it to Firebase
                 Map<String, Object> itemInfo = new HashMap<String, Object>();
-                itemInfo.put("Title", title);
-                itemInfo.put("Description", desc);
-                itemInfo.put("Price", price);
-                itemInfo.put("Currentprice", price);
-                itemInfo.put("Seller", Constants.loggedInName);
-                itemInfo.put("Sold", false);
-                itemInfo.put("Type", mTypeOfItem);
-                itemInfo.put("Image", mPhotoStr);
+                itemInfo.put("title", title);
+                itemInfo.put("description", desc);
+                itemInfo.put("price", price);
+                itemInfo.put("currentprice", price);
+                itemInfo.put("seller", Constants.loggedInName);
+                itemInfo.put("sold", false);
+                itemInfo.put("type", mTypeOfItem);
+                itemInfo.put("image", mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 mFirebaseAddItem.child(UUID.randomUUID().toString()).setValue(itemInfo, new Firebase.CompletionListener() {
@@ -200,6 +202,9 @@ public class ItemFragment extends Fragment {
                         }
                     }
                 });
+
+                Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
+                vibrator.vibrate(100);
             }
         }
 
