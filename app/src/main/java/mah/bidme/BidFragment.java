@@ -11,13 +11,19 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
+import java.util.Map;
+import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class BidFragment extends android.support.v4.app.Fragment {
-
+    private static String debug = "Debug";
     private int currBid = 50;//Change to value of current bid.
     private int yourBid = 0;//Change to value of current bid.
     private String itemName;
@@ -33,18 +39,37 @@ public class BidFragment extends android.support.v4.app.Fragment {
 
         // Get a reference to the right child in Firebase
         Constants.loggedInName = "Jesper Hansen";
-        mFirebase = Constants.myFirebaseRef.child("User").child(Constants.loggedInName).child("Items");
+        mFirebase = Constants.myFirebaseRef.child("Items");
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
 
-        TextView currPrice = (TextView) v.findViewById(R.id.current_price);
+        final TextView itemName = (TextView) v.findViewById(R.id.item_name);
+        final TextView currPrice = (TextView) v.findViewById(R.id.current_price);
 
         final TextView newPrice = (TextView) v.findViewById(R.id.your_price);
 
         FloatingActionButton addButt = (FloatingActionButton) v.findViewById(R.id.addButton);
         FloatingActionButton subButt = (FloatingActionButton) v.findViewById(R.id.subButton);
         FloatingActionButton checkButt = (FloatingActionButton) v.findViewById(R.id.checkButton);
+
+        mFirebase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
+                    Map<String, Object> item = itemSnapshot.getValue(Map.class);
+                    Log.i(debug, item.get("Price").toString());
+                    //itemName.setText(item.get("Title").toString());
+                    currPrice.setText(item.get("Price").toString());
+                }
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
+            }
+        });
+
         //Click made to add 5
         addButt.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -52,7 +77,7 @@ public class BidFragment extends android.support.v4.app.Fragment {
                 addition();
 
                 mFirebase.child("Bids").setValue(yourBid);
-                newPrice.setText(""+yourBid+"");
+                newPrice.setText("" + yourBid + "");
                 Log.i("Math:", "" + yourBid + "");
             }
         });
@@ -62,7 +87,7 @@ public class BidFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 subtraction();
-                newPrice.setText(""+yourBid+"");
+                newPrice.setText("" + yourBid + "");
                 Log.i("Math:", "" + yourBid + "");
             }
         });
