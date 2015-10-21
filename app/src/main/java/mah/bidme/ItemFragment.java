@@ -29,6 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
 
@@ -42,7 +43,6 @@ public class ItemFragment extends Fragment {
     private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
-    private ImageView mItemImageView;
 
     public ItemFragment() {
         // Required empty public constructor
@@ -93,6 +93,8 @@ public class ItemFragment extends Fragment {
         if (!hasCamera())
             mPhotoBtn.setEnabled(false);
 
+        mShowPhotoBtn.setEnabled(false);
+
         // Add an OnItemSelectedListener to the spinner
         mCategorySpinner.setOnItemSelectedListener(new SpinnerSelected());
 
@@ -116,6 +118,7 @@ public class ItemFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+            mShowPhotoBtn.setEnabled(true);
             Bundle extras = data.getExtras();
             Bitmap photo = (Bitmap) extras.get("data");
 
@@ -123,8 +126,6 @@ public class ItemFragment extends Fragment {
             photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
             mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
-
-            //mItemImageView.setImageBitmap(getPhotoImage());
         }
     }
 
@@ -182,13 +183,14 @@ public class ItemFragment extends Fragment {
                 itemInfo.put("Title", title);
                 itemInfo.put("Description", desc);
                 itemInfo.put("Price", price);
+                itemInfo.put("Currentprice", price);
                 itemInfo.put("Seller", Constants.loggedInName);
                 itemInfo.put("Sold", false);
                 itemInfo.put("Type", mTypeOfItem);
                 itemInfo.put("Image", mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
-                mFirebaseAddItem.child(title).setValue(itemInfo, new Firebase.CompletionListener() {
+                mFirebaseAddItem.child(UUID.randomUUID().toString()).setValue(itemInfo, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         if (firebaseError != null) {
@@ -214,10 +216,19 @@ public class ItemFragment extends Fragment {
         private void showTakenImage() {
             AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
             photoDialog.setTitle("Taken Photo");
+            photoDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    // Do nothing for now
+                }
+            });
+
             LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
             final View view = layoutInflater.inflate(R.layout.image_dialog, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.showPhoto);
             imageView.setImageBitmap(getPhotoImage());
+
             photoDialog.setView(view);
             photoDialog.show();
         }
