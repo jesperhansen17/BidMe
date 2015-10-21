@@ -16,6 +16,9 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -56,12 +59,17 @@ public class BidFragment extends android.support.v4.app.Fragment {
         mFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                List<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
+                Map<String, Object> item = new HashMap<String, Object>();
                 for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
-                    Map<String, Object> item = itemSnapshot.getValue(Map.class);
+                    item = itemSnapshot.getValue(HashMap.class);
+                    listItem.add((HashMap<String, Object>) item);
                     Log.i(debug, item.get("Price").toString());
                     //itemName.setText(item.get("Title").toString());
-                    currPrice.setText(item.get("Price").toString());
                 }
+
+
+                currPrice.setText(item.get("Price").toString());
             }
 
             @Override

@@ -69,12 +69,12 @@
             <!-- Floating Action Button - (+) Add -->
             <FrameLayout
                 android:layout_width="0dip"
-                android:layout_height="80dp"
+                android:layout_height="wrap_content"
                 android:layout_weight="1">
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/addButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:clickable="true"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_add_black_48dp"
@@ -89,8 +89,8 @@
                 android:weightSum="3">
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/subButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:clickable="true"
                     android:layout_weight="1"
                     android:layout_gravity="center"
@@ -105,8 +105,8 @@
                 android:layout_weight="1">
                 <android.support.design.widget.FloatingActionButton
                     android:id="@+id/checkButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:clickable="true"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_done_black_48dp"
