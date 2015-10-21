@@ -2,8 +2,8 @@ package mah.bidme;
 
 
 import android.os.Bundle;
-import android.app.Fragment;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,11 +25,12 @@ import java.util.Objects;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BidFragment extends android.support.v4.app.Fragment {
+public class BidFragment extends Fragment {
     private static String debug = "Debug";
-    private int currBid = 50;//Change to value of current bid.
-    private int yourBid = 0;//Change to value of current bid.
+    private int currBid;//Change to value of current bid.
+    private int yourBid;//Change to value of current bid.
     private String itemName;
+    private List<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
     private Firebase mFirebase;
 
     public BidFragment() {
@@ -41,7 +42,7 @@ public class BidFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
 
         // Get a reference to the right child in Firebase
-        Constants.loggedInName = "Jesper Hansen";
+        Constants.loggedInName = "Mario";
         mFirebase = Constants.myFirebaseRef.child("Items");
 
         // Inflate the layout for this fragment
@@ -59,17 +60,22 @@ public class BidFragment extends android.support.v4.app.Fragment {
         mFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                List<HashMap<String, Object>> listItem = new ArrayList<HashMap<String, Object>>();
                 Map<String, Object> item = new HashMap<String, Object>();
                 for (DataSnapshot itemSnapshot: dataSnapshot.getChildren()) {
                     item = itemSnapshot.getValue(HashMap.class);
                     listItem.add((HashMap<String, Object>) item);
                     Log.i(debug, item.get("Price").toString());
-                    //itemName.setText(item.get("Title").toString());
+                   /* while (item.get("Sold") == false){
+                        itemName.setText(item.get("Title").toString());
+                        currPrice.setText(item.get("Price").toString());
+                    }*/
+                    //listItem.add((HashMap<String, Object>) item);
+
+                    itemName.setText(listItem.get(0).get("Title").toString());
+                    currPrice.setText(listItem.get(0).get("Currentprice").toString());
+                    currBid = Integer.parseInt(listItem.get(0).get("Price").toString());
+                    yourBid = Integer.parseInt(listItem.get(0).get("Currentprice").toString());
                 }
-
-
-                currPrice.setText(item.get("Price").toString());
             }
 
             @Override
@@ -83,8 +89,6 @@ public class BidFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 addition();
-
-                mFirebase.child("Bids").setValue(yourBid);
                 newPrice.setText("" + yourBid + "");
                 Log.i("Math:", "" + yourBid + "");
             }
@@ -95,7 +99,6 @@ public class BidFragment extends android.support.v4.app.Fragment {
             @Override
             public void onClick(View v) {
                 subtraction();
-                newPrice.setText("" + yourBid + "");
                 Log.i("Math:", "" + yourBid + "");
             }
         });
@@ -130,9 +133,14 @@ public class BidFragment extends android.support.v4.app.Fragment {
         //Check if the bid is valid.
         if(currBid < yourBid){
             //Send bid to database
+            Map<String, Object> bid = new HashMap<String, Object>();
+            bid.put(Constants.loggedInName, yourBid);
+            //Log.i(debug, listItem.get(0).toString());
+            mFirebase.child(listItem.get(0).get("Title").toString() +"/Currentprice").setValue(yourBid);
+            mFirebase.child(listItem.get(0).get("Title").toString() +"/Bids").updateChildren(bid);
             Toast.makeText(getContext(), "Your bid was accepted!", Toast.LENGTH_SHORT).show();
             //add another 5 sec to the countdown.
-        }else{
+        } else{
             Toast.makeText(getContext(), "This bid is lower or equal to current bid!", Toast.LENGTH_SHORT).show();
         }
     }
