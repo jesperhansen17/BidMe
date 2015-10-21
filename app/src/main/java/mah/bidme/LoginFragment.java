@@ -17,7 +17,10 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 
 /**
@@ -93,7 +96,9 @@ public class LoginFragment extends Fragment {
 
                 } else {
                     Log.i(TAG, "You are logged in");
-
+                    Map<String, Object> userInfo = new HashMap<String, Object>();
+                    userInfo.put("Username", mUserView.getText().toString());
+                    firebaseReferens.child("Users").child(UUID.randomUUID().toString()).setValue(userInfo);
                 }
             }
         });
