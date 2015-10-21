@@ -34,7 +34,7 @@ public class LoginFragment extends Fragment {
 
 
     Firebase firebaseReferens;
-    String fireBasePin;
+    long fireBasePin;
     String fireBaseUser;
     ArrayList<String> users = new ArrayList<String>();
 
@@ -59,19 +59,10 @@ public class LoginFragment extends Fragment {
         firebaseReferens.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                fireBasePin = (String) dataSnapshot.child("Pincode").getValue();
-                for (DataSnapshot shot: dataSnapshot.child("User").getChildren()){
-                   fireBaseUser = (String) shot.child("User").getValue();
-                    Log.i(TAG, "Value of data changed " + "User:  " + dataSnapshot.child("User").getValue());
-                }
+                fireBasePin = (long) dataSnapshot.child("pincode").getValue();
               // fireBaseUser = (String) dataSnapshot.child("User").getValue();
 
-                Log.i(TAG, "There are " + dataSnapshot.child("User").getChildrenCount() + " Users");
-                Log.i(TAG, "Value of data changed " + "Pincode: " + dataSnapshot.child("Pincode").getValue());
-                Log.i(TAG, "Value of data changed " + "User:  " + dataSnapshot.child("User").getValue());
-                Log.i(TAG, "Value of data changed " + "User:  " + fireBaseUser);
-
-
+                Log.i(TAG, "Value of data changed " + "Pincode: " + fireBasePin);
             }
 
             @Override
@@ -90,55 +81,24 @@ public class LoginFragment extends Fragment {
                 Constants.id = random.nextInt((n) + 100000);
                 Constants.loggedInName = mUserView.getText().toString();
                 String pinCode = mPinCodeView.getText().toString();
+                long longPinCode = Long.parseLong(pinCode);
 
-
-
-
-                if (TextUtils.isEmpty(pinCode) || !pinCode.equals(fireBasePin)) {
+                if (TextUtils.isEmpty(pinCode) || longPinCode != fireBasePin) {
                     mPinCodeView.setError("Invalid pincode");
                     Log.i(TAG, "Not Logged in");
 
-                }
-
-                if (Constants.loggedInName.equals(fireBaseUser)) {
+                } else if (Constants.loggedInName.equals(fireBaseUser)) {
                     mUserView.setError("This username is already taken");
                     Log.i(TAG, "Wrong username");
 
-                }
-                if (pinCode.equals(fireBasePin) && !(Constants.loggedInName.equals(firebaseReferens.child("User").child("UserName")))) {
-                    Log.i(TAG, "pincode accepted");
-
-
-                    User user = new User(Constants.loggedInName, Constants.id);
-                    firebaseReferens.child("User").child(Constants.loggedInName).setValue(user);
-
-
-                      /*
-                    This part will get you to main menu
-                     */
-                    
-                    Log.i(TAG, "Logged in");
-                }
-                else {
-                    Log.i(TAG, "Else satsen vann");
-
-
+                } else {
+                    Log.i(TAG, "You are logged in");
 
                 }
-
-
             }
         });
-
-
         return v;
     }
-
-
-
-
-
-
 }
 
 
