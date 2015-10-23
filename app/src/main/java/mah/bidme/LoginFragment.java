@@ -64,7 +64,6 @@ public class LoginFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fireBasePin = (long) dataSnapshot.child("pincode").getValue();
-              // fireBaseUser = (String) dataSnapshot.child("User").getValue();
 
                 Log.i(TAG, "Value of data changed " + "Pincode: " + fireBasePin);
             }

@@ -22,7 +22,7 @@ public class Item {
 
     public Item() {}
 
-    public Item(String title, String description, int price, String idSeller, String type, Boolean sold, String image, String id) {
+    public Item(String title, String description, int price, String idSeller, String type, Boolean sold, String image) {
         this.title = title;
         this.description = description;
         this.startedPrice = price;
@@ -32,12 +32,7 @@ public class Item {
         this.type = type;
         this.sold = sold;
         this.image = image;
-        this.id = id;
         listBid = new ArrayList<HashMap<String, Object>>();
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getTitle() {

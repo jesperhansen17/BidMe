@@ -181,10 +181,7 @@ public class ItemFragment extends Fragment {
                 // Convert the input from EditText to a String, then parse the String to a Integer
                 int price = Integer.parseInt(mItemPrice.getText().toString());
 
-                // Create an random ID for the item
-                mRandomID = UUID.randomUUID().toString();
-
-                Item item = new Item(title, desc, price, Constants.loggedInName, mTypeOfItem, false, mPhotoStr, mRandomID);
+                Item item = new Item(title, desc, price, Constants.loggedInName, mTypeOfItem, false, mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 mFirebaseAddItem.push().setValue(item, new Firebase.CompletionListener() {
