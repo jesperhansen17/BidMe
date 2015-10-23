@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">BidMe</string>
 
+    <!-- Login Fragment -->
+
+    <string name="error_invalid_pincode">Wrong pincode!</string>
+
     <!-- Main menu Fragment -->
     <string name="mainMenuFragmentHeader">Menu</string>
     <string name="mainMenuFragmentAddItem">Add item</string>
@@ -26,5 +30,8 @@
         <item>Bicycles</item>
         <item>Phones</item>
     </string-array>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

@@ -2,12 +2,10 @@ package mah.bidme;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.Toolbar;
 
 import com.firebase.client.Firebase;
 
 public class MainActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,17 +13,19 @@ public class MainActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
-        
-        
 
-        if (findViewById(R.id.fragment_container) != null){
-            if(savedInstanceState != null){
+        if (findViewById(R.id.fragment_container) != null) {
+
+            if (savedInstanceState != null) {
                 return;
             }
+            LoginFragment loginFragment = new LoginFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(R.id.fragment_container, loginFragment)
+                    .commit();
+
+
         }
-
-        MainMenuFragment mainMenuFragment = new MainMenuFragment();
-        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container, mainMenuFragment).commit();
-
     }
 }
