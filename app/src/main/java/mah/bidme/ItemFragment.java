@@ -34,13 +34,13 @@ import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
 import mah.bidme.model.Item;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment that contains the all of the components for adding an item to the Firebase database
  */
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
     private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn;
-    private String mTypeOfItem, mPhotoStr, mRandomID;
+    private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
 
@@ -105,13 +105,21 @@ public class ItemFragment extends Fragment {
         return view;
     }
 
-    // Returns true if the running device has a camera
+    /**
+     * Returns true if the running device has a camera
+     * @return boolean that informs the user if the current Android phone has a camera
+     */
     private boolean hasCamera() {
         return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 
-    // Method that returns the taken picture from the camera application and
-    // convert the Bitmap to a String and store the String in a private variable
+    /**
+     * Method that returns the taken picture from the camera application and
+     * convert the Bitmap to a String and store the String in a private variable
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
@@ -126,13 +134,18 @@ public class ItemFragment extends Fragment {
         }
     }
 
-    // Method that reads the image String and converts it back to a thumbnail image
+    /**
+     * Method that reads the image String and converts it back to a thumbnail image
+     * @return Bitmap Taken thumbnail image
+     */
     public Bitmap getPhotoImage() {
         byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 
-    // Private class that implements an OnClickListener that handles the two buttons
+    /**
+     * Private class that implements an OnClickListener that handles the two buttons
+     */
     private class AddItemListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -152,9 +165,11 @@ public class ItemFragment extends Fragment {
             }
         }
 
-        // Private method that checks if the user has added the correct information.
-        // If so the item will be added to Firebase otherwise the screen will tell the user
-        // that the information was not correctly added
+        /**
+         * Private method that checks if the user has added the correct information.
+         * If so the item will be added to Firebase otherwise the screen will tell the user
+         * that the information was not correctly added
+         */
         private void addItemToFirebase() {
             if (mItemTitle.getText().toString().isEmpty()) {
                 mItemTitle.setError("Enter a title");
