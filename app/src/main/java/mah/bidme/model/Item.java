@@ -22,7 +22,7 @@ public class Item {
 
     public Item() {}
 
-    public Item(String title, String description, int price, String idSeller) {
+    public Item(String title, String description, int price, String idSeller, String type, Boolean sold, String image, String id) {
         this.title = title;
         this.description = description;
         this.startedPrice = price;
