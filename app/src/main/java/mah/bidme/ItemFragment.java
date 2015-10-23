@@ -144,7 +144,7 @@ public class ItemFragment extends Fragment {
                     cancelAddItemFragment();
                     break;
                 case R.id.takePhotoBtn:
-                    launchCamera(getView());
+                    launchCamera();
                     break;
                 case R.id.showTakenPhotoBtn:
                     showTakenImage();
@@ -193,14 +193,15 @@ public class ItemFragment extends Fragment {
 
                 clearAllFields();
 
-                // Vibrate the phone when the user adds an Item for extra feedback to the user
-                Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(100);
+                // Method for vibrate the phone 100 milliseconds
+                Utility.vibratePhone(getActivity(), 100);
 
             }
         }
 
-        // Method for reseting all inputfields when a new item is added to Firebase
+        /**
+         * Method for reseting all inputfields when a new item is added to Firebase
+         */
         private void clearAllFields() {
             mItemTitle.setText("");
             mItemDesc.setText("");
@@ -209,18 +210,24 @@ public class ItemFragment extends Fragment {
             mShowPhotoBtn.setEnabled(false);
         }
 
-        // Go back to main menu
+        /**
+         * Go back to main menu
+         */
         private void cancelAddItemFragment() {
             getActivity().getSupportFragmentManager().popBackStack();
         }
 
-        // Starts the camera application using an Intent
-        private void launchCamera(View view) {
+        /**
+         * Starts the camera application using an Intent
+         */
+        private void launchCamera() {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, 1);
         }
 
-        // Show the taken image as an thumbnail
+        /**
+         * Show the taken image as an thumbnail
+         */
         private void showTakenImage() {
             AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
             photoDialog.setTitle("Taken Photo");
@@ -243,7 +250,9 @@ public class ItemFragment extends Fragment {
 
     }
 
-    // A inner private class for the spinner which contains the different types of items
+    /**
+     * A inner private class for the spinner which contains the different types of items
+     */
     private class SpinnerSelected implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
