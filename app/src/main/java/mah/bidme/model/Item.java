@@ -15,6 +15,9 @@ public class Item {
     private int startedPrice;
     private String idSeller;
     private String idBuyer;
+    private String type;
+    private boolean sold;
+    private String image;
     private List<HashMap<String, Object>> listBid;
 
     public Item() {}
@@ -25,6 +28,11 @@ public class Item {
         this.startedPrice = price;
         this.currentPrice = price;
         this.idSeller = idSeller;
+        this.idBuyer = "";
+        this.type = type;
+        this.sold = sold;
+        this.image = image;
+        this.id = id;
         listBid = new ArrayList<HashMap<String, Object>>();
     }
 
@@ -54,6 +62,18 @@ public class Item {
 
     public String getIdBuyer() {
         return idBuyer;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public String getImage() {
+        return image;
     }
 
     public List<HashMap<String, Object>> getListBid() {
