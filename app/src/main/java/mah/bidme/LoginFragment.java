@@ -97,8 +97,17 @@ public class LoginFragment extends Fragment {
                 } else {
                     Log.i(TAG, "You are logged in");
                     Map<String, Object> userInfo = new HashMap<String, Object>();
-                    userInfo.put("Username", mUserView.getText().toString());
-                    firebaseReferens.child("Users").child(UUID.randomUUID().toString()).setValue(userInfo);
+                    userInfo.put("username", mUserView.getText().toString());
+                    firebaseReferens.child("users").push().setValue(userInfo);
+
+
+                    Firebase postRef = firebaseReferens.child("users");
+                    Firebase newPostRef = postRef.push();
+
+                    Constants.loggedInName = newPostRef.getKey();
+
+                    Log.i(TAG, "User Id: "+ Constants.loggedInName);
+
 
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()
