@@ -17,6 +17,8 @@ public class Item {
     private String idBuyer;
     private List<HashMap<String, Object>> listBid;
 
+    public Item() {}
+
     public Item(String title, String description, int price, String idSeller) {
         this.title = title;
         this.description = description;
@@ -24,30 +26,6 @@ public class Item {
         this.currentPrice = price;
         this.idSeller = idSeller;
         listBid = new ArrayList<HashMap<String, Object>>();
-    }
-
-    /**
-     * Get the winner of the bidding
-     * @return User
-     */
-    public HashMap<String, Object> getWinner(){
-        return listBid.get(listBid.size() - 1);
-    }
-
-    /**
-     * Get the winner of the bidding
-     * @return User
-     */
-    public void setWinner(String idWinner){
-        this.idBuyer = idWinner;
-    }
-
-    /**
-     * Return the bidding historical
-     * @return List<User>
-     */
-    public List<HashMap<String, Object>> getHistoricalBids(){
-        return listBid;
     }
 
     public String getId() {
@@ -62,20 +40,23 @@ public class Item {
         return description;
     }
 
+    public int getCurrentPrice() {
+        return currentPrice;
+    }
+
     public int getStartedPrice() {
         return startedPrice;
-    }
-
-    public int getCurrentPrice() {
-        return startedPrice;
-    }
-
-    public String getIdBuyer() {
-        return idBuyer;
     }
 
     public String getIdSeller() {
         return idSeller;
     }
 
+    public String getIdBuyer() {
+        return idBuyer;
+    }
+
+    public List<HashMap<String, Object>> getListBid() {
+        return listBid;
+    }
 }
