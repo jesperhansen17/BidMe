@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +29,6 @@ import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
 import mah.bidme.model.Item;
@@ -59,7 +55,7 @@ public class ItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Get a reference to the right child in Firebase
-        mFirebaseAddItem = Constants.myFirebaseRef.child("items");
+        mFirebaseAddItem = Utility.myFirebaseRef.child("items");
 
         // Retrieve the Title textView
         mTitleOfView = (TextView) view.findViewById(R.id.titleOfView);
@@ -181,7 +177,7 @@ public class ItemFragment extends Fragment {
                 int price = Integer.parseInt(mItemPrice.getText().toString());
 
                 // Create an new Item
-                Item item = new Item(title, desc, price, Constants.loggedInName, mTypeOfItem, false, mPhotoStr);
+                Item item = new Item(title, desc, price, Utility.loggedInName, mTypeOfItem, false, mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 mFirebaseAddItem.push().setValue(item, new Firebase.CompletionListener() {
@@ -196,11 +192,11 @@ public class ItemFragment extends Fragment {
                 });
 
                 clearAllFields();
-                Log.i("ItemFragment", mFirebaseAddItem.getKey());
 
                 // Vibrate the phone when the user adds an Item for extra feedback to the user
                 Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(100);
+
             }
         }
 
@@ -211,30 +207,6 @@ public class ItemFragment extends Fragment {
             mItemPrice.setText("");
             mCategorySpinner.setSelection(0);
             mShowPhotoBtn.setEnabled(false);
-        }
-
-        // Method that prompts an AlertDialog to the user where the user can make a one
-        // of three different choices
-        private void userChoices() {
-            AlertDialog.Builder choiceDialog = new AlertDialog.Builder(getActivity());
-            choiceDialog.setTitle("Options!");
-            choiceDialog.setItems(R.array.add_item_choice_array, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case 0:
-                            // Do nothing, just return back to add item fragment
-                            break;
-                        case 1:
-                            // Create an new Fragment that show the added items
-                            break;
-                        case 2:
-                            cancelAddItemFragment();
-                            break;
-                    }
-                }
-            });
-            choiceDialog.create().show();
         }
 
         // Go back to main menu

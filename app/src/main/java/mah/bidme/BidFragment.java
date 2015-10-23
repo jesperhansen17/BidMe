@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -42,8 +41,8 @@ public class BidFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         // Get a reference to the right child in Firebase
-        Constants.loggedInName = "Mario";
-        mFirebase = Constants.myFirebaseRef.child("Items");
+        Utility.loggedInName = "Mario";
+        mFirebase = Utility.myFirebaseRef.child("Items");
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
@@ -134,7 +133,7 @@ public class BidFragment extends Fragment {
         if(currBid < yourBid){
             //Send bid to database
             Map<String, Object> bid = new HashMap<String, Object>();
-            bid.put(Constants.loggedInName, yourBid);
+            bid.put(Utility.loggedInName, yourBid);
             //Log.i(debug, listItem.get(0).toString());
             mFirebase.child(listItem.get(0).get("Title").toString() +"/Currentprice").setValue(yourBid);
             mFirebase.child(listItem.get(0).get("Title").toString() +"/Bids").updateChildren(bid);
