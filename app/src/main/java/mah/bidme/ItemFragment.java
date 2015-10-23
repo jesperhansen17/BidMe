@@ -59,7 +59,6 @@ public class ItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Get a reference to the right child in Firebase
-        Constants.loggedInName = "Jesper Hansen";
         mFirebaseAddItem = Constants.myFirebaseRef.child("items");
 
         // Retrieve the Title textView
@@ -181,6 +180,7 @@ public class ItemFragment extends Fragment {
                 // Convert the input from EditText to a String, then parse the String to a Integer
                 int price = Integer.parseInt(mItemPrice.getText().toString());
 
+                // Create an new Item
                 Item item = new Item(title, desc, price, Constants.loggedInName, mTypeOfItem, false, mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not

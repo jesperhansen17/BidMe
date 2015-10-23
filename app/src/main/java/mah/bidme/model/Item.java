@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by JesperHansen on 2015-10-14.
+ * Created by Jesper Hansen on 2015-10-14.
  */
 public class Item {
     private String id;

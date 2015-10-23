@@ -89,22 +89,15 @@ public class LoginFragment extends Fragment {
                 if (TextUtils.isEmpty(pinCode) || longPinCode != fireBasePin) {
                     mPinCodeView.setError("Invalid pincode");
                     Log.i(TAG, "Not Logged in");
-
-                } else if (Constants.loggedInName.equals(fireBaseUser)) {
-                    mUserView.setError("This username is already taken");
-                    Log.i(TAG, "Wrong username");
-
                 } else {
                     Log.i(TAG, "You are logged in");
                     Map<String, Object> userInfo = new HashMap<String, Object>();
                     userInfo.put("username", mUserView.getText().toString());
-                    firebaseReferens.child("users").push().setValue(userInfo);
+                    Firebase postRef = firebaseReferens.child("users").push();
+                    Constants.loggedInName = postRef.getKey();
+                    postRef.setValue(userInfo);
 
 
-                    Firebase postRef = firebaseReferens.child("users");
-                    Firebase newPostRef = postRef.push();
-
-                    Constants.loggedInName = newPostRef.getKey();
 
                     Log.i(TAG, "User Id: "+ Constants.loggedInName);
 
