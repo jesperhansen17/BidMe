@@ -34,6 +34,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
+import mah.bidme.model.Item;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -88,13 +89,11 @@ public class ItemFragment extends Fragment {
         // Apply the adapter to the Spinner
         mCategorySpinner.setAdapter(adapter);
 
-        // Retreive the imageView that is gonna hold the captured image
-        //mItemImageView = (ImageView) view.findViewById(R.id.imageItem);
-
         // Check if the running device has a camera
         if (!hasCamera())
             mPhotoBtn.setEnabled(false);
 
+        // Make show photo button not enabled before a photo is taken
         mShowPhotoBtn.setEnabled(false);
 
         // Add an OnItemSelectedListener to the spinner
@@ -131,6 +130,7 @@ public class ItemFragment extends Fragment {
         }
     }
 
+    // Method that reads the image String and converts it back to a thumbnail image
     public Bitmap getPhotoImage() {
         byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
@@ -172,7 +172,7 @@ public class ItemFragment extends Fragment {
             if (mCategorySpinner.getSelectedItemPosition() == 0) {
                 Toast.makeText(getContext(), "Choose an category", Toast.LENGTH_SHORT).show();
             }
-            if ((!mItemTitle.getText().toString().isEmpty()) && (!mItemDesc.getText().toString().isEmpty()) && (!mItemPrice.getText().toString().isEmpty()) && mCategorySpinner.getSelectedItemPosition() != 0){
+            if ((!mItemTitle.getText().toString().isEmpty()) && (!mItemDesc.getText().toString().isEmpty()) && (!mItemPrice.getText().toString().isEmpty()) && mCategorySpinner.getSelectedItemPosition() != 0 && mShowPhotoBtn.isEnabled()){
                 // Convert the input from EditText to a String
                 String title = mItemTitle.getText().toString();
                 String desc = mItemDesc.getText().toString();
@@ -203,11 +203,50 @@ public class ItemFragment extends Fragment {
                     }
                 });
 
+                clearAllFields();
+
+                // Vibrate the phone when the user adds an Item for extra feedback to the user
                 Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(100);
+
+                userChoices();
             }
         }
 
+        // Method for reseting all inputfields when a new item is added to Firebase
+        private void clearAllFields() {
+            mItemTitle.setText("");
+            mItemDesc.setText("");
+            mItemPrice.setText("");
+            mCategorySpinner.setSelection(0);
+            mShowPhotoBtn.setEnabled(false);
+        }
+
+        // Method that prompts an AlertDialog to the user where the user can make a one
+        // of three different choices
+        private void userChoices() {
+            AlertDialog.Builder choiceDialog = new AlertDialog.Builder(getActivity());
+            choiceDialog.setTitle("Options!");
+            choiceDialog.setItems(R.array.add_item_choice_array, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 0:
+                            // Do nothing, just return back to add item fragment
+                            break;
+                        case 1:
+                            // Create an new Fragment that show the added items
+                            break;
+                        case 2:
+                            cancelAddItemFragment();
+                            break;
+                    }
+                }
+            });
+            choiceDialog.create().show();
+        }
+
+        // Go back to main menu
         private void cancelAddItemFragment() {
             getActivity().getSupportFragmentManager().popBackStack();
         }
@@ -218,6 +257,7 @@ public class ItemFragment extends Fragment {
             startActivityForResult(intent, 1);
         }
 
+        // Show the taken image as an thumbnail
         private void showTakenImage() {
             AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
             photoDialog.setTitle("Taken Photo");
@@ -235,11 +275,12 @@ public class ItemFragment extends Fragment {
             imageView.setImageBitmap(getPhotoImage());
 
             photoDialog.setView(view);
-            photoDialog.show();
+            photoDialog.create().show();
         }
 
     }
 
+    // A inner private class for the spinner which contains the different types of items
     private class SpinnerSelected implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

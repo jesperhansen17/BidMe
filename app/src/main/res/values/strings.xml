@@ -18,6 +18,13 @@
     <string name="itemFragmentTakePhotoBtn">Take Photo</string>
     <string name="itemFragmentShowPhotoBtn">Show Photo</string>
 
+    <!-- String Array for the choiceDialog in AddItemFragment -->
+    <string-array name="add_item_choice_array">
+        <item>Add a new item</item>
+        <item>View added items</item>
+        <item>Go back to main menu</item>
+    </string-array>
+
     <!-- String for spinner int ItemFragment -->
     <string-array name="items_array">
         <item>Select an item...</item>

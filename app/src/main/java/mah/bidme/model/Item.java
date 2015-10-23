@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * Created by JesperHansen on 2015-10-14.
+ * Created by Jesper Hansen on 2015-10-14.
  */
 public class Item {
     private String id;
@@ -15,14 +15,20 @@ public class Item {
     private int startedPrice;
     private String idSeller;
     private String idBuyer;
+    private String type;
+    private boolean sold;
+    private String image;
     private List<HashMap<String, Object>> listBid;
 
-    public Item(String title, String description, int price, String idSeller) {
+    public Item(String title, String description, int price, String idSeller, String type, boolean sold, String image) {
         this.title = title;
         this.description = description;
         this.startedPrice = price;
         this.currentPrice = price;
         this.idSeller = idSeller;
+        this.type = type;
+        this.sold = sold;
+        this.image = image;
         listBid = new ArrayList<HashMap<String, Object>>();
     }
 
@@ -78,4 +84,9 @@ public class Item {
         return idSeller;
     }
 
+    public String getType() { return type; }
+
+    public boolean getSold() { return sold; }
+
+    public String getImage() { return image; }
 }
