@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
     private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn;
-    private String mTypeOfItem, mPhotoStr;
+    private String mTypeOfItem, mPhotoStr, mRandomID;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
 
@@ -180,19 +181,13 @@ public class ItemFragment extends Fragment {
                 // Convert the input from EditText to a String, then parse the String to a Integer
                 int price = Integer.parseInt(mItemPrice.getText().toString());
 
-                // Add the information to a HashMap before sending it to Firebase
-                Map<String, Object> itemInfo = new HashMap<String, Object>();
-                itemInfo.put("title", title);
-                itemInfo.put("description", desc);
-                itemInfo.put("price", price);
-                itemInfo.put("currentprice", price);
-                itemInfo.put("seller", Constants.loggedInName);
-                itemInfo.put("sold", false);
-                itemInfo.put("type", mTypeOfItem);
-                itemInfo.put("image", mPhotoStr);
+                // Create an random ID for the item
+                mRandomID = UUID.randomUUID().toString();
+
+                Item item = new Item(title, desc, price, Constants.loggedInName, mTypeOfItem, false, mPhotoStr, mRandomID);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
-                mFirebaseAddItem.child(UUID.randomUUID().toString()).setValue(itemInfo, new Firebase.CompletionListener() {
+                mFirebaseAddItem.push().setValue(item, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         if (firebaseError != null) {
@@ -204,12 +199,11 @@ public class ItemFragment extends Fragment {
                 });
 
                 clearAllFields();
+                Log.i("ItemFragment", mFirebaseAddItem.getKey());
 
                 // Vibrate the phone when the user adds an Item for extra feedback to the user
                 Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
                 vibrator.vibrate(100);
-
-                userChoices();
             }
         }
 
