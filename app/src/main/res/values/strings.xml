@@ -41,6 +41,7 @@
 
     <!-- Bid ItemFragment -->
     <string name="bidFragmentPicture">Picture</string>
+    <string name="bidFragmentTitleHeader">Title</string>
     <string name="bidFragmentTitle">Item name</string>
     <string name="bidFragmentPrice">Price</string>
     <string name="bidFragmentYourBid">Your Bid</string>

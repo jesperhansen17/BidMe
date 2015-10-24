@@ -11,7 +11,7 @@
         xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view_item"
         android:layout_gravity="center"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         card_view:contentPadding="0dp"
         card_view:cardElevation="20dp"
@@ -21,9 +21,10 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="8dp">
 
-            <!-- Textview - Item name-->
+            <!-- ImageView - Picture-->
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -34,55 +35,57 @@
                 />
 
             <!-- Textview - Item name-->
-            <TextView
-                android:layout_width="match_parent"
+            <mah.bidme.CustomView.CustomTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="40dp"
-                android:gravity="center"
                 android:id="@+id/item_name"
-                android:text="Item Name"
+                android:text="@string/bidFragmentTitle"
                 android:textSize="30sp"
                 android:layout_below="@+id/item_picture"/>
 
-            <!-- Textview - Current price-->
-            <TextView
+           <!-- &lt;!&ndash; Textview - Current price&ndash;&gt;
+            <mah.bidme.CustomView.CustomTextView
                 android:layout_marginTop="40dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/bidFragmentPrice"
                 android:textSize="30sp"
                 android:id="@+id/item_price_title"
-                android:layout_below="@+id/item_name"/>
-
+                android:layout_alignRight="@+id/item_name"/>
+-->
             <!-- TextBox - Current Price-->
-            <TextView
-                android:layout_width="match_parent"
+            <mah.bidme.CustomView.CustomTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:textSize="24sp"
+                android:text="@string/bidFragmentPrice"
+                android:textSize="30sp"
                 android:id="@+id/item_price_text"
-                android:layout_below="@+id/item_price_title"/>
+                android:layout_alignBaseline="@+id/item_name"
+                android:layout_alignParentRight="true"/>
 
             <!-- TextView - Your Price-->
-            <TextView
+            <mah.bidme.CustomView.CustomTextView
                 android:layout_marginTop="40dp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:text="@string/bidFragmentYourBid"
-                android:textSize="34sp"
+                android:textSize="30sp"
                 android:id="@+id/item_bid_title"
-                android:layout_below="@+id/item_price_text"/>
+                android:layout_below="@+id/item_name"/>
 
             <!-- TextBox - Your Price-->
-            <TextView
-                android:layout_width="match_parent"
+            <mah.bidme.CustomView.CustomTextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:textSize="24sp"
                 android:id="@+id/item_bid_text"
-                android:layout_below="@+id/item_bid_title"/>
+                android:layout_alignBaseline="@+id/item_name"
+                android:layout_alignRight="@+id/item_bid_title"/>
 
         </RelativeLayout>
 

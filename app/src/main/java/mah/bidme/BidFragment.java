@@ -19,10 +19,7 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 import mah.bidme.CustomAdapter.ItemRecyclerAdapter;
 import mah.bidme.model.Item;
