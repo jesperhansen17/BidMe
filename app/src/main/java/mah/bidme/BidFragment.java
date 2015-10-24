@@ -50,8 +50,8 @@ public class BidFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get a reference to the right child in Firebase
-        Constants.loggedInName = "Mario";
-        mFirebase = Constants.myFirebaseRef.child("items");
+        Utility.loggedInName = "Mario";
+        mFirebase = Utility.myFirebaseRef.child("items");
         this.initListItem();
     }
 
