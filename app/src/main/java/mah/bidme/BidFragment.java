@@ -38,6 +38,11 @@ public class BidFragment extends Fragment {
     private List<Item> listItem = new ArrayList<Item>();
     private Firebase mFirebase;
 
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private static String LOG_TAG = "CardViewActivity";
+
     public BidFragment() {
         // Required empty public constructor
     }
@@ -58,16 +63,15 @@ public class BidFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
 
         // Create the RecyclerView in order to display the Item cardview
-        RecyclerView recList = (RecyclerView) v.findViewById(R.id.item_recycler_view);
-        recList.setHasFixedSize(true);
+        mRecyclerView = (RecyclerView) v.findViewById(R.id.item_recycler_view);
+        mRecyclerView.setHasFixedSize(true);
 
-        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        recList.setLayoutManager(llm);
+        mLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mLayoutManager);
 
 
-        ItemRecyclerAdapter itemRecyclerAdapter = new ItemRecyclerAdapter(listItem);
-        recList.setAdapter(itemRecyclerAdapter);
+        mAdapter = new ItemRecyclerAdapter(listItem);
+        mRecyclerView.setAdapter(mAdapter);
 
        /* final TextView itemName = (TextView) v.findViewById(R.id.item_name);
         final TextView currPrice = (TextView) v.findViewById(R.id.current_price);
@@ -120,7 +124,7 @@ public class BidFragment extends Fragment {
                     Item item = postSnapshot.getValue(Item.class);
                     //Log.i(debug, item.getTitle() + " - " + postSnapshot.getKey());
                     listItem.add(item);
-                    
+                    mAdapter.notifyDataSetChanged();
                 }
 
             }
