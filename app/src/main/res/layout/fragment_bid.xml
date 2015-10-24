@@ -6,111 +6,50 @@
     android:layout_height="match_parent"
     tools:context="mah.bidme.BidFragment">
 
-        <!-- Textview - Item name-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:gravity="center"
-            android:id="@+id/item_name"
-            android:text="Item Name"
-            android:textSize="45sp"
-            />
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/item_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="vertical"/>
 
-        <!-- Textview - Current price-->
-        <TextView
-            android:layout_marginTop="40dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Current Price"
-            android:textSize="34sp"
-            android:id="@+id/current_price_text"
-            android:layout_below="@+id/item_name"/>
+    <!-- Floating Action Button - (+) Add -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_action_add"
+        app:backgroundTint="#FF5252"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"/>
 
-        <!-- TextBox - Current Price-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:id="@+id/current_price"
-            android:layout_below="@+id/current_price_text"/>
+    <!-- Floating Action Button - (-) Remove -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/subButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:layout_weight="1"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_remove"
+        app:backgroundTint="#FF5252"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/addButton"/>
 
-        <!-- TextView - Your Price-->
-        <TextView
-            android:layout_marginTop="40dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Your price"
-            android:textSize="34sp"
-            android:id="@+id/your_price_text"
-            android:layout_below="@+id/current_price"/>
+    <!-- Floating Action Button - (V) Check -->
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/checkButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_margin="16dp"
+        android:clickable="true"
+        android:layout_gravity="center"
+        android:src="@drawable/ic_done_white_18dp"
+        app:backgroundTint="#FF5252"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"/>
 
-        <!-- TextBox - Your Price-->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textSize="24sp"
-            android:id="@+id/your_price"
-            android:layout_below="@+id/your_price_text"/>
-
-        <!-- Floating Action Buttons-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:gravity = "bottom"
-            android:paddingBottom="40dp"
-            android:layout_below="@+id/your_price"
-            android:weightSum="3">
-
-            <!-- Floating Action Button - (+) Add -->
-            <FrameLayout
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/addButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_add_black_48dp"
-                    app:backgroundTint="#2196F3"/>
-            </FrameLayout>
-
-             <!-- Floating Action Button - (-) Sub -->
-            <FrameLayout
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:weightSum="3">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/subButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_remove_black_48dp"
-                    app:backgroundTint="#2196F3"/>
-            </FrameLayout>
-
-            <!-- Floating Action Button - (✓) Check -->
-            <FrameLayout
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-                <android.support.design.widget.FloatingActionButton
-                    android:id="@+id/checkButton"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:clickable="true"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_done_black_48dp"
-                    app:backgroundTint="#2196F3"/>
-            </FrameLayout>
-        </LinearLayout>
 </RelativeLayout>

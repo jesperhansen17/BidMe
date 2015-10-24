@@ -38,7 +38,10 @@
         <item>Phones</item>
     </string-array>
 
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Bid ItemFragment -->
+    <string name="bidFragmentPicture">Picture</string>
+    <string name="bidFragmentTitle">Item name</string>
+    <string name="bidFragmentPrice">Price</string>
+    <string name="bidFragmentYourBid">Your Bid</string>
 
 </resources>

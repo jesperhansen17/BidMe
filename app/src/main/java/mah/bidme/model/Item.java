@@ -1,5 +1,9 @@
 package mah.bidme.model;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -67,8 +71,9 @@ public class Item {
         return sold;
     }
 
-    public String getImage() {
-        return image;
+    public Bitmap getImage() {
+        byte[] imageAsByte = Base64.decode(image, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 
     public List<HashMap<String, Object>> getListBid() {
