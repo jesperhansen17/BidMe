@@ -1,6 +1,7 @@
 package mah.bidme;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -9,8 +10,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
@@ -21,7 +24,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.UUID;
 
 
 /**
@@ -53,7 +55,7 @@ public class LoginFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        firebaseReferens = Constants.myFirebaseRef;
+        firebaseReferens = Utility.myFirebaseRef;
         mLoginFormView = v.findViewById(R.id.login_form);
         mProgressView = v.findViewById(R.id.login_progress);
         mUserView = (EditText) v.findViewById(R.id.username);
@@ -81,24 +83,27 @@ public class LoginFragment extends Fragment {
             public void onClick(View view) {
                 int n = 100000000;
                 Random random = new Random();
-                Constants.id = random.nextInt((n) + 100000);
-                Constants.loggedInName = mUserView.getText().toString();
+                Utility.id = random.nextInt((n) + 100000);
+                Utility.loggedInName = mUserView.getText().toString();
                 String pinCode = mPinCodeView.getText().toString();
                 long longPinCode = Long.parseLong(pinCode);
 
                 if (TextUtils.isEmpty(pinCode) || longPinCode != fireBasePin) {
                     mPinCodeView.setError("Invalid pincode");
                     Log.i(TAG, "Not Logged in");
-
-                } else if (Constants.loggedInName.equals(fireBaseUser)) {
-                    mUserView.setError("This username is already taken");
-                    Log.i(TAG, "Wrong username");
-
                 } else {
                     Log.i(TAG, "You are logged in");
                     Map<String, Object> userInfo = new HashMap<String, Object>();
-                    userInfo.put("Username", mUserView.getText().toString());
-                    firebaseReferens.child("Users").child(UUID.randomUUID().toString()).setValue(userInfo);
+                    userInfo.put("username", mUserView.getText().toString());
+                    Firebase postRef = firebaseReferens.child("users").push();
+                    Utility.loggedInName = postRef.getKey();
+                    postRef.setValue(userInfo);
+
+                    // Create a Toast to tell the user that he/she is logged in
+                    Toast.makeText(getContext(), "You are logged in", Toast.LENGTH_SHORT).show();
+
+                    // Static method for removing the Keyboard
+                    Utility.removeKeyboard(getActivity(), mPinCodeView);
 
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()

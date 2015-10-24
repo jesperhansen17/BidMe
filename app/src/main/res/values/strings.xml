@@ -2,7 +2,8 @@
     <string name="app_name">BidMe</string>
 
     <!-- Login Fragment -->
-
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
     <string name="error_invalid_pincode">Wrong pincode!</string>
 
     <!-- Main menu Fragment -->

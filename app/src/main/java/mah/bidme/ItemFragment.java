@@ -16,7 +16,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,21 +31,18 @@ import com.firebase.client.FirebaseError;
 
 import java.io.ByteArrayOutputStream;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
 
 import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
 import mah.bidme.model.Item;
 
 /**
- * A simple {@link Fragment} subclass.
+ * Fragment that contains the all of the components for adding an item to the Firebase database
  */
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
     private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn;
-    private String mTypeOfItem, mPhotoStr, mRandomID;
+    private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
 
@@ -61,8 +57,7 @@ public class ItemFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_item, container, false);
 
         // Get a reference to the right child in Firebase
-        Constants.loggedInName = "Jesper Hansen";
-        mFirebaseAddItem = Constants.myFirebaseRef.child("items");
+        mFirebaseAddItem = Utility.myFirebaseRef.child("items");
 
         // Retrieve the Title textView
         mTitleOfView = (TextView) view.findViewById(R.id.titleOfView);
@@ -112,13 +107,21 @@ public class ItemFragment extends Fragment {
         return view;
     }
 
-    // Returns true if the running device has a camera
+    /**
+     * Returns true if the running device has a camera
+     * @return boolean that informs the user if the current Android phone has a camera
+     */
     private boolean hasCamera() {
         return getActivity().getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY);
     }
 
-    // Method that returns the taken picture from the camera application and
-    // convert the Bitmap to a String and store the String in a private variable
+    /**
+     * Method that returns the taken picture from the camera application and
+     * convert the Bitmap to a String and store the String in a private variable
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
@@ -133,13 +136,18 @@ public class ItemFragment extends Fragment {
         }
     }
 
-    // Method that reads the image String and converts it back to a thumbnail image
+    /**
+     * Method that reads the image String and converts it back to a thumbnail image
+     * @return Bitmap Taken thumbnail image
+     */
     public Bitmap getPhotoImage() {
         byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
         return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 
-    // Private class that implements an OnClickListener that handles the two buttons
+    /**
+     * Private class that implements an OnClickListener that handles the two buttons
+     */
     private class AddItemListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
@@ -151,7 +159,7 @@ public class ItemFragment extends Fragment {
                     cancelAddItemFragment();
                     break;
                 case R.id.takePhotoBtn:
-                    launchCamera(getView());
+                    launchCamera();
                     break;
                 case R.id.showTakenPhotoBtn:
                     showTakenImage();
@@ -159,9 +167,11 @@ public class ItemFragment extends Fragment {
             }
         }
 
-        // Private method that checks if the user has added the correct information.
-        // If so the item will be added to Firebase otherwise the screen will tell the user
-        // that the information was not correctly added
+        /**
+         * Private method that checks if the user has added the correct information.
+         * If so the item will be added to Firebase otherwise the screen will tell the user
+         * that the information was not correctly added
+         */
         private void addItemToFirebase() {
             if (mItemTitle.getText().toString().isEmpty()) {
                 mItemTitle.setError("Enter a title");
@@ -183,7 +193,8 @@ public class ItemFragment extends Fragment {
                 // Convert the input from EditText to a String, then parse the String to a Integer
                 int price = Integer.parseInt(mItemPrice.getText().toString());
 
-                Item item = new Item(title, desc, price, Constants.loggedInName, mTypeOfItem, false, mPhotoStr);
+                // Create an new Item
+                Item item = new Item(title, desc, price, Utility.loggedInName, mTypeOfItem, false, mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 mFirebaseAddItem.push().setValue(item, new Firebase.CompletionListener() {
@@ -198,15 +209,16 @@ public class ItemFragment extends Fragment {
                 });
 
                 clearAllFields();
-                Log.i("ItemFragment", mFirebaseAddItem.getKey());
 
-                // Vibrate the phone when the user adds an Item for extra feedback to the user
-                Vibrator vibrator = (Vibrator) getActivity().getSystemService(Context.VIBRATOR_SERVICE);
-                vibrator.vibrate(100);
+                // Method for vibrate the phone 100 milliseconds
+                Utility.vibratePhone(getActivity(), 100);
+
             }
         }
 
-        // Method for reseting all inputfields when a new item is added to Firebase
+        /**
+         * Method for reseting all inputfields when a new item is added to Firebase
+         */
         private void clearAllFields() {
             mItemTitle.setText("");
             mItemDesc.setText("");
@@ -215,42 +227,24 @@ public class ItemFragment extends Fragment {
             mShowPhotoBtn.setEnabled(false);
         }
 
-        // Method that prompts an AlertDialog to the user where the user can make a one
-        // of three different choices
-        private void userChoices() {
-            AlertDialog.Builder choiceDialog = new AlertDialog.Builder(getActivity());
-            choiceDialog.setTitle("Options!");
-            choiceDialog.setItems(R.array.add_item_choice_array, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case 0:
-                            // Do nothing, just return back to add item fragment
-                            break;
-                        case 1:
-                            // Create an new Fragment that show the added items
-                            break;
-                        case 2:
-                            cancelAddItemFragment();
-                            break;
-                    }
-                }
-            });
-            choiceDialog.create().show();
-        }
-
-        // Go back to main menu
+        /**
+         * Go back to main menu
+         */
         private void cancelAddItemFragment() {
             getActivity().getSupportFragmentManager().popBackStack();
         }
 
-        // Starts the camera application using an Intent
-        private void launchCamera(View view) {
+        /**
+         * Starts the camera application using an Intent
+         */
+        private void launchCamera() {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
             startActivityForResult(intent, 1);
         }
 
-        // Show the taken image as an thumbnail
+        /**
+         * Show the taken image as an thumbnail
+         */
         private void showTakenImage() {
             AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
             photoDialog.setTitle("Taken Photo");
@@ -273,7 +267,9 @@ public class ItemFragment extends Fragment {
 
     }
 
-    // A inner private class for the spinner which contains the different types of items
+    /**
+     * A inner private class for the spinner which contains the different types of items
+     */
     private class SpinnerSelected implements AdapterView.OnItemSelectedListener {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

@@ -25,11 +25,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <AutoCompleteTextView
+                <mah.bidme.CustomView.CustomEditText
                     android:id="@+id/username"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Username"
+                    android:hint="@string/username_hint"
                     android:maxLines="1"
                     android:singleLine="true" />
 
@@ -39,15 +39,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-                <EditText
+                <mah.bidme.CustomView.CustomEditText
                     android:id="@+id/pincode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="pincode"
+                    android:hint="@string/password_hint"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="pin to short"
                     android:imeOptions="actionUnspecified"
-                    android:inputType="textPassword"
+                    android:inputType="numberPassword"
                     android:maxLines="1"
                     android:singleLine="true" />
 
