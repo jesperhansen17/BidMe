@@ -1,19 +1,20 @@
 package mah.bidme;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Vibrator;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,8 +27,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Arrays;
 
 import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
@@ -116,22 +119,54 @@ public class ItemFragment extends Fragment {
     /**
      * Method that returns the taken picture from the camera application and
      * convert the Bitmap to a String and store the String in a private variable
-     * @param requestCode
-     * @param resultCode
-     * @param data
      */
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             mShowPhotoBtn.setEnabled(true);
-            Bundle extras = data.getExtras();
+
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath(), "bidme.jpg");
+            Uri uri = Uri.fromFile(file);
+            Log.i("ItemFragment", "The Uri of the image is " + uri);
+
+            Bitmap imageBitmap;
+
+            try {
+                imageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+                imageBitmap = crupAndScale(imageBitmap, 1000);
+
+                // Convert to a String
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+                mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
+                Log.i("ItemFragment", ""+mPhotoStr);
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException IOe) {
+                IOe.printStackTrace();
+            }
+
+
+            /*Bundle extras = data.getExtras();
             Bitmap photo = (Bitmap) extras.get("data");
 
+            // Convert to a String
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
             byte[] byteArray = byteArrayOutputStream.toByteArray();
-            mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);*/
         }
+    }
+
+    public static  Bitmap crupAndScale (Bitmap source,int scale){
+        int factor = source.getHeight() <= source.getWidth() ? source.getHeight(): source.getWidth();
+        int longer = source.getHeight() >= source.getWidth() ? source.getHeight(): source.getWidth();
+        int x = source.getHeight() >= source.getWidth() ?0:(longer-factor)/2;
+        int y = source.getHeight() <= source.getWidth() ?0:(longer-factor)/2;
+        source = Bitmap.createBitmap(source, x, y, factor, factor);
+        source = Bitmap.createScaledBitmap(source, scale, scale, false);
+        return source;
     }
 
     /**
@@ -237,6 +272,13 @@ public class ItemFragment extends Fragment {
          */
         private void launchCamera() {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+            // this part to save captured image on provided path
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+                    "bidme.jpg");
+            Uri photoPath = Uri.fromFile(file);
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoPath);
+
             startActivityForResult(intent, 1);
         }
 
