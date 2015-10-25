@@ -13,11 +13,11 @@ import java.util.Map;
  * Created by Jesper Hansen on 2015-10-14.
  */
 public class Item {
-    private String id;
     private String title;
     private String description;
     private int currentPrice;
     private int startedPrice;
+    private String id;
     private String idSeller;
     private String idBuyer;
     private String type;
@@ -27,11 +27,12 @@ public class Item {
 
     public Item() {}
 
-    public Item(String title, String description, int price, String idSeller, String type, Boolean sold, String image) {
+    public Item(String title, String description, int price, String id, String idSeller, String type, Boolean sold, String image) {
         this.title = title;
         this.description = description;
         this.startedPrice = price;
         this.currentPrice = price;
+        this.id = id;
         this.idSeller = idSeller;
         this.idBuyer = "";
         this.type = type;
@@ -55,6 +56,8 @@ public class Item {
     public int getStartedPrice() {
         return startedPrice;
     }
+
+    public String getId() { return id; }
 
     public String getIdSeller() {
         return idSeller;
