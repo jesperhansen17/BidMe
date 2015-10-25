@@ -33,10 +33,6 @@ import mah.bidme.model.Item;
  * A simple {@link Fragment} subclass.
  */
 public class BidFragment extends Fragment {
-    /*private static String debug = "Debug";
-    private int currBid;//Change to value of current bid.
-    private int yourBid;//Change to value of current bid.
-    private String itemName;*/
     private List<Item> listItem;
     private Firebase mFirebase;
 
@@ -45,7 +41,6 @@ public class BidFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
 
-    private TextView yourBidTextView;
     private ProgressBar progressBar;
 
     public BidFragment() {
@@ -116,6 +111,9 @@ public class BidFragment extends Fragment {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                Item item = dataSnapshot.getValue(Item.class);
+                listItem.clear();
+                listItem.add(item);
                 mAdapter.notifyDataSetChanged();
                 //Item item = dataSnapshot.getValue(Item.class);
                 //mAdapter.updatePrice(item.getCurrentPrice());

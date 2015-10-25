@@ -98,7 +98,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     //Log.i(debug, listItem.get(0).toString());
                     mFirebase.child(item.getId() + "/currentPrice").setValue(yourBid);
                     mFirebase.child(item.getId() +"/bids").updateChildren(bid);
-                    //holder.vItemPrice.setText(Integer.toString(yourBid));
+                    holder.vItemPrice.setText(Integer.toString(yourBid) + " SEK");
                     //notifyItemChanged(itemList.indexOf(item));
                     Toast.makeText(mContext, "Your bid was accepted!", Toast.LENGTH_SHORT).show();
                     //add another 5 sec to the countdown.
@@ -129,7 +129,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         protected ImageView vItemPicture;
         protected TextView vItemTitle;
         protected TextView vItemPrice;
-        protected EditText vItemYourBid;
+        protected TextView vItemYourBid;
         protected Button vItemAddBid;
         protected Button vItemRemoveBid;
         protected Button vItemConfirmBid;
@@ -139,66 +139,11 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             vItemPicture = (ImageView) itemView.findViewById(R.id.item_picture);
             vItemTitle = (TextView) itemView.findViewById(R.id.item_name);
             vItemPrice = (TextView) itemView.findViewById(R.id.item_price_text);
-            vItemYourBid = (EditText) itemView.findViewById(R.id.item_bid_text);
+            vItemYourBid = (TextView) itemView.findViewById(R.id.item_bid_text);
             vItemAddBid = (Button) itemView.findViewById(R.id.addBidButton);
             vItemRemoveBid = (Button) itemView.findViewById(R.id.removeBidButton);
             vItemConfirmBid = (Button) itemView.findViewById(R.id.checkBidButton);
 
         }
     }
-
-    /**
-     * Private class that implements an OnClickListener that handles the two buttons
-     */
-/*    private class BidItemListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.addBidButton:
-                    addBidItem();
-                    break;
-                case R.id.removeBidButton:
-                    removeBidItem();
-                    break;
-                case R.id.checkBidButton:
-                    checkBidFirebase();
-                    break;
-            }
-        }
-    }*/
-
-   /* private void addBidItem() {
-        yourBid = yourBid + 5;
-        Log.i("Math:", "" + yourBid + "");
-    }*/
-
-   /* private void removeBidItem() {
-        //Subtract 5
-        //Makes sure you are above current bid.
-        if (currBid + 5 <= yourBid) {
-            yourBid = yourBid - 5;
-            Log.i("Math:", "" + yourBid + "");
-        } else {
-            Toast.makeText(mContext, "You cant go lower than current bid!", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-
-  /*  private void checkBidFirebase() {
-
-        //Create bid
-        //Check if the bid is valid.
-        if (currBid < yourBid) {
-            //Send bid to database
-            Map<String, Object> bid = new HashMap<String, Object>();
-            bid.put(Utility.loggedInName, yourBid);
-            //Log.i(debug, listItem.get(0).toString());
-           *//* mFirebase.child(listItem.get(0).get("Title").toString() +"/Currentprice").setValue(yourBid);
-            mFirebase.child(listItem.get(0).get("Title").toString() +"/Bids").updateChildren(bid);*//*
-            Log.i("Math:", "Create bid!");
-            Toast.makeText(mContext, "Your bid was accepted!", Toast.LENGTH_SHORT).show();
-            //add another 5 sec to the countdown.
-        } else {
-            Toast.makeText(mContext, "This bid is lower or equal to current bid!", Toast.LENGTH_SHORT).show();
-        }
-    }*/
 }
