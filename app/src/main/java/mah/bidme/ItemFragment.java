@@ -14,7 +14,6 @@ import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +31,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
-
 import mah.bidme.CustomAdapter.CustomSpinnerAdapter;
 import mah.bidme.model.Item;
 
@@ -104,7 +102,6 @@ public class ItemFragment extends Fragment {
         mPhotoBtn.setOnClickListener(new AddItemListener());
         mShowPhotoBtn.setOnClickListener(new AddItemListener());
 
-
         return view;
     }
 
@@ -125,14 +122,17 @@ public class ItemFragment extends Fragment {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             mShowPhotoBtn.setEnabled(true);
 
+            // Retreive the bidme image from the SD Card
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath(), "bidme.jpg");
             Uri uri = Uri.fromFile(file);
-            Log.i("ItemFragment", "The Uri of the image is " + uri);
 
             Bitmap imageBitmap;
 
             try {
+                // Convert the Image to a Bitmap
                 imageBitmap = MediaStore.Images.Media.getBitmap(getActivity().getContentResolver(), uri);
+
+                // Rescale the Bitmap
                 imageBitmap = crupAndScale(imageBitmap, 1000);
 
                 // Convert to a String
@@ -140,25 +140,17 @@ public class ItemFragment extends Fragment {
                 imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
                 byte[] byteArray = byteArrayOutputStream.toByteArray();
                 mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);
-                Log.i("ItemFragment", ""+mPhotoStr);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException IOe) {
                 IOe.printStackTrace();
             }
-
-
-            /*Bundle extras = data.getExtras();
-            Bitmap photo = (Bitmap) extras.get("data");
-
-            // Convert to a String
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            photo.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-            byte[] byteArray = byteArrayOutputStream.toByteArray();
-            mPhotoStr = Base64.encodeToString(byteArray, Base64.DEFAULT);*/
         }
     }
 
+    /**
+     * Method for rescaling the Image
+     */
     public static  Bitmap crupAndScale (Bitmap source,int scale){
         int factor = source.getHeight() <= source.getWidth() ? source.getHeight(): source.getWidth();
         int longer = source.getHeight() >= source.getWidth() ? source.getHeight(): source.getWidth();
@@ -167,15 +159,6 @@ public class ItemFragment extends Fragment {
         source = Bitmap.createBitmap(source, x, y, factor, factor);
         source = Bitmap.createScaledBitmap(source, scale, scale, false);
         return source;
-    }
-
-    /**
-     * Method that reads the image String and converts it back to a thumbnail image
-     * @return Bitmap Taken thumbnail image
-     */
-    public Bitmap getPhotoImage() {
-        byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 
     /**
@@ -274,11 +257,13 @@ public class ItemFragment extends Fragment {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
             // this part to save captured image on provided path
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                    "bidme.jpg");
+            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "bidme.jpg");
             Uri photoPath = Uri.fromFile(file);
+
+            // Put the Uri to the Image in the Intent
             intent.putExtra(MediaStore.EXTRA_OUTPUT, photoPath);
 
+            // Start the Camera application
             startActivityForResult(intent, 1);
         }
 
@@ -288,7 +273,7 @@ public class ItemFragment extends Fragment {
         private void showTakenImage() {
             AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
             photoDialog.setTitle("Taken Photo");
-            photoDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+            photoDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // Do nothing for now
@@ -303,6 +288,15 @@ public class ItemFragment extends Fragment {
 
             photoDialog.setView(view);
             photoDialog.create().show();
+        }
+
+        /**
+         * Method that reads the image String and converts it back to a thumbnail image
+         * @return Bitmap Taken thumbnail image
+         */
+        private Bitmap getPhotoImage() {
+            byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
+            return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
         }
 
     }
