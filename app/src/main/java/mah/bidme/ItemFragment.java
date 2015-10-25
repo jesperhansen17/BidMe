@@ -209,11 +209,14 @@ public class ItemFragment extends Fragment {
                 // Convert the input from EditText to a String, then parse the String to a Integer
                 int price = Integer.parseInt(mItemPrice.getText().toString());
 
+                // Make a new Firebase reference so that the Item can have the key as a attribute
+                Firebase firebaseId = mFirebaseAddItem.push();
+
                 // Create an new Item
-                Item item = new Item(title, desc, price, Utility.loggedInName, mTypeOfItem, false, mPhotoStr);
+                Item item = new Item(title, desc, price, firebaseId.getKey(), Utility.loggedInName, mTypeOfItem, false, mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
-                mFirebaseAddItem.push().setValue(item, new Firebase.CompletionListener() {
+                firebaseId.setValue(item, new Firebase.CompletionListener() {
                     @Override
                     public void onComplete(FirebaseError firebaseError, Firebase firebase) {
                         if (firebaseError != null) {
