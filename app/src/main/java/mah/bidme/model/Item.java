@@ -24,6 +24,7 @@ public class Item {
     private boolean sold;
     private String image;
     private Map<String, Object> bids;
+    //private int timer;
 
     public Item() {}
 
@@ -38,7 +39,8 @@ public class Item {
         this.type = type;
         this.sold = sold;
         this.image = image;
-        bids = new HashMap<String, Object>();
+        //this.timer = 0;
+        this.bids = new HashMap<String, Object>();
     }
 
     public String getTitle() {

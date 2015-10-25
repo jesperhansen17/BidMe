@@ -109,10 +109,14 @@ public class BidFragment extends Fragment {
                     Item item = postSnapshot.getValue(Item.class);
                     //Log.i(debug, item.getTitle() + " - " + postSnapshot.getKey());
                     //progressBar.setVisibility(View.VISIBLE);
-                    if(listItem.contains(item)){
-                        int positionItem = listItem.indexOf(item);
-                        listItem.set(positionItem, item);
-                    }else
+                    if(listItem.size() > 0){
+                        //int positionItem = listItem.indexOf(item);
+
+                        if(listItem.get(0).getId() == postSnapshot.getKey()){
+                            listItem.set(0, item);
+                        } else
+                            listItem.add(item);
+                    } else
                         listItem.add(item);
 
                     mAdapter.notifyDataSetChanged();

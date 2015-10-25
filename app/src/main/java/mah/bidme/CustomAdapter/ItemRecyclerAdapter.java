@@ -94,8 +94,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     Map<String, Object> bid = new HashMap<String, Object>();
                     bid.put(Utility.loggedInName, yourBid);
                     //Log.i(debug, listItem.get(0).toString());
-                    mFirebase.child("-K1T84SSqxNlrbNXJHD1" + "/currentPrice").setValue(yourBid);
-                    mFirebase.child("-K1T84SSqxNlrbNXJHD1" +"/bids").updateChildren(bid);
+                    mFirebase.child(item.getId() + "/currentPrice").setValue(yourBid);
+                    mFirebase.child(item.getId() +"/bids").updateChildren(bid);
                     Log.i("Math:", "Create bid!");
                     Toast.makeText(mContext, "Your bid was accepted!", Toast.LENGTH_SHORT).show();
                     //add another 5 sec to the countdown.
