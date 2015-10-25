@@ -32,6 +32,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     private static String debug = "Debug";
     private int currBid;//Change to value of current bid.
     private int yourBid;//Change to value of current bid.
+    private int currentPrice;
     //private String itemName;
     //private List<Item> listItem = new ArrayList<Item>();
     private Firebase mFirebase;
@@ -69,7 +70,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             @Override
             public void onClick(View v) {
                 yourBid = yourBid + 5;
-                holder.vItemYourBid.setText("" + yourBid + "");
+                holder.vItemYourBid.setText(Integer.toString(yourBid));
                 Log.i("Math:", "" + yourBid + "");
             }
         });
@@ -79,7 +80,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             public void onClick(View v) {
                 if (currBid + 5 <= yourBid) {
                     yourBid = yourBid - 5;
-                    holder.vItemYourBid.setText("" + yourBid + "");
+                    holder.vItemYourBid.setText(Integer.toString(yourBid));
                     Log.i("Math:", "" + yourBid + "");
                 } else {
                     Toast.makeText(mContext, "You cant go lower than current bid!", Toast.LENGTH_SHORT).show();
@@ -97,9 +98,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     //Log.i(debug, listItem.get(0).toString());
                     mFirebase.child(item.getId() + "/currentPrice").setValue(yourBid);
                     mFirebase.child(item.getId() +"/bids").updateChildren(bid);
-                    holder.vItemPrice.setText(Integer.toString(yourBid));
+                    //holder.vItemPrice.setText(Integer.toString(yourBid));
                     //notifyItemChanged(itemList.indexOf(item));
-                    Log.i("Math:", "Create bid!");
                     Toast.makeText(mContext, "Your bid was accepted!", Toast.LENGTH_SHORT).show();
                     //add another 5 sec to the countdown.
                 } else {
@@ -119,6 +119,10 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         listItem.clear();
         listItem.addAll(listItem);
         notifyDataSetChanged();
+    }
+
+    public void updatePrice(int currentPrice) {
+        this.currentPrice = currentPrice;
     }
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {

@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
@@ -104,13 +105,51 @@ public class BidFragment extends Fragment {
      * We retrieve the data from Firebase and save into a List<Item> in order to send to the Adapter
      */
     private void initListItem() {
-        mFirebase.addValueEventListener(new ValueEventListener() {
+        mFirebase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Item item = dataSnapshot.getValue(Item.class);
+                listItem.add(item);
+                mAdapter.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                mAdapter.notifyDataSetChanged();
+                //Item item = dataSnapshot.getValue(Item.class);
+                //mAdapter.updatePrice(item.getCurrentPrice());
+                Log.i("BidFragment", "Currentprice is updated");
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
+
+
+        /*mFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Item item = postSnapshot.getValue(Item.class);
                     //progressBar.setVisibility(View.VISIBLE);
 
+                    if (listItem.contains(item)) {
+                        mAdapter.updatePrice(item.getCurrentPrice());
+                        Log.i("BidFragment", "Item exist");
+                    }
                     listItem.add(item);
                     //mAdapter.swapList((ArrayList<Item>) listItem);
                     mAdapter.notifyDataSetChanged();
@@ -121,7 +160,7 @@ public class BidFragment extends Fragment {
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
             }
-        });
+        });*/
     }
 
     /**
