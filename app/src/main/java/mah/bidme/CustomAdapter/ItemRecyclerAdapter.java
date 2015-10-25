@@ -124,9 +124,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         protected ImageView vItemPicture;
         protected TextView vItemTitle;
-        protected EditText vItemPrice;
-        protected TextView vItemBid;
-        protected TextView vItemYourBid;
+        protected TextView vItemPrice;
+        protected EditText vItemYourBid;
         protected Button vItemAddBid;
         protected Button vItemRemoveBid;
         protected Button vItemConfirmBid;
@@ -135,9 +134,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             super(itemView);
             vItemPicture = (ImageView) itemView.findViewById(R.id.item_picture);
             vItemTitle = (TextView) itemView.findViewById(R.id.item_name);
-            vItemPrice = (EditText) itemView.findViewById(R.id.item_price_text);
-            vItemBid = (TextView) itemView.findViewById(R.id.item_bid_title);
-            vItemYourBid = (TextView) itemView.findViewById(R.id.item_bid_text);
+            vItemPrice = (TextView) itemView.findViewById(R.id.item_price_text);
+            vItemYourBid = (EditText) itemView.findViewById(R.id.item_bid_text);
             vItemAddBid = (Button) itemView.findViewById(R.id.addBidButton);
             vItemRemoveBid = (Button) itemView.findViewById(R.id.removeBidButton);
             vItemConfirmBid = (Button) itemView.findViewById(R.id.checkBidButton);

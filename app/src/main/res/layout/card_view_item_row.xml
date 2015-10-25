@@ -13,8 +13,7 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardElevation="8dp"
-        card_view:cardMaxElevation="50dp"
+        card_view:cardElevation="20dp"
         card_view:cardCornerRadius="2dp"
         app:cardUseCompatPadding="true"
         android:padding="8dp"
@@ -44,7 +43,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingTop="24dp"
-                android:paddingBottom="24dp"
+                android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
 
@@ -52,7 +51,6 @@
                 <mah.bidme.CustomView.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingBottom="16dp"
                     android:id="@+id/item_name"
                     android:text="@string/bidFragmentTitle"
                     android:textSize="30sp"
@@ -83,6 +81,12 @@
                     android:layout_alignParentRight="true"
                     android:textColor="@color/colorSecondaryText"/>-->
 
+                <!--  <View
+                  android:layout_width="fill_parent"
+                  android:id="@+id/divider"
+                  android:layout_height="1dp"
+                  android:background="@color/colorDividerText"
+                  android:layout_below="@+id/item_name"/>-->
 
                 <!-- TextBox - Your Price-->
                 <mah.bidme.CustomView.CustomEditText
@@ -90,10 +94,10 @@
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="24sp"
+                    android:textColorLink="@color/colorAccent"
                     android:id="@+id/item_bid_text"
                     android:text="@string/bidFragmentYourBid"
-                    android:layout_below="@+id/item_price_text"
-                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/item_name"
                     android:textColor="@color/colorSecondaryText"/>
 
             </RelativeLayout>
