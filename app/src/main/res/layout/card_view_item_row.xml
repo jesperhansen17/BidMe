@@ -4,7 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="5dp">
+    android:paddingBottom="8dp">
 
     <!-- A CardView that contains a TextView -->
     <android.support.v7.widget.CardView
@@ -13,81 +13,130 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:contentPadding="0dp"
-        card_view:cardElevation="20dp"
+        card_view:cardElevation="8dp"
         card_view:cardMaxElevation="50dp"
-        card_view:cardCornerRadius="4dp"
-        app:cardUseCompatPadding="true">
+        card_view:cardCornerRadius="2dp"
+        app:cardUseCompatPadding="true"
+        android:padding="8dp"
+        android:background="@color/colorTextIcons">
 
-        <RelativeLayout
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="8dp">
+            android:layout_height="match_parent">
 
-            <!-- ImageView - Picture-->
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:gravity="center"
-                android:id="@+id/item_picture"
-                android:text="@string/bidFragmentPicture"
-                />
+                android:layout_height="match_parent"
+                android:id="@+id/item_picture_layout">
 
-            <!-- Textview - Item name-->
-            <mah.bidme.CustomView.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:id="@+id/item_name"
-                android:text="@string/bidFragmentTitle"
-                android:textSize="30sp"
-                android:layout_below="@+id/item_picture"/>
+                <!-- ImageView - Picture-->
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:id="@+id/item_picture"
+                    android:text="@string/bidFragmentPicture" />
 
-           <!-- &lt;!&ndash; Textview - Current price&ndash;&gt;
-            <mah.bidme.CustomView.CustomTextView
-                android:layout_marginTop="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/bidFragmentPrice"
-                android:textSize="30sp"
-                android:id="@+id/item_price_title"
-                android:layout_alignRight="@+id/item_name"/>
--->
-            <!-- TextBox - Current Price-->
-            <mah.bidme.CustomView.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/bidFragmentPrice"
-                android:textSize="30sp"
-                android:id="@+id/item_price_text"
-                android:layout_alignBaseline="@+id/item_name"
-                android:layout_alignParentRight="true"/>
+            </RelativeLayout>
 
-            <!-- TextView - Your Price-->
-            <mah.bidme.CustomView.CustomTextView
-                android:layout_marginTop="40dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/bidFragmentYourBid"
-                android:textSize="30sp"
-                android:id="@+id/item_bid_title"
-                android:layout_below="@+id/item_name"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="24dp"
+                android:paddingBottom="24dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
 
-            <!-- TextBox - Your Price-->
-            <mah.bidme.CustomView.CustomTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:textSize="24sp"
-                android:id="@+id/item_bid_text"
-                android:layout_alignBaseline="@+id/item_name"
-                android:layout_alignRight="@+id/item_bid_title"/>
+                <!-- Textview - Item name-->
+                <mah.bidme.CustomView.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="16dp"
+                    android:id="@+id/item_name"
+                    android:text="@string/bidFragmentTitle"
+                    android:textSize="30sp"
+                    android:textColor="@color/colorPrimaryText"/>
 
-        </RelativeLayout>
+                <!-- TextBox - Current Price-->
+                <mah.bidme.CustomView.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/bidFragmentPrice"
+                    android:textSize="24sp"
+                    android:id="@+id/item_price_text"
+                    android:layout_alignBaseline="@+id/item_name"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/colorSecondaryText"/>
+
+                <!-- TextView - Your Price-->
+                <mah.bidme.CustomView.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/bidFragmentYourBid"
+                    android:paddingRight="8dp"
+                    android:textSize="24sp"
+                    android:id="@+id/item_bid_title"
+                    android:layout_below="@+id/item_name"
+                    android:textColor="@color/colorSecondaryText"/>
+
+                <!-- TextBox - Your Price-->
+                <mah.bidme.CustomView.CustomTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:textSize="24sp"
+                    android:id="@+id/item_bid_text"
+                    android:layout_alignBaseline="@+id/item_bid_title"
+                    android:layout_toRightOf="@+id/item_bid_title"
+                    android:textColor="@color/colorSecondaryText"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingBottom="24dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/addBidButton"
+                    android:text="@string/bidFragmentAddBidButton"
+                    android:textColor="@color/colorAccent"
+                    android:background="@color/colorTextIcons"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:layout_marginRight="8dp"
+                    android:id="@+id/removeBidButton"
+                    android:layout_toRightOf="@+id/addBidButton"
+                    android:text="@string/bidFragmentRemoveBidButton"
+                    android:textColor="@color/colorAccent"
+                    android:background="@color/colorTextIcons"/>
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="8dp"
+                    android:id="@+id/checkBidButton"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/bidFragmentConfirmBidButton"
+                    android:textColor="@color/colorAccent"
+                    android:background="@color/colorTextIcons"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
 
     </android.support.v7.widget.CardView>
 </LinearLayout>

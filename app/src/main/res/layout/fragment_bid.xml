@@ -6,15 +6,23 @@
     android:layout_height="match_parent"
     tools:context="mah.bidme.BidFragment">
 
+    <ProgressBar
+        android:id="@+id/item_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:clickable="true"
+        style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+        tools:targetApi="lollipop" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/item_recycler_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="vertical"/>
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"/>
 
     <!-- Floating Action Button - (+) Add -->
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/addButton"
+   <!-- <android.support.design.widget.FloatingActionButton
+        android:id="@+id/addBidButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="16dp"
@@ -25,9 +33,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"/>
 
-    <!-- Floating Action Button - (-) Remove -->
+    &lt;!&ndash; Floating Action Button - (-) Remove &ndash;&gt;
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/subButton"
+        android:id="@+id/removeBidButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="16dp"
@@ -37,11 +45,11 @@
         android:src="@drawable/ic_remove"
         app:backgroundTint="#FF5252"
         android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/addButton"/>
+        android:layout_toRightOf="@+id/addBidButton"/>
 
-    <!-- Floating Action Button - (V) Check -->
+    &lt;!&ndash; Floating Action Button - (V) Check &ndash;&gt;
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/checkButton"
+        android:id="@+id/checkBidButton"
         android:layout_width="60dp"
         android:layout_height="60dp"
         android:layout_margin="16dp"
@@ -50,6 +58,6 @@
         android:src="@drawable/ic_done_white_18dp"
         app:backgroundTint="#FF5252"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentRight="true"/>-->
 
 </RelativeLayout>

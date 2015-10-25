@@ -7,6 +7,7 @@ import android.util.Base64;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Jesper Hansen on 2015-10-14.
@@ -22,7 +23,7 @@ public class Item {
     private String type;
     private boolean sold;
     private String image;
-    private List<HashMap<String, Object>> listBid;
+    private Map<String, Object> bids;
 
     public Item() {}
 
@@ -36,7 +37,7 @@ public class Item {
         this.type = type;
         this.sold = sold;
         this.image = image;
-        listBid = new ArrayList<HashMap<String, Object>>();
+        bids = new HashMap<String, Object>();
     }
 
     public String getTitle() {
@@ -76,7 +77,7 @@ public class Item {
         return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 
-    public List<HashMap<String, Object>> getListBid() {
-        return listBid;
+    public Map<String, Object> getBids() {
+        return bids;
     }
 }

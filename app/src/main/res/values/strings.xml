@@ -45,5 +45,8 @@
     <string name="bidFragmentTitle">Item name</string>
     <string name="bidFragmentPrice">Price</string>
     <string name="bidFragmentYourBid">Your Bid</string>
+    <string name="bidFragmentAddBidButton">Bid +5KR</string>
+    <string name="bidFragmentRemoveBidButton">Remove -5KR</string>
+    <string name="bidFragmentConfirmBidButton">Confirm</string>
 
 </resources>
