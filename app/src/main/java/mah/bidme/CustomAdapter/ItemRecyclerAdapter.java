@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -96,6 +97,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     //Log.i(debug, listItem.get(0).toString());
                     mFirebase.child(item.getId() + "/currentPrice").setValue(yourBid);
                     mFirebase.child(item.getId() +"/bids").updateChildren(bid);
+                    holder.vItemPrice.setText(Integer.toString(yourBid));
+                    //notifyItemChanged(itemList.indexOf(item));
                     Log.i("Math:", "Create bid!");
                     Toast.makeText(mContext, "Your bid was accepted!", Toast.LENGTH_SHORT).show();
                     //add another 5 sec to the countdown.
@@ -112,10 +115,16 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         return itemList.size();
     }
 
+    public void swapList(ArrayList<Item> listItem){
+        listItem.clear();
+        listItem.addAll(listItem);
+        notifyDataSetChanged();
+    }
+
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         protected ImageView vItemPicture;
         protected TextView vItemTitle;
-        protected TextView vItemPrice;
+        protected EditText vItemPrice;
         protected TextView vItemBid;
         protected TextView vItemYourBid;
         protected Button vItemAddBid;
@@ -126,7 +135,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             super(itemView);
             vItemPicture = (ImageView) itemView.findViewById(R.id.item_picture);
             vItemTitle = (TextView) itemView.findViewById(R.id.item_name);
-            vItemPrice = (TextView) itemView.findViewById(R.id.item_price_text);
+            vItemPrice = (EditText) itemView.findViewById(R.id.item_price_text);
             vItemBid = (TextView) itemView.findViewById(R.id.item_bid_title);
             vItemYourBid = (TextView) itemView.findViewById(R.id.item_bid_text);
             vItemAddBid = (Button) itemView.findViewById(R.id.addBidButton);

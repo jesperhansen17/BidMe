@@ -71,7 +71,7 @@
                     android:textColor="@color/colorSecondaryText"/>
 
                 <!-- TextView - Your Price-->
-                <mah.bidme.CustomView.CustomTextView
+              <!--  <mah.bidme.CustomView.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -79,18 +79,21 @@
                     android:paddingRight="8dp"
                     android:textSize="24sp"
                     android:id="@+id/item_bid_title"
-                    android:layout_below="@+id/item_name"
-                    android:textColor="@color/colorSecondaryText"/>
+                    android:layout_below="@+id/item_price_text"
+                    android:layout_alignParentRight="true"
+                    android:textColor="@color/colorSecondaryText"/>-->
+
 
                 <!-- TextBox - Your Price-->
-                <mah.bidme.CustomView.CustomTextView
+                <mah.bidme.CustomView.CustomEditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
                     android:textSize="24sp"
                     android:id="@+id/item_bid_text"
-                    android:layout_alignBaseline="@+id/item_bid_title"
-                    android:layout_toRightOf="@+id/item_bid_title"
+                    android:text="@string/bidFragmentYourBid"
+                    android:layout_below="@+id/item_price_text"
+                    android:layout_alignParentRight="true"
                     android:textColor="@color/colorSecondaryText"/>
 
             </RelativeLayout>

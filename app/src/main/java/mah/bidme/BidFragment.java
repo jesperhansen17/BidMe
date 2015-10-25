@@ -36,11 +36,11 @@ public class BidFragment extends Fragment {
     private int currBid;//Change to value of current bid.
     private int yourBid;//Change to value of current bid.
     private String itemName;*/
-    private List<Item> listItem = new ArrayList<Item>();
+    private List<Item> listItem;
     private Firebase mFirebase;
 
     private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
+    private ItemRecyclerAdapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
 
@@ -54,9 +54,10 @@ public class BidFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Get a reference to the right child in Firebase
-        Utility.loggedInName = "Mario";
+        /*Utility.loggedInName = "Mario";*/
         mFirebase = Utility.myFirebaseRef.child("items");
-        this.initListItem();
+        listItem = new ArrayList<Item>();
+
     }
 
     @Override
@@ -66,8 +67,9 @@ public class BidFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
 
-        /*progressBar = (ProgressBar) v.findViewById(R.id.item_progressbar);
-        progressBar.setIndeterminate(true);*/
+        progressBar = (ProgressBar) v.findViewById(R.id.item_progressbar);
+        progressBar.setVisibility(v.VISIBLE);
+        progressBar.setIndeterminate(true);
 
         // Create the RecyclerView in order to display the Item cardview
         mRecyclerView = (RecyclerView) v.findViewById(R.id.item_recycler_view);
@@ -76,10 +78,9 @@ public class BidFragment extends Fragment {
         mLayoutManager = new LinearLayoutManager(getActivity());
         mRecyclerView.setLayoutManager(mLayoutManager);
 
-
+        this.initListItem();
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
-        //progressBar.setVisibility(View.GONE);
 
        /* final TextView itemName = (TextView) v.findViewById(R.id.item_name);
         final TextView currPrice = (TextView) v.findViewById(R.id.current_price);
@@ -99,29 +100,22 @@ public class BidFragment extends Fragment {
         return v;
     }
 
+    /**
+     * We retrieve the data from Firebase and save into a List<Item> in order to send to the Adapter
+     */
     private void initListItem() {
         mFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-
-                //Log.i(debug, "There are " + dataSnapshot.getChildrenCount() + " item posts");
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Item item = postSnapshot.getValue(Item.class);
-                    //Log.i(debug, item.getTitle() + " - " + postSnapshot.getKey());
                     //progressBar.setVisibility(View.VISIBLE);
-                    if(listItem.size() > 0){
-                        //int positionItem = listItem.indexOf(item);
 
-                        if(listItem.get(0).getId() == postSnapshot.getKey()){
-                            listItem.set(0, item);
-                        } else
-                            listItem.add(item);
-                    } else
-                        listItem.add(item);
-
+                    listItem.add(item);
+                    //mAdapter.swapList((ArrayList<Item>) listItem);
                     mAdapter.notifyDataSetChanged();
                 }
-
+                progressBar.setVisibility(View.GONE);
             }
             @Override
             public void onCancelled(FirebaseError firebaseError) {

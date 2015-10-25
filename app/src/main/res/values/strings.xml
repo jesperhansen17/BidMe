@@ -44,9 +44,9 @@
     <string name="bidFragmentTitleHeader">Title</string>
     <string name="bidFragmentTitle">Item name</string>
     <string name="bidFragmentPrice">Price</string>
-    <string name="bidFragmentYourBid">Your Bid</string>
-    <string name="bidFragmentAddBidButton">Bid +5KR</string>
+    <string name="bidFragmentYourBid">Bid</string>
+    <string name="bidFragmentAddBidButton">Add +5KR</string>
     <string name="bidFragmentRemoveBidButton">Remove -5KR</string>
-    <string name="bidFragmentConfirmBidButton">Confirm</string>
+    <string name="bidFragmentConfirmBidButton">Bid</string>
 
 </resources>

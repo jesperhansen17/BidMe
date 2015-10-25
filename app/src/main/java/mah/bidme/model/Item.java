@@ -24,7 +24,7 @@ public class Item {
     private boolean sold;
     private String image;
     private Map<String, Object> bids;
-    //private int timer;
+    private int timer;
 
     public Item() {}
 
@@ -39,7 +39,7 @@ public class Item {
         this.type = type;
         this.sold = sold;
         this.image = image;
-        //this.timer = 0;
+        this.timer = 0;
         this.bids = new HashMap<String, Object>();
     }
 
@@ -84,5 +84,9 @@ public class Item {
 
     public Map<String, Object> getBids() {
         return bids;
+    }
+
+    public int getTimer(){
+        return timer;
     }
 }
