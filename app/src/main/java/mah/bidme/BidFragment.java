@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,7 +21,9 @@ import com.firebase.client.FirebaseError;
 import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import mah.bidme.CustomAdapter.ItemRecyclerAdapter;
 import mah.bidme.model.Item;
@@ -28,10 +32,10 @@ import mah.bidme.model.Item;
  * A simple {@link Fragment} subclass.
  */
 public class BidFragment extends Fragment {
-    private static String debug = "Debug";
+    /*private static String debug = "Debug";
     private int currBid;//Change to value of current bid.
     private int yourBid;//Change to value of current bid.
-    private String itemName;
+    private String itemName;*/
     private List<Item> listItem = new ArrayList<Item>();
     private Firebase mFirebase;
 
@@ -39,6 +43,9 @@ public class BidFragment extends Fragment {
     private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
+
+    private TextView yourBidTextView;
+    private ProgressBar progressBar;
 
     public BidFragment() {
         // Required empty public constructor
@@ -59,6 +66,9 @@ public class BidFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
 
+        /*progressBar = (ProgressBar) v.findViewById(R.id.item_progressbar);
+        progressBar.setIndeterminate(true);*/
+
         // Create the RecyclerView in order to display the Item cardview
         mRecyclerView = (RecyclerView) v.findViewById(R.id.item_recycler_view);
         mRecyclerView.setHasFixedSize(true);
@@ -69,63 +79,46 @@ public class BidFragment extends Fragment {
 
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
+        //progressBar.setVisibility(View.GONE);
 
        /* final TextView itemName = (TextView) v.findViewById(R.id.item_name);
         final TextView currPrice = (TextView) v.findViewById(R.id.current_price);
 
         final TextView newPrice = (TextView) v.findViewById(R.id.your_price);*/
 
-        FloatingActionButton addButt = (FloatingActionButton) v.findViewById(R.id.addButton);
-        FloatingActionButton subButt = (FloatingActionButton) v.findViewById(R.id.subButton);
-        FloatingActionButton checkButt = (FloatingActionButton) v.findViewById(R.id.checkButton);
+        //yourBidTextView = (TextView) v.findViewById(R.id.item_bid_text);
+       /* Button addBidButton = (Button) v.findViewById(R.id.addBidButton);
+        Button removeBidButton = (Button) v.findViewById(R.id.removeBidButton);
+        Button checkBidButton = (Button) v.findViewById(R.id.checkBidButton);
 
-       /* //Click made to add 5
-        addButt.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                addition();
-                newPrice.setText("" + yourBid + "");
-                Log.i("Math:", "" + yourBid + "");
-            }
-        });
 
-        //Click made to subtract 5
-        subButt.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                subtraction();
-                Log.i("Math:", "" + yourBid + "");
-            }
-        });
-
-        //Click made to place bid
-        checkButt.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                check();
-                Log.i("Math:", "Create bid!");
-            }
-        }); */
+        addBidButton.setOnClickListener(new BidItemListener());
+        removeBidButton.setOnClickListener(new BidItemListener());
+        checkBidButton.setOnClickListener(new BidItemListener());*/
 
         return v;
     }
 
-    private void initListItem(){
+    private void initListItem() {
         mFirebase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //Map<String, Object> item = new HashMap<String, Object>();
 
                 //Log.i(debug, "There are " + dataSnapshot.getChildrenCount() + " item posts");
-                for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     Item item = postSnapshot.getValue(Item.class);
                     //Log.i(debug, item.getTitle() + " - " + postSnapshot.getKey());
-                    listItem.add(item);
+                    //progressBar.setVisibility(View.VISIBLE);
+                    if(listItem.contains(item)){
+                        int positionItem = listItem.indexOf(item);
+                        listItem.set(positionItem, item);
+                    }else
+                        listItem.add(item);
+
                     mAdapter.notifyDataSetChanged();
                 }
 
             }
-
             @Override
             public void onCancelled(FirebaseError firebaseError) {
                 System.out.println("The read failed: " + firebaseError.getMessage());
@@ -133,33 +126,24 @@ public class BidFragment extends Fragment {
         });
     }
 
-    private void addition(){
-        yourBid = yourBid + 5;
-    }
-    private void subtraction(){
-        //Subtract 5
-        //Makes sure you are above current bid.
-        if(currBid +5 <= yourBid) {
-            yourBid = yourBid - 5;
-        }else{
-            Toast.makeText(getContext(), "You cant go lower than current bid!", Toast.LENGTH_SHORT).show();
-        }
-    }
-    /*private void check(){
+    /**
+     * Private class that implements an OnClickListener that handles the two buttons
+     */
+  /*  private class BidItemListener implements View.OnClickListener {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.addBidButton:
+                    addBidItem();
+                    break;
+                case R.id.removeBidButton:
+                    removeBidItem();
+                    break;
+                case R.id.checkBidButton:
+                    checkBidFirebase();
+                    break;
+            }
+        }*/
 
-        //Create bid
-        //Check if the bid is valid.
-        if(currBid < yourBid){
-            //Send bid to database
-            Map<String, Object> bid = new HashMap<String, Object>();
-            bid.put(Constants.loggedInName, yourBid);
-            //Log.i(debug, listItem.get(0).toString());
-            mFirebase.child(listItem.get(0).get("Title").toString() +"/Currentprice").setValue(yourBid);
-            mFirebase.child(listItem.get(0).get("Title").toString() +"/Bids").updateChildren(bid);
-            Toast.makeText(getContext(), "Your bid was accepted!", Toast.LENGTH_SHORT).show();
-            //add another 5 sec to the countdown.
-        } else{
-            Toast.makeText(getContext(), "This bid is lower or equal to current bid!", Toast.LENGTH_SHORT).show();
-        }
-    }*/
-}
+
+    }
