@@ -84,4 +84,6 @@ public class Item {
     public Map<String, Object> getBids() {
         return bids;
     }
+
+    public int getTimer() { return timer; }
 }
