@@ -19,15 +19,10 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState != null) {
                 return;
             }
-           /* LoginFragment loginFragment = new LoginFragment();
+            LoginFragment loginFragment = new LoginFragment();
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.fragment_container, loginFragment)
-                    .commit();*/
-
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.fragment_container, new MainMenuFragment())
                     .commit();
 
         }

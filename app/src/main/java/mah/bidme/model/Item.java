@@ -21,7 +21,6 @@ public class Item {
     private String idSeller;
     private String idBuyer;
     private String type;
-    private int timer;
     private boolean sold;
     private String image;
     private Map<String, Object> bids;
@@ -74,8 +73,6 @@ public class Item {
     public String getType() {
         return type;
     }
-
-    public int getTimer() { return timer; }
 
     public boolean isSold() {
         return sold;

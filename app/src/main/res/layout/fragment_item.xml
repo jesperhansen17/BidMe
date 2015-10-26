@@ -89,7 +89,7 @@
             android:layout_marginTop="40dp"
             android:background="@color/colorPrimary"
             android:text="@string/itemFragmentTakePhotoBtn"
-            android:textColor="@color/colorButtonText"/>
+            android:textColor="@color/colorTextIcons"/>
 
         <android.widget.Space
             android:layout_width="match_parent"
@@ -102,7 +102,7 @@
             android:layout_gravity="center"
             android:background="@color/colorPrimary"
             android:text="@string/itemFragmentShowPhotoBtn"
-            android:textColor="@color/colorButtonText"/>
+            android:textColor="@color/colorTextIcons"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
                 android:text="@string/itemFragmenCancelItemBtn"
-                android:textColor="@color/colorButtonText"/>
+                android:textColor="@color/colorTextIcons"/>
 
             <android.widget.Space
                 android:layout_width="0dp"
@@ -131,7 +131,7 @@
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
                 android:text="@string/itemFragmentAddItemBtn"
-                android:textColor="@color/colorButtonText" />
+                android:textColor="@color/colorTextIcons" />
 
         </LinearLayout>
 
