@@ -112,8 +112,7 @@ public class BidFragment extends Fragment {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
-                listItem.clear();
-                listItem.add(item);
+                listItem.set(0, item);
                 mAdapter.notifyDataSetChanged();
                 //Item item = dataSnapshot.getValue(Item.class);
                 //mAdapter.updatePrice(item.getCurrentPrice());
