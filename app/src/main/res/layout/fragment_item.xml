@@ -88,7 +88,8 @@
             android:layout_gravity="center"
             android:layout_marginTop="40dp"
             android:background="@color/colorPrimary"
-            android:text="@string/itemFragmentTakePhotoBtn" />
+            android:text="@string/itemFragmentTakePhotoBtn"
+            android:textColor="@color/colorTextIcons"/>
 
         <android.widget.Space
             android:layout_width="match_parent"
@@ -100,7 +101,8 @@
             android:layout_height="36dp"
             android:layout_gravity="center"
             android:background="@color/colorPrimary"
-            android:text="@string/itemFragmentShowPhotoBtn" />
+            android:text="@string/itemFragmentShowPhotoBtn"
+            android:textColor="@color/colorTextIcons"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -113,7 +115,8 @@
                 android:layout_weight="2"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
-                android:text="@string/itemFragmenCancelItemBtn" />
+                android:text="@string/itemFragmenCancelItemBtn"
+                android:textColor="@color/colorTextIcons"/>
 
             <android.widget.Space
                 android:layout_width="0dp"
@@ -127,7 +130,8 @@
                 android:layout_weight="2"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
-                android:text="@string/itemFragmentAddItemBtn" />
+                android:text="@string/itemFragmentAddItemBtn"
+                android:textColor="@color/colorTextIcons" />
 
         </LinearLayout>
 

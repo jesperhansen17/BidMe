@@ -21,7 +21,6 @@ public class Item {
     private String idSeller;
     private String idBuyer;
     private String type;
-    private int timer;
     private boolean sold;
     private String image;
     private Map<String, Object> bids;
@@ -40,7 +39,6 @@ public class Item {
         this.timer = timer;
         this.sold = sold;
         this.image = image;
-        this.timer = 0;
         this.bids = new HashMap<String, Object>();
     }
 
@@ -74,15 +72,12 @@ public class Item {
         return type;
     }
 
-    public int getTimer() { return timer; }
-
     public boolean isSold() {
         return sold;
     }
 
-    public Bitmap getImage() {
-        byte[] imageAsByte = Base64.decode(image, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
+    public String getImage() {
+        return image;
     }
 
     public Map<String, Object> getBids() {

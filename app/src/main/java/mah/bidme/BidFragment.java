@@ -49,11 +49,8 @@ public class BidFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Get a reference to the right child in Firebase
-        /*Utility.loggedInName = "Mario";*/
         mFirebase = Utility.myFirebaseRef.child("items");
         listItem = new ArrayList<Item>();
-
     }
 
     @Override
@@ -77,21 +74,6 @@ public class BidFragment extends Fragment {
         this.initListItem();
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
-
-       /* final TextView itemName = (TextView) v.findViewById(R.id.item_name);
-        final TextView currPrice = (TextView) v.findViewById(R.id.current_price);
-
-        final TextView newPrice = (TextView) v.findViewById(R.id.your_price);*/
-
-        //yourBidTextView = (TextView) v.findViewById(R.id.item_bid_text);
-       /* Button addBidButton = (Button) v.findViewById(R.id.addBidButton);
-        Button removeBidButton = (Button) v.findViewById(R.id.removeBidButton);
-        Button checkBidButton = (Button) v.findViewById(R.id.checkBidButton);
-
-
-        addBidButton.setOnClickListener(new BidItemListener());
-        removeBidButton.setOnClickListener(new BidItemListener());
-        checkBidButton.setOnClickListener(new BidItemListener());*/
 
         return v;
     }

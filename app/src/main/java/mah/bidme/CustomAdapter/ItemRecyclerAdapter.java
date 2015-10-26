@@ -48,7 +48,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 from(parent.getContext()).
                 inflate(R.layout.card_view_item_row, parent, false);
 
-        Utility.loggedInName = "Kevin";
+        /*Utility.loggedInName = "Kevin";*/
         mFirebase = Utility.myFirebaseRef.child("items");
         mContext = parent.getContext();
 
@@ -58,7 +58,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         final Item item = itemList.get(position);
-        holder.vItemPicture.setImageBitmap(item.getImage());
+        holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
         holder.vItemTitle.setText(item.getTitle());
         holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
         //holder.vItemBid.setText(item.getListBid());
