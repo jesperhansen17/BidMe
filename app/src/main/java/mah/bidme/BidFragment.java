@@ -75,6 +75,11 @@ public class BidFragment extends Fragment {
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
 
+        if (mAdapter.getItemCount() == 0){
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "No items are on sale", Toast.LENGTH_SHORT).show();
+        }
+
         return v;
     }
 
@@ -142,24 +147,4 @@ public class BidFragment extends Fragment {
         });*/
     }
 
-    /**
-     * Private class that implements an OnClickListener that handles the two buttons
-     */
-  /*  private class BidItemListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.addBidButton:
-                    addBidItem();
-                    break;
-                case R.id.removeBidButton:
-                    removeBidItem();
-                    break;
-                case R.id.checkBidButton:
-                    checkBidFirebase();
-                    break;
-            }
-        }*/
-
-
-    }
+}
