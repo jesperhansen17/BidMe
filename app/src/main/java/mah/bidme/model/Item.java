@@ -22,13 +22,14 @@ public class Item {
     private String idBuyer;
     private String type;
     private boolean sold;
+    private boolean upForSale;
     private String image;
     private Map<String, Object> bids;
     private int timer;
 
     public Item() {}
 
-    public Item(String title, String description, int price, String id, String idSeller, String type, int timer, Boolean sold, String image) {
+    public Item(String title, String description, int price, String id, String idSeller, String type, int timer, Boolean sold, Boolean upForSale, String image) {
         this.title = title;
         this.description = description;
         this.startedPrice = price;
@@ -39,8 +40,8 @@ public class Item {
         this.type = type;
         this.timer = timer;
         this.sold = sold;
+        this.upForSale = upForSale;
         this.image = image;
-        this.timer = 0;
         this.bids = new HashMap<String, Object>();
     }
 
@@ -76,6 +77,10 @@ public class Item {
 
     public boolean isSold() {
         return sold;
+    }
+
+    public boolean getUpForSale() {
+        return upForSale;
     }
 
     public String getImage() {

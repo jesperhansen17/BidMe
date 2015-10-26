@@ -33,8 +33,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     private int currBid;//Change to value of current bid.
     private int yourBid;//Change to value of current bid.
     private int currentPrice;
-    //private String itemName;
-    //private List<Item> listItem = new ArrayList<Item>();
     private Firebase mFirebase;
     private Context mContext;
 
@@ -48,7 +46,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 from(parent.getContext()).
                 inflate(R.layout.card_view_item_row, parent, false);
 
-        /*Utility.loggedInName = "Kevin";*/
         mFirebase = Utility.myFirebaseRef.child("items");
         mContext = parent.getContext();
 
@@ -61,7 +58,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
         holder.vItemTitle.setText(item.getTitle());
         holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
-        //holder.vItemBid.setText(item.getListBid());
 
         currBid = item.getCurrentPrice();
         yourBid = currBid;
@@ -115,12 +111,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     public int getItemCount() {
         return itemList.size();
     }
-
-/*    public void swapList(ArrayList<Item> listItem){
-        listItem.clear();
-        listItem.addAll(listItem);
-        notifyDataSetChanged();
-    }*/
 
     public void updatePrice(int currentPrice) {
         this.currentPrice = currentPrice;

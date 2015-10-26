@@ -101,8 +101,6 @@ public class BidFragment extends Fragment {
                 Item item = dataSnapshot.getValue(Item.class);
                 listItem.set(0, item);
                 mAdapter.notifyDataSetChanged();
-                //Item item = dataSnapshot.getValue(Item.class);
-                //mAdapter.updatePrice(item.getCurrentPrice());
                 Log.i("BidFragment", "Currentprice is updated");
             }
 
@@ -121,30 +119,6 @@ public class BidFragment extends Fragment {
 
             }
         });
-
-
-        /*mFirebase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Item item = postSnapshot.getValue(Item.class);
-                    //progressBar.setVisibility(View.VISIBLE);
-
-                    if (listItem.contains(item)) {
-                        mAdapter.updatePrice(item.getCurrentPrice());
-                        Log.i("BidFragment", "Item exist");
-                    }
-                    listItem.add(item);
-                    //mAdapter.swapList((ArrayList<Item>) listItem);
-                    mAdapter.notifyDataSetChanged();
-                }
-                progressBar.setVisibility(View.GONE);
-            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });*/
     }
 
 }
