@@ -24,6 +24,7 @@ public class Item {
     private boolean sold;
     private String image;
     private Map<String, Object> bids;
+    private int timer;
 
     public Item() {}
 
