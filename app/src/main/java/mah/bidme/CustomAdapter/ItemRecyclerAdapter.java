@@ -98,7 +98,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     //Log.i(debug, listItem.get(0).toString());
                     mFirebase.child(item.getId() + "/currentPrice").setValue(yourBid);
                     mFirebase.child(item.getId() +"/bids").updateChildren(bid);
-                    holder.vItemPrice.setText(Integer.toString(yourBid) + " SEK");
+                    holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
                     //notifyItemChanged(itemList.indexOf(item));
                     Toast.makeText(mContext, "Your bid was accepted!", Toast.LENGTH_SHORT).show();
                     //add another 5 sec to the countdown.
