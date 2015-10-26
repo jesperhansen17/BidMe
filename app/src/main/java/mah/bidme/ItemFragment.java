@@ -289,19 +289,10 @@ public class ItemFragment extends Fragment {
 
             final View view = layoutInflater.inflate(R.layout.image_dialog, null);
             ImageView imageView = (ImageView) view.findViewById(R.id.showPhoto);
-            imageView.setImageBitmap(getPhotoImage());
+            imageView.setImageBitmap(Utility.getPhotoImage(mPhotoStr));
 
             photoDialog.setView(view);
             photoDialog.create().show();
-        }
-
-        /**
-         * Method that reads the image String and converts it back to a thumbnail image
-         * @return Bitmap Taken thumbnail image
-         */
-        private Bitmap getPhotoImage() {
-            byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
-            return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
         }
 
     }

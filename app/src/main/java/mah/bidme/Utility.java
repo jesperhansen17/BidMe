@@ -2,7 +2,10 @@ package mah.bidme;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Vibrator;
+import android.util.Base64;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import com.firebase.client.Firebase;
@@ -35,5 +38,14 @@ public class Utility {
     public static void vibratePhone(Activity activity, int duration) {
         Vibrator vibrator = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(duration);
+    }
+
+    /**
+     * Method that reads the image String and converts it back to a thumbnail image
+     * @return Bitmap Taken thumbnail image
+     */
+    public static Bitmap getPhotoImage(String mPhotoStr) {
+        byte[] imageAsByte = Base64.decode(mPhotoStr, Base64.DEFAULT);
+        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
     }
 }

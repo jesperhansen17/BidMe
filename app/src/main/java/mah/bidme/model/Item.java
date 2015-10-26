@@ -78,9 +78,8 @@ public class Item {
         return sold;
     }
 
-    public Bitmap getImage() {
-        byte[] imageAsByte = Base64.decode(image, Base64.DEFAULT);
-        return BitmapFactory.decodeByteArray(imageAsByte, 0, imageAsByte.length);
+    public String getImage() {
+        return image;
     }
 
     public Map<String, Object> getBids() {
