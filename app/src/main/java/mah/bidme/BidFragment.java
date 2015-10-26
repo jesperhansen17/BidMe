@@ -91,7 +91,10 @@ public class BidFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
-                listItem.add(item);
+
+                if (item.getUpForSale())
+                    listItem.add(item);
+
                 mAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
@@ -99,7 +102,16 @@ public class BidFragment extends Fragment {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
-                listItem.set(0, item);
+
+                if (item.getUpForSale())
+                    if (!listItem.isEmpty()){
+                        listItem.set(0, item);
+                    } else
+                        listItem.add(item);
+                else
+                    listItem.remove(0);
+
+
                 mAdapter.notifyDataSetChanged();
                 Log.i("BidFragment", "Currentprice is updated");
             }
