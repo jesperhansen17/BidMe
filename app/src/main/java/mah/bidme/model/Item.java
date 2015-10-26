@@ -21,6 +21,7 @@ public class Item {
     private String idSeller;
     private String idBuyer;
     private String type;
+    private int timer;
     private boolean sold;
     private String image;
     private Map<String, Object> bids;
@@ -28,7 +29,7 @@ public class Item {
 
     public Item() {}
 
-    public Item(String title, String description, int price, String id, String idSeller, String type, Boolean sold, String image) {
+    public Item(String title, String description, int price, String id, String idSeller, String type, int timer, Boolean sold, String image) {
         this.title = title;
         this.description = description;
         this.startedPrice = price;
@@ -37,6 +38,7 @@ public class Item {
         this.idSeller = idSeller;
         this.idBuyer = "";
         this.type = type;
+        this.timer = timer;
         this.sold = sold;
         this.image = image;
         this.timer = 0;
@@ -72,6 +74,8 @@ public class Item {
     public String getType() {
         return type;
     }
+
+    public int getTimer() { return timer; }
 
     public boolean isSold() {
         return sold;

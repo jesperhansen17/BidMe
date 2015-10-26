@@ -2,6 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="mah.bidme.ItemFragment">
 
     <mah.bidme.CustomView.CustomTextView
@@ -77,6 +81,29 @@
         android:orientation="vertical"
         android:layout_below="@+id/input_spinner">
 
+        <Button
+            android:id="@+id/takePhotoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:background="@color/colorPrimary"
+            android:text="@string/itemFragmentTakePhotoBtn"
+            android:textColor="@color/colorButtonText"/>
+
+        <android.widget.Space
+            android:layout_width="match_parent"
+            android:layout_height="10dp" />
+
+        <Button
+            android:id="@+id/showTakenPhotoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_gravity="center"
+            android:background="@color/colorPrimary"
+            android:text="@string/itemFragmentShowPhotoBtn"
+            android:textColor="@color/colorButtonText"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="fill_parent" >
@@ -84,39 +111,12 @@
             <Button
                 android:id="@+id/cancelBtn"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_height="36dp"
+                android:layout_weight="2"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
-                android:text="@string/itemFragmenCancelItemBtn"/>
-
-            <android.widget.Space
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/showTakenPhotoBtn"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:text="@string/itemFragmentShowPhotoBtn"/>
-
-            <android.widget.Space
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content" />
-
-            <Button
-                android:id="@+id/takePhotoBtn"
-                android:layout_width="0dp"
-                android:layout_weight="3"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:text="@string/itemFragmentTakePhotoBtn"/>
+                android:text="@string/itemFragmenCancelItemBtn"
+                android:textColor="@color/colorButtonText"/>
 
             <android.widget.Space
                 android:layout_width="0dp"
@@ -126,11 +126,12 @@
             <Button
                 android:id="@+id/okBtn"
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="3"
+                android:layout_height="36dp"
+                android:layout_weight="2"
                 android:layout_gravity="center"
                 android:background="@color/colorPrimary"
-                android:text="@string/itemFragmentAddItemBtn"/>
+                android:text="@string/itemFragmentAddItemBtn"
+                android:textColor="@color/colorButtonText" />
 
         </LinearLayout>
 
