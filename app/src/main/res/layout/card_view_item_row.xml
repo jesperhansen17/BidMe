@@ -13,9 +13,9 @@
         android:layout_gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        card_view:cardElevation="20dp"
+        card_view:cardElevation="5dp"
         card_view:cardCornerRadius="2dp"
-        app:cardUseCompatPadding="true"
+        card_view:cardUseCompatPadding="true"
         android:padding="8dp"
         android:background="@color/colorTextIcons">
 
@@ -113,33 +113,33 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
                     android:padding="8dp"
                     android:layout_marginRight="8dp"
                     android:id="@+id/addBidButton"
                     android:text="@string/bidFragmentAddBidButton"
-                    android:textColor="@color/colorAccent"
-                    android:background="@color/colorTextIcons"/>
+                    android:textColor="@color/colorAccent" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
                     android:padding="8dp"
                     android:layout_marginRight="8dp"
                     android:id="@+id/removeBidButton"
                     android:layout_toRightOf="@+id/addBidButton"
                     android:text="@string/bidFragmentRemoveBidButton"
-                    android:textColor="@color/colorAccent"
-                    android:background="@color/colorTextIcons"/>
+                    android:textColor="@color/colorAccent" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    style="?android:attr/borderlessButtonStyle"
                     android:padding="8dp"
                     android:id="@+id/checkBidButton"
                     android:layout_alignParentRight="true"
                     android:text="@string/bidFragmentConfirmBidButton"
-                    android:textColor="@color/colorAccent"
-                    android:background="@color/colorTextIcons"/>
+                    android:textColor="@color/colorAccent" />
 
             </RelativeLayout>
 
