@@ -23,6 +23,9 @@
     <string name="itemFragmentTakePhotoBtn">Take Photo</string>
     <string name="itemFragmentShowPhotoBtn">Show Photo</string>
 
+    <!-- Menu Actions ItemFragment -->
+    <string name="action_settings">Settings</string>
+
     <!-- String Array for the choiceDialog in AddItemFragment -->
     <string-array name="add_item_choice_array">
         <item>Add a new item</item>
