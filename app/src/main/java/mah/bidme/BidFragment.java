@@ -75,6 +75,11 @@ public class BidFragment extends Fragment {
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
 
+        if (mAdapter.getItemCount() == 0){
+            progressBar.setVisibility(View.GONE);
+            Toast.makeText(getContext(), "No items are on sale", Toast.LENGTH_SHORT).show();
+        }
+
         return v;
     }
 
@@ -86,7 +91,10 @@ public class BidFragment extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
-                listItem.add(item);
+
+                if (item.getUpForSale())
+                    listItem.add(item);
+
                 mAdapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
@@ -94,10 +102,17 @@ public class BidFragment extends Fragment {
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
-                listItem.set(0, item);
+
+                if (item.getUpForSale())
+                    if (!listItem.isEmpty()){
+                        listItem.set(0, item);
+                    } else
+                        listItem.add(item);
+                else
+                    listItem.remove(0);
+
+
                 mAdapter.notifyDataSetChanged();
-                //Item item = dataSnapshot.getValue(Item.class);
-                //mAdapter.updatePrice(item.getCurrentPrice());
                 Log.i("BidFragment", "Currentprice is updated");
             }
 
@@ -116,50 +131,6 @@ public class BidFragment extends Fragment {
 
             }
         });
-
-
-        /*mFirebase.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    Item item = postSnapshot.getValue(Item.class);
-                    //progressBar.setVisibility(View.VISIBLE);
-
-                    if (listItem.contains(item)) {
-                        mAdapter.updatePrice(item.getCurrentPrice());
-                        Log.i("BidFragment", "Item exist");
-                    }
-                    listItem.add(item);
-                    //mAdapter.swapList((ArrayList<Item>) listItem);
-                    mAdapter.notifyDataSetChanged();
-                }
-                progressBar.setVisibility(View.GONE);
-            }
-            @Override
-            public void onCancelled(FirebaseError firebaseError) {
-                System.out.println("The read failed: " + firebaseError.getMessage());
-            }
-        });*/
     }
 
-    /**
-     * Private class that implements an OnClickListener that handles the two buttons
-     */
-  /*  private class BidItemListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.addBidButton:
-                    addBidItem();
-                    break;
-                case R.id.removeBidButton:
-                    removeBidItem();
-                    break;
-                case R.id.checkBidButton:
-                    checkBidFirebase();
-                    break;
-            }
-        }*/
-
-
-    }
+}

@@ -46,6 +46,8 @@ public class ItemFragment extends Fragment {
     private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
+    private boolean mSold = false;
+    private boolean mUpForSale = false;
 
     public ItemFragment() {
         // Required empty public constructor
@@ -215,7 +217,7 @@ public class ItemFragment extends Fragment {
                 Firebase firebaseId = mFirebaseAddItem.push();
 
                 // Create an new Item
-                Item item = new Item(title, desc, price, firebaseId.getKey(), Utility.loggedInName, mTypeOfItem, 60, false, mPhotoStr);
+                Item item = new Item(title, desc, price, firebaseId.getKey(), Utility.loggedInName, mTypeOfItem, 60, mSold, mUpForSale,  mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 firebaseId.setValue(item, new Firebase.CompletionListener() {
