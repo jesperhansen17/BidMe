@@ -85,7 +85,7 @@ public class ItemFragment extends Fragment {
         // Retrieve the Buttons from the XML
         mOkBtn = (Button) view.findViewById(R.id.okBtn);
         mCancelBtn = (Button) view.findViewById(R.id.cancelBtn);
-        mPhotoBtn = (Button) view.findViewById(R.id.takePhotoBtn);
+        //mPhotoBtn = (Button) view.findViewById(R.id.takePhotoBtn);
         mShowPhotoBtn = (Button) view.findViewById(R.id.showTakenPhotoBtn);
 
         // Retreive the Spinner
@@ -110,7 +110,7 @@ public class ItemFragment extends Fragment {
         // Add a listener to the buttons
         mOkBtn.setOnClickListener(new AddItemListener());
         mCancelBtn.setOnClickListener(new AddItemListener());
-        mPhotoBtn.setOnClickListener(new AddItemListener());
+        //mPhotoBtn.setOnClickListener(new AddItemListener());
         mShowPhotoBtn.setOnClickListener(new AddItemListener());
 
         return view;
@@ -187,6 +187,9 @@ public class ItemFragment extends Fragment {
                     case R.id.take_image:
                         launchCamera();
                         return true;
+                    case R.id.show_image:
+                        showTakenImage();
+                        return true;
                 }
                 return false;
             }
@@ -211,6 +214,29 @@ public class ItemFragment extends Fragment {
     }
 
     /**
+     * Show the taken image as an thumbnail
+     */
+    private void showTakenImage() {
+        AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
+        photoDialog.setTitle("Taken Photo");
+        photoDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing for now
+            }
+        });
+
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
+        final View view = layoutInflater.inflate(R.layout.image_dialog, null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.showPhoto);
+        imageView.setImageBitmap(Utility.getPhotoImage(mPhotoStr));
+
+        photoDialog.setView(view);
+        photoDialog.create().show();
+    }
+
+    /**
      * Private class that implements an OnClickListener that handles the two buttons
      */
     private class AddItemListener implements View.OnClickListener {
@@ -223,9 +249,9 @@ public class ItemFragment extends Fragment {
                 case R.id.cancelBtn:
                     cancelAddItemFragment();
                     break;
-                case R.id.takePhotoBtn:
+                /*case R.id.takePhotoBtn:
                     launchCamera();
-                    break;
+                    break;*/
                 case R.id.showTakenPhotoBtn:
                     showTakenImage();
                     break;

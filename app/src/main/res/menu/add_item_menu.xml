@@ -15,4 +15,10 @@
         android:icon="@drawable/photo_camera_white"
         app:showAsAction="ifRoom"
         android:title="@string/add_items_camera" />
+
+    <item android:id="@+id/show_image"
+        android:orderInCategory="2"
+        android:icon="@drawable/show_photo_white"
+        app:showAsAction="ifRoom"
+        android:title="@string/add_items_show_image" />
 </menu>

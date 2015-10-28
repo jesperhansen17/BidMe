@@ -94,16 +94,6 @@
             android:orientation="vertical"
             android:layout_below="@+id/input_spinner">
 
-            <Button
-                android:id="@+id/takePhotoBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:layout_marginTop="40dp"
-                android:background="@color/colorPrimary"
-                android:text="@string/itemFragmentTakePhotoBtn"
-                android:textColor="@color/colorTextIcons"/>
-
             <android.widget.Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
