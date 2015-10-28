@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -59,6 +60,8 @@ public class BidFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
+
+        setUpToolbar(v);
 
         progressBar = (ProgressBar) v.findViewById(R.id.item_progressbar);
         progressBar.setVisibility(v.VISIBLE);
@@ -173,5 +176,14 @@ public class BidFragment extends Fragment {
             }
         }*/
 
+    /**
+     * Method for setting up the custom Toolbar for AddItemFragment
+     */
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarBid);
+        //toolbar.inflateMenu(R.menu.add_item_menu);
+        toolbar.setTitle("Bid");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
+    }
 
     }

@@ -176,7 +176,7 @@ public class ItemFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
         toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Add item");
-
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
     }
 
     /**
