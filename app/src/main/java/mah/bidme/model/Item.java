@@ -79,7 +79,7 @@ public class Item {
         return sold;
     }
 
-    public boolean isUpForSale() { return upForSale; }
+    public boolean getUpForSale() { return upForSale; }
 
     public String getImage() {
         return image;
