@@ -13,8 +13,10 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +58,8 @@ public class ItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item, container, false);
+
+        setUpToolbar(view);
 
         // Get a reference to the right child in Firebase
         mFirebaseAddItem = Utility.myFirebaseRef.child("items");
@@ -161,6 +165,16 @@ public class ItemFragment extends Fragment {
         source = Bitmap.createBitmap(source, x, y, factor, factor);
         source = Bitmap.createScaledBitmap(source, scale, scale, false);
         return source;
+    }
+
+    /**
+     * Method for setting up the custom Toolbar for AddItemFragment
+     */
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
+        AppCompatActivity activity = (AppCompatActivity) getActivity();
+        activity.setSupportActionBar(toolbar);
+        activity.getSupportActionBar().setTitle("Add item");
     }
 
     /**
