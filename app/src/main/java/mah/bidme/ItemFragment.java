@@ -1,6 +1,7 @@
 package mah.bidme;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,6 +11,7 @@ import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
@@ -172,9 +174,9 @@ public class ItemFragment extends Fragment {
      */
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
-        AppCompatActivity activity = (AppCompatActivity) getActivity();
-        activity.setSupportActionBar(toolbar);
-        activity.getSupportActionBar().setTitle("Add item");
+        toolbar.inflateMenu(R.menu.add_item_menu);
+        toolbar.setTitle("Add item");
+
     }
 
     /**
@@ -229,7 +231,7 @@ public class ItemFragment extends Fragment {
                 Firebase firebaseId = mFirebaseAddItem.push();
 
                 // Create an new Item
-                Item item = new Item(title, desc, price, firebaseId.getKey(), Utility.loggedInName, mTypeOfItem, 60, false, mPhotoStr);
+                Item item = new Item(title, desc, price, firebaseId.getKey(), Utility.loggedInName, mTypeOfItem, 60, false, false, mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
                 firebaseId.setValue(item, new Firebase.CompletionListener() {
