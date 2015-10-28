@@ -137,25 +137,6 @@ public class BidFragment extends Fragment {
     }
 
     /**
-     * Private class that implements an OnClickListener that handles the two buttons
-     */
-  /*  private class BidItemListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.addBidButton:
-                    addBidItem();
-                    break;
-                case R.id.removeBidButton:
-                    removeBidItem();
-                    break;
-                case R.id.checkBidButton:
-                    checkBidFirebase();
-                    break;
-            }
-        }*/
-
-    /**
      * Method for setting up the custom Toolbar for AddItemFragment
      */
     private void setUpToolbar(View view) {
