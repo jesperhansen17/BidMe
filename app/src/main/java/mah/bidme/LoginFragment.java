@@ -124,7 +124,7 @@ public class LoginFragment extends Fragment {
      */
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarLogin);
-        toolbar.inflateMenu(R.menu.add_item_menu);
+        //toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Login to BidMe");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
     }

@@ -6,7 +6,13 @@
 
     <item
         android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+        android:title="@string/add_items_settings"
         android:orderInCategory="100"
         app:showAsAction="never" />
+
+    <item android:id="@+id/take_image"
+        android:orderInCategory="1"
+        android:icon="@drawable/photo_camera_white"
+        app:showAsAction="ifRoom"
+        android:title="@string/add_items_camera" />
 </menu>

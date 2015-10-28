@@ -21,6 +21,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -46,7 +47,7 @@ import mah.bidme.model.Item;
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
-    private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn;
+    private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn, mTakeImage;
     private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
@@ -176,9 +177,37 @@ public class ItemFragment extends Fragment {
      */
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
-        toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Add item");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
+        toolbar.inflateMenu(R.menu.add_item_menu);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.take_image:
+                        launchCamera();
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Starts the camera application using an Intent
+     */
+    private void launchCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // this part to save captured image on provided path
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "bidme.jpg");
+        Uri photoPath = Uri.fromFile(file);
+
+        // Put the Uri to the Image in the Intent
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoPath);
+
+        // Start the Camera application
+        startActivityForResult(intent, 1);
     }
 
     /**
@@ -276,7 +305,7 @@ public class ItemFragment extends Fragment {
         /**
          * Starts the camera application using an Intent
          */
-        private void launchCamera() {
+        public void launchCamera() {
             Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
             // this part to save captured image on provided path

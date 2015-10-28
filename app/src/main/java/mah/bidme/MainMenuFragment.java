@@ -66,7 +66,7 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
      */
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarMainMenu);
-        toolbar.inflateMenu(R.menu.add_item_menu);
+        //toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Main Menu");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
     }
