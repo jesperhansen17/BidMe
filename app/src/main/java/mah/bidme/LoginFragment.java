@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment {
 
 
     Firebase firebaseReferens;
-    long fireBasePin;
+    long fireBasePin, mEnteredPin;
     String fireBaseUser;
     ArrayList<String> users = new ArrayList<String>();
 
@@ -88,9 +88,14 @@ public class LoginFragment extends Fragment {
                 Utility.id = random.nextInt((n) + 100000);
                 Utility.loggedInName = mUserView.getText().toString();
                 String pinCode = mPinCodeView.getText().toString();
-                long longPinCode = Long.parseLong(pinCode);
+                try {
+                    mEnteredPin = Long.parseLong(pinCode);
 
-                if (TextUtils.isEmpty(pinCode) || longPinCode != fireBasePin) {
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), "Enter pincode!", Toast.LENGTH_SHORT).show();
+                }
+
+                if (TextUtils.isEmpty(pinCode) || mEnteredPin != fireBasePin) {
                     mPinCodeView.setError("Invalid pincode");
                     Log.i(TAG, "Not Logged in");
                 } else {

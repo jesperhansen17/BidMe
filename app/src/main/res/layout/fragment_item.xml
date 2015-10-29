@@ -38,7 +38,7 @@
             <mah.bidme.CustomView.CustomEditText
                 android:id="@+id/input_title"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/itemFragmentTitle"
                 android:singleLine="true"
                 android:textSize="16sp"
@@ -56,7 +56,7 @@
             <mah.bidme.CustomView.CustomEditText
                 android:id="@+id/input_desc"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:hint="@string/itemFragmentDesc"
                 android:textSize="16sp"
                 android:singleLine="true" />
@@ -98,15 +98,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <Button
-                android:id="@+id/showTakenPhotoBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:background="@color/colorPrimary"
-                android:text="@string/itemFragmentShowPhotoBtn"
-                android:textColor="@color/colorTextIcons"/>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="fill_parent" >
@@ -116,7 +107,7 @@
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_weight="2"
-                    android:layout_gravity="center"
+                    android:layout_gravity="bottom"
                     android:background="@color/colorPrimary"
                     android:text="@string/itemFragmenCancelItemBtn"
                     android:textColor="@color/colorTextIcons"/>
@@ -131,7 +122,7 @@
                     android:layout_width="0dp"
                     android:layout_height="36dp"
                     android:layout_weight="2"
-                    android:layout_gravity="center"
+                    android:layout_gravity="bottom"
                     android:background="@color/colorPrimary"
                     android:text="@string/itemFragmentAddItemBtn"
                     android:textColor="@color/colorTextIcons" />
