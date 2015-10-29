@@ -1,5 +1,6 @@
 package mah.bidme;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Vibrator;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -47,7 +49,7 @@ import mah.bidme.model.Item;
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
-    private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn, mTakeImage;
+    private FloatingActionButton mAddBtn;
     private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
@@ -85,8 +87,10 @@ public class ItemFragment extends Fragment {
         mItemPrice.setHintTextColor(Color.GRAY);
 
         // Retrieve the Buttons from the XML
-        mOkBtn = (Button) view.findViewById(R.id.okBtn);
-        mCancelBtn = (Button) view.findViewById(R.id.cancelBtn);
+        mAddBtn = (FloatingActionButton) view.findViewById(R.id.floating_button_add_item);
+
+        // Add listener to FAB
+        mAddBtn.setOnClickListener(new AddItemListener());
 
         // Retreive the Spinner
         mCategorySpinner = (Spinner) view.findViewById(R.id.input_spinner);
@@ -97,18 +101,10 @@ public class ItemFragment extends Fragment {
         // Apply the adapter to the Spinner
         mCategorySpinner.setAdapter(adapter);
 
-        // Check if the running device has a camera
-        if (!hasCamera())
-            mPhotoBtn.setEnabled(false);
-
         mPhotoTaken = false;
 
         // Add an OnItemSelectedListener to the spinner
         mCategorySpinner.setOnItemSelectedListener(new SpinnerSelected());
-
-        // Add a listener to the buttons
-        mOkBtn.setOnClickListener(new AddItemListener());
-        mCancelBtn.setOnClickListener(new AddItemListener());
 
         return view;
     }
@@ -170,6 +166,7 @@ public class ItemFragment extends Fragment {
     /**
      * Method for setting up the custom Toolbar for AddItemFragment
      */
+    @TargetApi(21)
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
 
@@ -177,6 +174,7 @@ public class ItemFragment extends Fragment {
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
         toolbar.inflateMenu(R.menu.add_item_menu);
 
+        toolbar.setElevation(10);
 
         toolbar.setNavigationIcon(R.drawable.arrow_back_white);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -259,11 +257,8 @@ public class ItemFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.okBtn:
+                case R.id.floating_button_add_item:
                     addItemToFirebase();
-                    break;
-                case R.id.cancelBtn:
-                    cancelAddItemFragment();
                     break;
             }
         }
@@ -332,16 +327,8 @@ public class ItemFragment extends Fragment {
             mItemDesc.setText("");
             mItemPrice.setText("");
             mCategorySpinner.setSelection(0);
-            mShowPhotoBtn.setEnabled(false);
+            mItemTitle.requestFocus();
         }
-
-        /**
-         * Go back to main menu
-         */
-        private void cancelAddItemFragment() {
-            getActivity().getSupportFragmentManager().popBackStack();
-        }
-
     }
 
     /**

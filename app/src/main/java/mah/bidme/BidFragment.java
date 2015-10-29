@@ -144,6 +144,13 @@ public class BidFragment extends Fragment {
         //toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Bid");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
-    }
 
+        toolbar.setNavigationIcon(R.drawable.arrow_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
     }
+}

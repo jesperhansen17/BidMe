@@ -88,48 +88,21 @@
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_below="@+id/input_layout_price" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:layout_below="@+id/input_spinner">
+        <!-- Floating Action Button -->
+        <android.support.design.widget.FloatingActionButton
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/floating_button_add_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:elevation="10dp"
+            app:fabSize="normal"
+            android:src="@drawable/add_plus_white"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            app:backgroundTint="@color/colorPrimary"/>
 
-            <android.widget.Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="fill_parent" >
-
-                <Button
-                    android:id="@+id/cancelBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
-                    android:layout_weight="2"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/itemFragmenCancelItemBtn"
-                    android:textColor="@color/colorTextIcons"/>
-
-                <android.widget.Space
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/okBtn"
-                    android:layout_width="0dp"
-                    android:layout_height="36dp"
-                    android:layout_weight="2"
-                    android:layout_gravity="bottom"
-                    android:background="@color/colorPrimary"
-                    android:text="@string/itemFragmentAddItemBtn"
-                    android:textColor="@color/colorTextIcons" />
-
-            </LinearLayout>
-
-        </LinearLayout>
 
     </RelativeLayout>
 
