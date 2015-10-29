@@ -1,26 +1,26 @@
 package mah.bidme;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Base64;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -42,12 +42,13 @@ import mah.bidme.model.Item;
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
-    private Button mOkBtn, mCancelBtn, mPhotoBtn, mShowPhotoBtn;
+    private FloatingActionButton mAddBtn;
     private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
     private boolean mSold = false;
     private boolean mUpForSale = false;
+    private boolean mPhotoTaken;
 
     public ItemFragment() {
         // Required empty public constructor
@@ -58,6 +59,9 @@ public class ItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item, container, false);
+
+        // Sets up the custom Toolbar
+        setUpToolbar(view);
 
         // Get a reference to the right child in Firebase
         mFirebaseAddItem = Utility.myFirebaseRef.child("items");
@@ -76,10 +80,10 @@ public class ItemFragment extends Fragment {
         mItemPrice.setHintTextColor(Color.GRAY);
 
         // Retrieve the Buttons from the XML
-        mOkBtn = (Button) view.findViewById(R.id.okBtn);
-        mCancelBtn = (Button) view.findViewById(R.id.cancelBtn);
-        mPhotoBtn = (Button) view.findViewById(R.id.takePhotoBtn);
-        mShowPhotoBtn = (Button) view.findViewById(R.id.showTakenPhotoBtn);
+        mAddBtn = (FloatingActionButton) view.findViewById(R.id.floating_button_add_item);
+
+        // Add listener to FAB
+        mAddBtn.setOnClickListener(new AddItemListener());
 
         // Retreive the Spinner
         mCategorySpinner = (Spinner) view.findViewById(R.id.input_spinner);
@@ -90,21 +94,10 @@ public class ItemFragment extends Fragment {
         // Apply the adapter to the Spinner
         mCategorySpinner.setAdapter(adapter);
 
-        // Check if the running device has a camera
-        if (!hasCamera())
-            mPhotoBtn.setEnabled(false);
-
-        // Make show photo button not enabled before a photo is taken
-        mShowPhotoBtn.setEnabled(false);
+        mPhotoTaken = false;
 
         // Add an OnItemSelectedListener to the spinner
         mCategorySpinner.setOnItemSelectedListener(new SpinnerSelected());
-
-        // Add a listener to the buttons
-        mOkBtn.setOnClickListener(new AddItemListener());
-        mCancelBtn.setOnClickListener(new AddItemListener());
-        mPhotoBtn.setOnClickListener(new AddItemListener());
-        mShowPhotoBtn.setOnClickListener(new AddItemListener());
 
         return view;
     }
@@ -124,8 +117,6 @@ public class ItemFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            mShowPhotoBtn.setEnabled(true);
-
             // Retreive the bidme image from the SD Card
             File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).getPath(), "bidme.jpg");
             Uri uri = Uri.fromFile(file);
@@ -166,23 +157,98 @@ public class ItemFragment extends Fragment {
     }
 
     /**
+     * Method for setting up the custom Toolbar for AddItemFragment
+     */
+    @TargetApi(21)
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
+
+        toolbar.setTitle("Add item");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
+        toolbar.inflateMenu(R.menu.add_item_menu);
+
+        toolbar.setElevation(10);
+
+        toolbar.setNavigationIcon(R.drawable.arrow_back_white);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getActivity().getSupportFragmentManager().popBackStack();
+            }
+        });
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.take_image:
+                        launchCamera();
+                        return true;
+                    case R.id.show_image:
+                        if (mPhotoTaken) {
+                            showTakenImage();
+                        } else {
+                            Toast.makeText(getContext(), "Take photo first!", Toast.LENGTH_SHORT).show();
+                        }
+                        return true;
+                }
+                return false;
+            }
+        });
+    }
+
+    /**
+     * Starts the camera application using an Intent
+     */
+    private void launchCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // this part to save captured image on provided path
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "bidme.jpg");
+        Uri photoPath = Uri.fromFile(file);
+
+        // Put the Uri to the Image in the Intent
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoPath);
+
+        // Update boolean that keeps track if an photo has been taken
+        mPhotoTaken = true;
+
+        // Start the Camera application
+        startActivityForResult(intent, 1);
+    }
+
+    /**
+     * Show the taken image as an thumbnail
+     */
+    private void showTakenImage() {
+        AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
+        photoDialog.setTitle("Taken Photo");
+        photoDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // Do nothing for now
+            }
+        });
+
+        LayoutInflater layoutInflater = LayoutInflater.from(getContext());
+
+        final View view = layoutInflater.inflate(R.layout.image_dialog, null);
+        ImageView imageView = (ImageView) view.findViewById(R.id.showPhoto);
+        imageView.setImageBitmap(Utility.getPhotoImage(mPhotoStr));
+
+        photoDialog.setView(view);
+        photoDialog.create().show();
+    }
+
+    /**
      * Private class that implements an OnClickListener that handles the two buttons
      */
     private class AddItemListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.okBtn:
+                case R.id.floating_button_add_item:
                     addItemToFirebase();
-                    break;
-                case R.id.cancelBtn:
-                    cancelAddItemFragment();
-                    break;
-                case R.id.takePhotoBtn:
-                    launchCamera();
-                    break;
-                case R.id.showTakenPhotoBtn:
-                    showTakenImage();
                     break;
             }
         }
@@ -205,7 +271,9 @@ public class ItemFragment extends Fragment {
             if (mCategorySpinner.getSelectedItemPosition() == 0) {
                 Toast.makeText(getContext(), "Choose an category", Toast.LENGTH_SHORT).show();
             }
-            if ((!mItemTitle.getText().toString().isEmpty()) && (!mItemDesc.getText().toString().isEmpty()) && (!mItemPrice.getText().toString().isEmpty()) && mCategorySpinner.getSelectedItemPosition() != 0 && mShowPhotoBtn.isEnabled()){
+
+            // Check if all information is added before send the item to Firebase
+            if ((!mItemTitle.getText().toString().isEmpty()) && (!mItemDesc.getText().toString().isEmpty()) && (!mItemPrice.getText().toString().isEmpty()) && mCategorySpinner.getSelectedItemPosition() != 0 && mPhotoTaken){
                 // Convert the input from EditText to a String
                 String title = mItemTitle.getText().toString();
                 String desc = mItemDesc.getText().toString();
@@ -236,6 +304,8 @@ public class ItemFragment extends Fragment {
                 // Method for vibrate the phone 100 milliseconds
                 Utility.vibratePhone(getActivity(), 100);
 
+            } else {
+                Toast.makeText(getContext(), "Please take an image!", Toast.LENGTH_SHORT).show();
             }
         }
 
@@ -247,56 +317,8 @@ public class ItemFragment extends Fragment {
             mItemDesc.setText("");
             mItemPrice.setText("");
             mCategorySpinner.setSelection(0);
-            mShowPhotoBtn.setEnabled(false);
+            mItemTitle.requestFocus();
         }
-
-        /**
-         * Go back to main menu
-         */
-        private void cancelAddItemFragment() {
-            getActivity().getSupportFragmentManager().popBackStack();
-        }
-
-        /**
-         * Starts the camera application using an Intent
-         */
-        private void launchCamera() {
-            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-            // this part to save captured image on provided path
-            File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "bidme.jpg");
-            Uri photoPath = Uri.fromFile(file);
-
-            // Put the Uri to the Image in the Intent
-            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoPath);
-
-            // Start the Camera application
-            startActivityForResult(intent, 1);
-        }
-
-        /**
-         * Show the taken image as an thumbnail
-         */
-        private void showTakenImage() {
-            AlertDialog.Builder photoDialog = new AlertDialog.Builder(getActivity());
-            photoDialog.setTitle("Taken Photo");
-            photoDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    // Do nothing for now
-                }
-            });
-
-            LayoutInflater layoutInflater = LayoutInflater.from(getContext());
-
-            final View view = layoutInflater.inflate(R.layout.image_dialog, null);
-            ImageView imageView = (ImageView) view.findViewById(R.id.showPhoto);
-            imageView.setImageBitmap(Utility.getPhotoImage(mPhotoStr));
-
-            photoDialog.setView(view);
-            photoDialog.create().show();
-        }
-
     }
 
     /**

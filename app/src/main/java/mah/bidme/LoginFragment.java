@@ -1,10 +1,12 @@
 package mah.bidme;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -40,7 +42,7 @@ public class LoginFragment extends Fragment {
 
 
     Firebase firebaseReferens;
-    long fireBasePin;
+    long fireBasePin, mEnteredPin;
     String fireBaseUser;
     ArrayList<String> users = new ArrayList<String>();
 
@@ -55,6 +57,7 @@ public class LoginFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+        setUpToolbar(v);
         firebaseReferens = Utility.myFirebaseRef;
         mLoginFormView = v.findViewById(R.id.login_form);
         mProgressView = v.findViewById(R.id.login_progress);
@@ -86,9 +89,14 @@ public class LoginFragment extends Fragment {
                 Utility.id = random.nextInt((n) + 100000);
                 Utility.loggedInName = mUserView.getText().toString();
                 String pinCode = mPinCodeView.getText().toString();
-                long longPinCode = Long.parseLong(pinCode);
+                try {
+                    mEnteredPin = Long.parseLong(pinCode);
 
-                if (TextUtils.isEmpty(pinCode) || longPinCode != fireBasePin) {
+                } catch (NumberFormatException e) {
+                    Toast.makeText(getContext(), "Enter pincode!", Toast.LENGTH_SHORT).show();
+                }
+
+                if (TextUtils.isEmpty(pinCode) || mEnteredPin != fireBasePin) {
                     mPinCodeView.setError("Invalid pincode");
                     Log.i(TAG, "Not Logged in");
                 } else {
@@ -97,6 +105,7 @@ public class LoginFragment extends Fragment {
                     userInfo.put("username", mUserView.getText().toString());
                     Firebase postRef = firebaseReferens.child("users").push();
                     Utility.loggedInName = postRef.getKey();
+                    userInfo.put("id", Utility.loggedInName);
                     postRef.setValue(userInfo);
 
                     // Create a Toast to tell the user that he/she is logged in
@@ -114,6 +123,18 @@ public class LoginFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    /**
+     * Method for setting up the custom Toolbar for AddItemFragment
+     */
+    @TargetApi(21)
+    private void setUpToolbar(View view) {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarLogin);
+        toolbar.setTitle("Login to BidMe");
+        toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
+
+        toolbar.setElevation(10);
     }
 }
 

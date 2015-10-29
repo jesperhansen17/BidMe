@@ -91,7 +91,5 @@ public class Item {
         return bids;
     }
 
-    public int getTimer(){
-        return timer;
-    }
+    public int getTimer() { return timer; }
 }
