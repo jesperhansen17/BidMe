@@ -1,6 +1,7 @@
 package mah.bidme;
 
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -127,11 +128,13 @@ public class LoginFragment extends Fragment {
     /**
      * Method for setting up the custom Toolbar for AddItemFragment
      */
+    @TargetApi(21)
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarLogin);
-        //toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Login to BidMe");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
+
+        toolbar.setElevation(10);
     }
 }
 

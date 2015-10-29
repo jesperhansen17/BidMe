@@ -191,9 +191,6 @@ public class ItemFragment extends Fragment {
                             Toast.makeText(getContext(), "Take photo first!", Toast.LENGTH_SHORT).show();
                         }
                         return true;
-                    case R.drawable.arrow_back_white:
-                        getActivity().getSupportFragmentManager().popBackStack();
-                        return true;
                 }
                 return false;
             }

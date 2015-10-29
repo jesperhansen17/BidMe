@@ -1,6 +1,7 @@
 package mah.bidme;
 
 
+import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -139,11 +140,14 @@ public class BidFragment extends Fragment {
     /**
      * Method for setting up the custom Toolbar for AddItemFragment
      */
+    @TargetApi(21)
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarBid);
         //toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Bid");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
+
+        toolbar.setElevation(21);
 
         toolbar.setNavigationIcon(R.drawable.arrow_back_white);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {

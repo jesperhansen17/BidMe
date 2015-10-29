@@ -1,6 +1,7 @@
 package mah.bidme;
 
 
+import android.annotation.TargetApi;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -64,10 +65,13 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
     /**
      * Method for setting up the custom Toolbar for AddItemFragment
      */
+    @TargetApi(21)
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarMainMenu);
-        //toolbar.inflateMenu(R.menu.add_item_menu);
+
         toolbar.setTitle("Main Menu");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
+
+        toolbar.setElevation(10);
     }
 }
