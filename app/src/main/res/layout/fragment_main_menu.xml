@@ -41,6 +41,14 @@
             android:layout_below="@id/menuButtonAddItem"
             android:layout_centerHorizontal="true"/>
 
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menuButtonShowItems"
+            android:text="@string/mainMenuFragmentShowItems"
+            android:layout_below="@id/menuButtonBidItem"
+            android:layout_centerHorizontal="true"/>
+
     </RelativeLayout>
 
 </RelativeLayout>

@@ -10,6 +10,7 @@
     <string name="mainMenuFragmentHeader">Menu</string>
     <string name="mainMenuFragmentAddItem">Add item</string>
     <string name="mainMenuFragmentBidItem">Bid</string>
+    <string name="mainMenuFragmentShowItems">Show Items</string>
 
     <!-- Add ItemFragment -->
     <string name="itemFragmentHeader">Add item</string>
@@ -53,5 +54,8 @@
     <string name="bidFragmentAddBidButton">Add +5KR</string>
     <string name="bidFragmentRemoveBidButton">Remove -5KR</string>
     <string name="bidFragmentConfirmBidButton">Bid</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

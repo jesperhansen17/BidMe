@@ -57,6 +57,11 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                         .addToBackStack("")
                         .commit();
                 break;
+            case R.id.menuButtonShowItems:
+                fm.beginTransaction()
+                        .replace(R.id.fragment_container, new ShowItems())
+                        .addToBackStack("")
+                        .commit();
         }
 
     }
