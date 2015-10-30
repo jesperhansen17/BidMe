@@ -29,12 +29,14 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main_menu, container, false);
         setUpToolbar(v);
-        //TextView headerMenu = (TextView) v.findViewById(R.id.menuTitle);
+
         Button addItemButton = (Button) v.findViewById(R.id.menuButtonAddItem);
         Button bidItemButton = (Button) v.findViewById(R.id.menuButtonBidItem);
+        Button showItemBid = (Button) v.findViewById(R.id.menuButtonShowItems);
 
         addItemButton.setOnClickListener(this);
         bidItemButton.setOnClickListener(this);
+        showItemBid.setOnClickListener(this);
 
         return v;
     }
@@ -71,7 +73,6 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
      */
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarMainMenu);
-        //toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Main Menu");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
     }
