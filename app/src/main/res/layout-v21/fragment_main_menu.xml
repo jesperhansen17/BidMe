@@ -1,11 +1,6 @@
-<android.support.v4.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/drawer"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context=".MainActivity">
+    android:layout_height="match_parent">
 
     <android.support.v7.widget.Toolbar
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -15,41 +10,41 @@
         android:minHeight="?attr/actionBarSize"
         android:background="?attr/colorPrimary" />
 
-    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/toolbarMainMenu" tools:context="mah.bidme.MainMenuFragment" android:orientation="vertical">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/menuTitle"
-            android:textSize="50sp"
-            android:text="@string/mainMenuFragmentHeader"
-            android:gravity="center"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/menuButtonAddItem"
+            android:minWidth="88dp"
+            android:height="36dp"
+            android:elevation="8dp"
+            android:color="?android:colorControlHighlight"
+            android:background="@color/colorPrimary"
             android:text="@string/mainMenuFragmentAddItem"
-            android:layout_centerInParent="true" />
+            android:textColor="@color/colorTextIcons"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/menuButtonBidItem"
+            android:minWidth="88dp"
+            android:height="36dp"
+            android:elevation="8dp"
+            android:color="?android:colorControlHighlight"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="16dp"
             android:text="@string/mainMenuFragmentBidItem"
+            android:textColor="@color/colorTextIcons"
             android:layout_below="@id/menuButtonAddItem"
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>
--->
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent" />
-</android.support.v4.widget.DrawerLayout>
+
+</RelativeLayout>
 

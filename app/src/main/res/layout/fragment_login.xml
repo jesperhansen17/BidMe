@@ -1,6 +1,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="mah.bidme.LoginFragment">
+    android:layout_height="match_parent" tools:context="mah.bidme.LoginFragment"
+    android:background="@color/colorPrimaryDark">
     <ProgressBar
         android:id="@+id/login_progress"
         style="?android:attr/progressBarStyleLarge"
@@ -9,17 +10,30 @@
         android:layout_marginBottom="8dp"
         android:visibility="gone" />
 
-    <ScrollView
-        android:id="@+id/login_form"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/app_name"
+            android:text="BidMe"
+            android:textSize="64dp"
+            android:textColor="@color/colorTextIcons"
+            android:gravity="center"
+            android:layout_marginBottom="32dp"/>
 
 
         <LinearLayout
             android:id="@+id/user_login_form"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_margin="32dp"
+            android:layout_below="@+id/app_name">
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -31,13 +45,15 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/username_hint"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextIcons"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:textColor="@color/colorTextIcons">
 
                 <mah.bidme.CustomView.CustomEditText
                     android:id="@+id/pincode"
@@ -49,12 +65,14 @@
                     android:imeOptions="actionUnspecified"
                     android:inputType="numberPassword"
                     android:maxLines="1"
-                    android:singleLine="true" />
+                    android:singleLine="true"
+                    android:textColor="@color/colorTextIcons"/>
 
             </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/sign_in_button"
+                android:textColor="@color/colorTextIcons"
                 style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -64,6 +82,7 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </RelativeLayout>
+
 
 </FrameLayout>

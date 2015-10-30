@@ -1,13 +1,25 @@
 package mah.bidme;
 
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import com.firebase.client.Firebase;
 
+import mah.bidme.model.Item;
+
 public class MainActivity extends AppCompatActivity {
-    private Toolbar mToolbar;
+    //private Toolbar mToolbar;
+    private DrawerLayout mDrawer;
+    private NavigationView mNavigationView;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +28,17 @@ public class MainActivity extends AppCompatActivity {
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
         //setupToolbar();
+
+        //init();
+
+        // Find our drawer view
+        mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        // Find our drawer view
+        mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        // Setup drawer view
+        setupDrawerContent(mNavigationView);
+
 
         if (findViewById(R.id.fragment_container) != null) {
 
@@ -31,7 +54,75 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    /*private void setupToolbar() {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // The action bar home/up action should open or close the drawer.
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                mDrawer.openDrawer(GravityCompat.START);
+                return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    // Make sure this is the method with just `Bundle` as the signature
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+    }
+
+
+    private void setupDrawerContent(NavigationView navigationView) {
+        //mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+
+        //mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+        mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem menuItem) {
+                selectDrawerItem(menuItem);
+                return true;
+            }
+        });
+    }
+
+    public void selectDrawerItem(MenuItem menuItem) {
+        // Create a new fragment and specify the planet to show based on
+        // position
+        Fragment fragment = null;
+
+        Class fragmentClass = null;
+        switch (menuItem.getItemId()) {
+            case R.id.navigation_biditem:
+                fragmentClass = BidFragment.class;
+                break;
+            case R.id.navigation_additem:
+                fragmentClass = ItemFragment.class;
+                break;
+            case R.id.navigation_logout:
+                fragmentClass = LoginFragment.class;
+                break;
+            // TODO - Handle other items
+        }
+
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // Insert the fragment by replacing any existing fragment
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().replace(R.id.fragment_container, fragment).commit();
+
+        // Highlight the selected item, update the title, and close the drawer
+        menuItem.setChecked(true);
+        setTitle(menuItem.getTitle());
+        mDrawer.closeDrawers();
+    }
+
+
+  /*  private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("BidMe");

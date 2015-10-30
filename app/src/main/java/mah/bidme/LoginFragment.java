@@ -57,9 +57,7 @@ public class LoginFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        setUpToolbar(v);
         firebaseReferens = Utility.myFirebaseRef;
-        mLoginFormView = v.findViewById(R.id.login_form);
         mProgressView = v.findViewById(R.id.login_progress);
         mUserView = (EditText) v.findViewById(R.id.username);
         mPinCodeView = (EditText) v.findViewById(R.id.pincode);
@@ -116,7 +114,7 @@ public class LoginFragment extends Fragment {
 
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()
-                            .replace(R.id.fragment_container, new MainMenuFragment())
+                            .replace(R.id.fragment_container, new BidFragment())
                             .addToBackStack("")
                             .commit();
                 }
@@ -128,14 +126,14 @@ public class LoginFragment extends Fragment {
     /**
      * Method for setting up the custom Toolbar for AddItemFragment
      */
-    @TargetApi(21)
+   /* @TargetApi(21)
     private void setUpToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarLogin);
         toolbar.setTitle("Login to BidMe");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
 
         toolbar.setElevation(10);
-    }
+    }*/
 }
 
 

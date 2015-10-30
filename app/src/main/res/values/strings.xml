@@ -6,6 +6,15 @@
     <string name="password_hint">Password</string>
     <string name="error_invalid_pincode">Wrong pincode!</string>
 
+    <!-- Navigation View -->
+    <string name="navigationBidItem">Auction Room</string>
+    <string name="navigationAddItem">Add an item</string>
+    <string name="navigationLogout">Logout</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+
+
     <!-- Main menu Fragment -->
     <string name="mainMenuFragmentHeader">Menu</string>
     <string name="mainMenuFragmentAddItem">Add item</string>
