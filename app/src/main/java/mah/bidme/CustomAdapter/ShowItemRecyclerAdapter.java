@@ -42,7 +42,7 @@ public class ShowItemRecyclerAdapter extends RecyclerView.Adapter<ShowItemRecycl
 
     @Override
     public void onBindViewHolder(ShowItemRecyclerAdapter.ItemViewHolder holder, int position) {
-        Item item = mListItem.get(position);
+        final Item item = mListItem.get(position);
 
         holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
         holder.vItemTitle.setText(item.getTitle());
@@ -52,6 +52,7 @@ public class ShowItemRecyclerAdapter extends RecyclerView.Adapter<ShowItemRecycl
             @Override
             public void onClick(View v) {
                 // Remove an Item here
+                mFirebase.child(item.getId()).removeValue();
             }
         });
     }

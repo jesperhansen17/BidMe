@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
@@ -35,8 +36,6 @@ public class ShowItems extends Fragment {
     private RecyclerView mRecyclerView;
     private ShowItemRecyclerAdapter mShowItemRecyclerAdapter;
     private RecyclerView.LayoutManager mRecyclerLayoutManager;
-    private ProgressBar mProgressBar;
-
 
     public ShowItems() {
         // Required empty public constructor
@@ -62,10 +61,6 @@ public class ShowItems extends Fragment {
         connectToFirebase();
 
         // Connect to all XML items
-        mProgressBar = (ProgressBar) view.findViewById(R.id.show_item_progressbar);
-        mProgressBar.setVisibility(view.VISIBLE);
-        mProgressBar.setIndeterminate(true);
-
         mRecyclerView = (RecyclerView) view.findViewById(R.id.show_item_recycler_view);
 
         // use this setting to improve performance if you know that changes
@@ -88,11 +83,9 @@ public class ShowItems extends Fragment {
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
 
-                Log.i("ShowItems", Utility.loggedInName);
-                Log.i("ShowItems", item.getIdSeller());
+                // Add only the users Items to the List for showing in the GUI
                 if (item.getIdSeller().equals(Utility.loggedInName)) {
                     mListItem.add(item);
-                    Log.i("ShowItems", item.getTitle());
                 }
 
                 mShowItemRecyclerAdapter.notifyDataSetChanged();
@@ -105,7 +98,15 @@ public class ShowItems extends Fragment {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Item item = dataSnapshot.getValue(Item.class);
 
+                for (int i = 0; i < mListItem.size(); i++) {
+                    if (mListItem.get(i).getId().equals(item.getId())) {
+                        mListItem.remove(i);
+                        mShowItemRecyclerAdapter.notifyDataSetChanged();
+                        Log.i("ShowItems", dataSnapshot.child("title").getValue() + " is removed.");
+                    }
+                }
             }
 
             @Override
