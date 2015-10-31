@@ -10,6 +10,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -32,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
-        setupToolbar();
 
         //init();
 
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private ActionBarDrawerToggle setupDrawerToggle() {
-        return new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.drawer_open,  R.string.drawer_close);
+        return new ActionBarDrawerToggle(this, mDrawer, R.string.drawer_open,  R.string.drawer_close);
     }
 
     @Override
@@ -143,12 +143,5 @@ public class MainActivity extends AppCompatActivity {
         menuItem.setChecked(true);
         setTitle(menuItem.getTitle());
         mDrawer.closeDrawers();
-    }
-
-
-    private void setupToolbar() {
-        mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(mToolbar);
-        getSupportActionBar().setTitle("BidMe");
     }
 }
