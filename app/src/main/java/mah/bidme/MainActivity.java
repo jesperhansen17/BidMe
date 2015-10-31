@@ -1,23 +1,28 @@
 package mah.bidme;
 
+import android.content.res.Configuration;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.firebase.client.Firebase;
 
 import mah.bidme.model.Item;
 
 public class MainActivity extends AppCompatActivity {
-    //private Toolbar mToolbar;
+    private Toolbar mToolbar;
     private DrawerLayout mDrawer;
     private NavigationView mNavigationView;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private String mActivityTitle;
 
 
 
@@ -27,12 +32,14 @@ public class MainActivity extends AppCompatActivity {
 
         Firebase.setAndroidContext(this);
         setContentView(R.layout.activity_main);
-        //setupToolbar();
+        setupToolbar();
 
         //init();
 
         // Find our drawer view
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mActivityTitle = getTitle().toString();
+        mDrawerToggle = setupDrawerToggle();
 
         // Find our drawer view
         mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
@@ -54,13 +61,20 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private ActionBarDrawerToggle setupDrawerToggle() {
+        return new ActionBarDrawerToggle(this, mDrawer, mToolbar, R.string.drawer_open,  R.string.drawer_close);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // The action bar home/up action should open or close the drawer.
-        switch (item.getItemId()) {
+        /*switch (item.getItemId()) {
             case android.R.id.home:
                 mDrawer.openDrawer(GravityCompat.START);
                 return true;
+        }*/
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -70,8 +84,18 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+
     }
 
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        // Pass any configuration change to the drawer toggles
+        mDrawerToggle.onConfigurationChanged(newConfig);
+
+    }
 
     private void setupDrawerContent(NavigationView navigationView) {
         //mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -122,9 +146,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-  /*  private void setupToolbar() {
+    private void setupToolbar() {
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("BidMe");
-    }*/
+    }
 }
