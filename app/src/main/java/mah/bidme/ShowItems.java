@@ -7,12 +7,16 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,6 +58,9 @@ public class ShowItems extends Fragment {
         // Sets up the Toolbar
         setupToolbar(view);
 
+        // Download Items from Firebase to an ArrayList
+        connectToFirebase();
+
         // Connect to all XML items
         mProgressBar = (ProgressBar) view.findViewById(R.id.show_item_progressbar);
         mProgressBar.setVisibility(view.VISIBLE);
@@ -71,7 +78,46 @@ public class ShowItems extends Fragment {
 
         // Specify an adapter
         mShowItemRecyclerAdapter = new ShowItemRecyclerAdapter(mListItem);
+        mRecyclerView.setAdapter(mShowItemRecyclerAdapter);
         return view;
+    }
+
+    private void connectToFirebase() {
+        mFirebase.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Item item = dataSnapshot.getValue(Item.class);
+
+                Log.i("ShowItems", Utility.loggedInName);
+                Log.i("ShowItems", item.getIdSeller());
+                if (item.getIdSeller().equals(Utility.loggedInName)) {
+                    mListItem.add(item);
+                    Log.i("ShowItems", item.getTitle());
+                }
+
+                mShowItemRecyclerAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+
+            }
+        });
     }
 
     private void setupToolbar(View view) {
