@@ -13,7 +13,7 @@
     <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbarMainMenu" tools:context="mah.bidme.MainMenuFragment" android:orientation="vertical">
+        android:layout_below="@id/toolbarMainMenu" tools:context="mah.bidme.MainMenuFragment">
 
         <TextView
             android:layout_width="match_parent"
@@ -39,6 +39,14 @@
             android:id="@+id/menuButtonBidItem"
             android:text="@string/mainMenuFragmentBidItem"
             android:layout_below="@id/menuButtonAddItem"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menuButtonShowItems"
+            android:text="@string/mainMenuFragmentShowItems"
+            android:layout_below="@id/menuButtonBidItem"
             android:layout_centerHorizontal="true"/>
 
     </RelativeLayout>

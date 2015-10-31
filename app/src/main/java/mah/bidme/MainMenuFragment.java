@@ -30,12 +30,14 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main_menu, container, false);
         setUpToolbar(v);
-        //TextView headerMenu = (TextView) v.findViewById(R.id.menuTitle);
+
         Button addItemButton = (Button) v.findViewById(R.id.menuButtonAddItem);
         Button bidItemButton = (Button) v.findViewById(R.id.menuButtonBidItem);
+        Button showItemBid = (Button) v.findViewById(R.id.menuButtonShowItems);
 
         addItemButton.setOnClickListener(this);
         bidItemButton.setOnClickListener(this);
+        showItemBid.setOnClickListener(this);
 
         return v;
     }
@@ -58,6 +60,11 @@ public class MainMenuFragment extends Fragment implements View.OnClickListener {
                         .addToBackStack("")
                         .commit();
                 break;
+            case R.id.menuButtonShowItems:
+                fm.beginTransaction()
+                        .replace(R.id.fragment_container, new ShowItems())
+                        .addToBackStack("")
+                        .commit();
         }
 
     }
