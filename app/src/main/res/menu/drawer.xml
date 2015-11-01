@@ -11,9 +11,14 @@
         android:icon="@drawable/ic_note_add"
         android:title="@string/navigationAddItem" />
     <item
+        android:id="@+id/navigation_show_item"
+        android:icon="@drawable/ic_list"
+        android:title="@string/navigationShowItem" />
+    <item
         android:id="@+id/navigation_logout"
         android:icon="@drawable/ic_reply"
         android:title="@string/navigationLogout" />
+
     
     </group>
 </menu>

@@ -9,6 +9,7 @@
     <!-- Navigation View -->
     <string name="navigationBidItem">Auction Room</string>
     <string name="navigationAddItem">Add an item</string>
+    <string name="navigationShowItem">Show items</string>
     <string name="navigationLogout">Logout</string>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
