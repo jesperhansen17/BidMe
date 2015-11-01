@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -38,15 +39,10 @@ public class LoginFragment extends Fragment {
     // UI references.
     private EditText mUserView;
     private EditText mPinCodeView;
-    private View mProgressView;
-    private View mLoginFormView;
-
+    private ImageView mAppName;
 
     Firebase firebaseReferens;
     long fireBasePin, mEnteredPin;
-    String fireBaseUser;
-    ArrayList<String> users = new ArrayList<String>();
-
 
     public LoginFragment() {
         // Required empty public constructor
@@ -66,9 +62,11 @@ public class LoginFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         firebaseReferens = Utility.myFirebaseRef;
-        mProgressView = v.findViewById(R.id.login_progress);
         mUserView = (EditText) v.findViewById(R.id.username);
         mPinCodeView = (EditText) v.findViewById(R.id.pincode);
+        mAppName = (ImageView) v.findViewById(R.id.app_name);
+
+        mAppName.setImageResource(R.mipmap.bidme);
 
 
         firebaseReferens.addValueEventListener(new ValueEventListener() {
@@ -123,7 +121,6 @@ public class LoginFragment extends Fragment {
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()
                             .replace(R.id.fragment_container, new BidFragment())
-                            .addToBackStack("")
                             .commit();
                 }
             }
