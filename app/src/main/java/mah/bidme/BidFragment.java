@@ -3,13 +3,17 @@ package mah.bidme;
 
 import android.annotation.TargetApi;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -21,7 +25,6 @@ import com.firebase.client.ChildEventListener;
 import com.firebase.client.DataSnapshot;
 import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
-import com.firebase.client.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +47,9 @@ public class BidFragment extends Fragment {
     private static String LOG_TAG = "CardViewActivity";
 
     private ProgressBar progressBar;
+    private Toolbar toolbar;
+    private NavigationView navigationView;
+    private DrawerLayout drawerLayout;
 
     public BidFragment() {
         // Required empty public constructor
@@ -53,6 +59,8 @@ public class BidFragment extends Fragment {
         super.onCreate(savedInstanceState);
         mFirebase = Utility.myFirebaseRef.child("items");
         listItem = new ArrayList<Item>();
+
+
     }
 
     @Override
@@ -142,18 +150,19 @@ public class BidFragment extends Fragment {
      */
     @TargetApi(21)
     private void setUpToolbar(View view) {
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarBid);
+        toolbar= (Toolbar) view.findViewById(R.id.toolbarBid);
         //toolbar.inflateMenu(R.menu.add_item_menu);
         toolbar.setTitle("Bid");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
 
         toolbar.setElevation(21);
 
-        toolbar.setNavigationIcon(R.drawable.arrow_back_white);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
+                DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+                drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
     }

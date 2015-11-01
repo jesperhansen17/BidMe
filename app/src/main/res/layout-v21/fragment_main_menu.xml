@@ -1,0 +1,50 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbarMainMenu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbarMainMenu" tools:context="mah.bidme.MainMenuFragment" android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menuButtonAddItem"
+            android:minWidth="88dp"
+            android:height="36dp"
+            android:elevation="8dp"
+            android:color="?android:colorControlHighlight"
+            android:background="@color/colorPrimary"
+            android:text="@string/mainMenuFragmentAddItem"
+            android:textColor="@color/colorTextIcons"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/menuButtonBidItem"
+            android:minWidth="88dp"
+            android:height="36dp"
+            android:elevation="8dp"
+            android:color="?android:colorControlHighlight"
+            android:background="@color/colorPrimary"
+            android:layout_marginTop="16dp"
+            android:text="@string/mainMenuFragmentBidItem"
+            android:textColor="@color/colorTextIcons"
+            android:layout_below="@id/menuButtonAddItem"
+            android:layout_centerHorizontal="true"/>
+
+    </RelativeLayout>
+
+</RelativeLayout>
+
