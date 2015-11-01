@@ -123,6 +123,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.navigation_additem:
                 fragmentClass = ItemFragment.class;
                 break;
+            case R.id.navigation_show_item:
+                fragmentClass = ShowItems.class;
+                break;
             case R.id.navigation_logout:
                 fragmentClass = LoginFragment.class;
                 break;
