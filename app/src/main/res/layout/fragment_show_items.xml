@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="mah.bidme.ShowItems">
+
+    <android.support.v7.widget.Toolbar
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/toolbarShowItems"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/toolbarShowItems">
+
+        <ProgressBar
+            android:id="@+id/show_item_progressbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            style="@android:style/Widget.Material.Light.ProgressBar.Horizontal"
+            tools:targetApi="lollipop"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/show_item_recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"/>
+
+        </RelativeLayout>
+
+</RelativeLayout>
