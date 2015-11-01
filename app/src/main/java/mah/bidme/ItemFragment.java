@@ -162,8 +162,11 @@ public class ItemFragment extends Fragment {
      * Method for setting up the custom Toolbar for AddItemFragment
      */
     @TargetApi(21)
-    private void setUpToolbar(View view) {
+    private void setUpToolbar(final View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
+
+        final DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
         toolbar.setTitle("Add item");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
@@ -176,7 +179,6 @@ public class ItemFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 // Open the Navigation drawer from the left
-                DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });

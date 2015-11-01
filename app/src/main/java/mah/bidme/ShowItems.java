@@ -132,6 +132,9 @@ public class ShowItems extends Fragment {
     private void setupToolbar(View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarShowItems);
 
+        final DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
         toolbar.setTitle("Show added items");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
 
@@ -142,7 +145,6 @@ public class ShowItems extends Fragment {
             @Override
             public void onClick(View v) {
                 // Open the Navigation drawer from the left
-                DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });

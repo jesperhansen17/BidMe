@@ -151,7 +151,10 @@ public class BidFragment extends Fragment {
     @TargetApi(21)
     private void setUpToolbar(View view) {
         toolbar= (Toolbar) view.findViewById(R.id.toolbarBid);
-        //toolbar.inflateMenu(R.menu.add_item_menu);
+
+        final DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+
         toolbar.setTitle("Bid");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
 
@@ -161,7 +164,6 @@ public class BidFragment extends Fragment {
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
