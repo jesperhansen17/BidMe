@@ -216,11 +216,11 @@ public class ItemFragment extends Fragment {
         // Put the Uri to the Image in the Intent
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoPath);
 
-        // Update boolean that keeps track if an photo has been taken
-        mPhotoTaken = true;
-
         // Start the Camera application
         startActivityForResult(intent, 1);
+
+        // Update boolean that keeps track if an photo has been taken
+        mPhotoTaken = true;
     }
 
     /**
@@ -294,16 +294,7 @@ public class ItemFragment extends Fragment {
                 Item item = new Item(title, desc, price, firebaseId.getKey(), Utility.loggedInName, mTypeOfItem, 60, mSold, mUpForSale,  mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
-                firebaseId.setValue(item, new Firebase.CompletionListener() {
-                    @Override
-                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                        if (firebaseError != null) {
-                            Toast.makeText(getContext(), "Item not added to auction, please try again", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Item added to auction", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                firebaseId.setValue(item);
 
                 clearAllFields();
 
