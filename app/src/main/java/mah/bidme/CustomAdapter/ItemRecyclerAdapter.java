@@ -117,7 +117,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                     //Set cancelable on touch outside (default true)
                     //.dismissOnTouchOutside(false)
                     .setupPositiveButton("Accept", new Button.OnClickListener() {
-
                         @Override
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
@@ -125,15 +124,12 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                         }
 
                     });
-
                    /* .setupNegativeButton("Decline", new Button.OnClickListener() {
-
                         @Override
                         public void onClick(View v) {
                             // TODO Auto-generated method stub
                             dialog.dismiss();
                         }
-
                     });*/
             dialog.show();
         }
