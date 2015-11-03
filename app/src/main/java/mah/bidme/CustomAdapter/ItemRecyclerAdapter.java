@@ -7,14 +7,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,9 +28,9 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
     private List<Item> itemList;
     private static String debug = "Debug";
-    private int currBid;//Change to value of current bid.
-    private int yourBid;//Change to value of current bid.
-    private int currentPrice;
+    private int currentPrice;//Change to value of current bid.
+    private int yourBid;
+    //private int currentPrice;
     private Firebase mFirebase;
     private Context mContext;
 
@@ -58,9 +56,10 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
         holder.vItemTitle.setText(item.getTitle());
         holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
+        holder.vItemYourBid.setText("Bid");
 
-        currBid = item.getCurrentPrice();
-        yourBid = currBid;
+        currentPrice = item.getCurrentPrice();
+        yourBid = currentPrice;
 
         holder.vItemAddBid.setOnClickListener(new View.OnClickListener()      {
             @Override
@@ -74,7 +73,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.vItemRemoveBid.setOnClickListener(new View.OnClickListener()      {
             @Override
             public void onClick(View v) {
-                if (currBid + 5 <= yourBid) {
+                if (currentPrice + 5 <= yourBid) {
                     yourBid = yourBid - 5;
                     holder.vItemYourBid.setText(Integer.toString(yourBid));
                     Log.i("Math:", "" + yourBid + "");
@@ -87,13 +86,14 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.vItemConfirmBid.setOnClickListener(new View.OnClickListener()      {
             @Override
             public void onClick(View v) {
-                if (currBid < yourBid) {
+                if (currentPrice < yourBid) {
                     //Send bid to database
                     Map<String, Object> bid = new HashMap<String, Object>();
                     bid.put(Utility.loggedInName, yourBid);
 
                     mFirebase.child(item.getId() + "/currentPrice").setValue(yourBid);
                     mFirebase.child(item.getId() +"/bids").updateChildren(bid);
+
                     holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
 
                     yourBid = item.getCurrentPrice();
