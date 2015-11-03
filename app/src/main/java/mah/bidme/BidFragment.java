@@ -87,11 +87,6 @@ public class BidFragment extends Fragment {
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
 
-        if (mAdapter.getItemCount() == 0){
-            progressBar.setVisibility(View.GONE);
-            Toast.makeText(getContext(), "No items are on sale", Toast.LENGTH_SHORT).show();
-        }
-
         return v;
     }
 
@@ -122,7 +117,7 @@ public class BidFragment extends Fragment {
                         listItem.add(item);
 
 
-
+                Utility.vibratePhone(getActivity(), 100);
                 mAdapter.notifyDataSetChanged();
                 Log.i("BidFragment", "Currentprice is updated");
             }

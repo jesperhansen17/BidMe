@@ -1,6 +1,8 @@
 package mah.bidme.CustomAdapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,17 +29,26 @@ import mah.bidme.model.Item;
 public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapter.ItemViewHolder> {
 
     private List<Item> itemList;
-    private static String debug = "Debug";
-    private int currentPrice;//Change to value of current bid.
+    private int currentPrice;
     private int yourBid;
-    //private int currentPrice;
     private Firebase mFirebase;
     private Context mContext;
+    private AlertDialog.Builder mBuilder;
 
+    /**
+     * Class constructor
+     * @param itemList
+     */
     public ItemRecyclerAdapter(List<Item> itemList) {
         this.itemList = itemList;
     }
 
+    /**
+     * Inflate the view with the layout xml and connect the fragment with firebase database
+     * @param parent
+     * @param viewType
+     * @return
+     */
     @Override
     public ItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.
@@ -50,6 +61,11 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         return new ItemViewHolder(itemView);
     }
 
+    /**
+     * For each item available in the list, we set the picture, title, price and bid
+     * @param holder
+     * @param position
+     */
     @Override
     public void onBindViewHolder(final ItemViewHolder holder, int position) {
         final Item item = itemList.get(position);
@@ -57,6 +73,11 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.vItemTitle.setText(item.getTitle());
         holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
         holder.vItemYourBid.setText("Bid");
+        mBuilder = new AlertDialog.Builder(mContext);
+
+        if(getItemCount() == 0){
+            Toast.makeText(mContext, "No items on sale!", Toast.LENGTH_SHORT).show();
+        }
 
         currentPrice = item.getCurrentPrice();
         yourBid = currentPrice;
@@ -87,34 +108,55 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             @Override
             public void onClick(View v) {
                 if (currentPrice < yourBid) {
-                    //Send bid to database
                     Map<String, Object> bid = new HashMap<String, Object>();
                     bid.put(Utility.loggedInName, yourBid);
-
                     mFirebase.child(item.getId() + "/currentPrice").setValue(yourBid);
                     mFirebase.child(item.getId() +"/bids").updateChildren(bid);
-
                     holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
-
                     yourBid = item.getCurrentPrice();
                     Toast.makeText(mContext, "Your bid was accepted!", Toast.LENGTH_SHORT).show();
-                    //add another 5 sec to the countdown.
                 } else {
                     Toast.makeText(mContext, "This bid is lower or equal to current bid!", Toast.LENGTH_SHORT).show();
                 }
             }
         });
 
+
+        if(item.isSold()){
+            if (item.getIdBuyer() == Utility.loggedInName){
+                mBuilder.setTitle("Congratulations!").setMessage("You won the auction for the item : \n\n"
+                        + "Title: " + item.getTitle()
+                        + "\nFinal price: " + item.getCurrentPrice());
+            } else{
+                mBuilder.setTitle("Oops...").setMessage("You missed the item : \n\n"
+                        + "Title: " + item.getTitle()
+                        + "\nFinal price: " + item.getCurrentPrice());
+            }
+
+            mBuilder.setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
+            AlertDialog alert = mBuilder.create();
+            alert.show();
+        }
+
     }
 
+    /**
+     * Get the number of the item list
+     * @return int size
+     */
     @Override
     public int getItemCount() {
         return itemList.size();
     }
 
-    public void updatePrice(int currentPrice) {
+   /* public void updatePrice(int currentPrice) {
         this.currentPrice = currentPrice;
-    }
+    }*/
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
         protected ImageView vItemPicture;
