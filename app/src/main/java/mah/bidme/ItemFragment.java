@@ -13,9 +13,11 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
 import android.util.Base64;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -71,13 +73,10 @@ public class ItemFragment extends Fragment {
 
         // Retreive the EditText from the XML and set the text color of the Hint to GRAY
         mItemTitle = (EditText) view.findViewById(R.id.input_title);
-        mItemTitle.setHintTextColor(Color.GRAY);
 
         mItemDesc = (EditText) view.findViewById(R.id.input_desc);
-        mItemDesc.setHintTextColor(Color.GRAY);
 
         mItemPrice = (EditText) view.findViewById(R.id.input_price);
-        mItemPrice.setHintTextColor(Color.GRAY);
 
         // Retrieve the Buttons from the XML
         mAddBtn = (FloatingActionButton) view.findViewById(R.id.floating_button_add_item);
@@ -160,8 +159,11 @@ public class ItemFragment extends Fragment {
      * Method for setting up the custom Toolbar for AddItemFragment
      */
     @TargetApi(21)
-    private void setUpToolbar(View view) {
+    private void setUpToolbar(final View view) {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
+
+        final DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
         toolbar.setTitle("Add item");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
@@ -169,11 +171,12 @@ public class ItemFragment extends Fragment {
 
         toolbar.setElevation(10);
 
-        toolbar.setNavigationIcon(R.drawable.arrow_back_white);
+        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity().getSupportFragmentManager().popBackStack();
+                // Open the Navigation drawer from the left
+                drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
 
@@ -210,11 +213,11 @@ public class ItemFragment extends Fragment {
         // Put the Uri to the Image in the Intent
         intent.putExtra(MediaStore.EXTRA_OUTPUT, photoPath);
 
-        // Update boolean that keeps track if an photo has been taken
-        mPhotoTaken = true;
-
         // Start the Camera application
         startActivityForResult(intent, 1);
+
+        // Update boolean that keeps track if an photo has been taken
+        mPhotoTaken = true;
     }
 
     /**
@@ -288,16 +291,7 @@ public class ItemFragment extends Fragment {
                 Item item = new Item(title, desc, price, firebaseId.getKey(), Utility.loggedInName, mTypeOfItem, 60, mSold, mUpForSale,  mPhotoStr);
 
                 // Set the HashMap to the Firebase, make a Toast to show the user if the item been added to Firebase or not
-                firebaseId.setValue(item, new Firebase.CompletionListener() {
-                    @Override
-                    public void onComplete(FirebaseError firebaseError, Firebase firebase) {
-                        if (firebaseError != null) {
-                            Toast.makeText(getContext(), "Item not added to auction, please try again", Toast.LENGTH_SHORT).show();
-                        } else {
-                            Toast.makeText(getContext(), "Item added to auction", Toast.LENGTH_SHORT).show();
-                        }
-                    }
-                });
+                firebaseId.setValue(item);
 
                 clearAllFields();
 
