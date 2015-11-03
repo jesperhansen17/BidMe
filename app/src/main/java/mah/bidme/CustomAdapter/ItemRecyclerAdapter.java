@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mah.bidme.CustomDialog.MaterialDialog;
 import mah.bidme.R;
 import mah.bidme.Utility;
 import mah.bidme.model.Item;
@@ -28,9 +29,8 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
 
     private List<Item> itemList;
     private static String debug = "Debug";
-    private int currentPrice;//Change to value of current bid.
+    private int currentPrice;
     private int yourBid;
-    //private int currentPrice;
     private Firebase mFirebase;
     private Context mContext;
 
@@ -104,6 +104,39 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
                 }
             }
         });
+
+        if(item.getTimer() == 1 ){
+            final MaterialDialog dialog = new MaterialDialog(mContext);
+            dialog.setTitle("Winner")
+                    //Use this if you want to set a text message
+                    .setMessage("Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test Test")
+
+                    //Use this for a custom layout resource
+                    .setCustomViewResource(R.layout.dialog_layout_base)
+
+                    //Set cancelable on touch outside (default true)
+                    //.dismissOnTouchOutside(false)
+                    .setupPositiveButton("Accept", new Button.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Auto-generated method stub
+                            dialog.dismiss();
+                        }
+
+                    });
+
+                   /* .setupNegativeButton("Decline", new Button.OnClickListener() {
+
+                        @Override
+                        public void onClick(View v) {
+                            // TODO Auto-generated method stub
+                            dialog.dismiss();
+                        }
+
+                    });*/
+            dialog.show();
+        }
 
     }
 
