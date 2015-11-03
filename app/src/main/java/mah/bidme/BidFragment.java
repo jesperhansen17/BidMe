@@ -120,8 +120,7 @@ public class BidFragment extends Fragment {
                         listItem.set(0, item);
                     } else
                         listItem.add(item);
-                else
-                    listItem.remove(0);
+
 
 
                 mAdapter.notifyDataSetChanged();
