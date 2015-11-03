@@ -47,7 +47,7 @@ public class ShowItemRecyclerAdapter extends RecyclerView.Adapter<ShowItemRecycl
 
         holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
         holder.vItemTitle.setText(item.getTitle());
-        holder.vItemPrice.setText(item.getDescription());
+        holder.vItemDesc.setText(item.getDescription());
 
         holder.vRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,14 +65,14 @@ public class ShowItemRecyclerAdapter extends RecyclerView.Adapter<ShowItemRecycl
 
     static class ItemViewHolder extends RecyclerView.ViewHolder {
         ImageView vItemPicture;
-        TextView vItemPrice;
+        TextView vItemDesc;
         TextView vItemTitle;
         Button vRemoveBtn;
 
         public ItemViewHolder(View itemView) {
             super(itemView);
             vItemPicture = (ImageView) itemView.findViewById(R.id.show_item_picture);
-            vItemPrice = (TextView) itemView.findViewById(R.id.show_user_item_price);
+            vItemDesc = (TextView) itemView.findViewById(R.id.show_user_item_price);
             vItemTitle = (TextView) itemView.findViewById(R.id.show_user_item_name);
             vRemoveBtn = (Button) itemView.findViewById(R.id.show_user_item_remove);
         }

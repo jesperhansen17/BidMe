@@ -25,10 +25,11 @@
                 android:id="@+id/show_item_picture"
                 android:contentDescription="Item image" />
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingTop="24dp"
+                android:orientation="vertical"
+                android:paddingTop="16dp"
                 android:paddingBottom="16dp"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp">
@@ -39,36 +40,33 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/show_user_item_name"
                     android:text="Item Name"
-                    android:textSize="30sp"
+                    android:textSize="24sp"
                     android:textColor="@color/colorPrimaryText"/>
+
+                <android.widget.Space
+                    android:layout_width="wrap_content"
+                    android:layout_height="8dp" />
 
                 <!-- TextView - Current Price -->
                 <mah.bidme.CustomView.CustomTextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/show_user_item_price"
-                    android:text="Price"
-                    android:textSize="24sp"
-                    android:gravity="center"
-                    android:layout_alignBaseline="@+id/show_user_item_name"
-                    android:layout_alignParentRight="true"/>
-
-            </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent">
+                    android:text="Desc"
+                    android:textSize="16sp"
+                    android:gravity="center" />
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/show_user_item_remove"
                     style="?android:attr/borderlessButtonStyle"
-                    android:text="Remove Item"
-                    android:layout_marginRight="8dp"
+                    android:text="@string/showItemFragmentRemove"
+                    android:textSize="14sp"
+                    android:layout_gravity="right"
                     android:textColor="@color/colorAccent"/>
 
-            </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </android.support.v7.widget.CardView>
