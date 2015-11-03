@@ -2,10 +2,9 @@ package mah.bidme;
 
 
 import android.annotation.TargetApi;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,12 +12,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.firebase.client.ChildEventListener;
@@ -27,109 +23,93 @@ import com.firebase.client.Firebase;
 import com.firebase.client.FirebaseError;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import mah.bidme.CustomAdapter.ItemRecyclerAdapter;
+import mah.bidme.CustomAdapter.ShowItemRecyclerAdapter;
 import mah.bidme.model.Item;
+
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class BidFragment extends Fragment {
-    private List<Item> listItem;
+public class ShowItems extends Fragment {
+    private List<Item> mListItem;
     private Firebase mFirebase;
-
     private RecyclerView mRecyclerView;
-    private ItemRecyclerAdapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-    private static String LOG_TAG = "CardViewActivity";
+    private ShowItemRecyclerAdapter mShowItemRecyclerAdapter;
+    private RecyclerView.LayoutManager mRecyclerLayoutManager;
 
-    private ProgressBar progressBar;
-    private Toolbar toolbar;
-    private NavigationView navigationView;
-    private DrawerLayout drawerLayout;
-
-    public BidFragment() {
+    public ShowItems() {
         // Required empty public constructor
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mFirebase = Utility.myFirebaseRef.child("items");
-        listItem = new ArrayList<Item>();
-
-
+        mListItem = new ArrayList<Item>();
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_bid, container, false);
+        View view = inflater.inflate(R.layout.fragment_show_items, container, false);
 
-        setUpToolbar(v);
+        // Sets up the Toolbar
+        setupToolbar(view);
 
-        progressBar = (ProgressBar) v.findViewById(R.id.item_progressbar);
-        progressBar.setVisibility(v.VISIBLE);
-        progressBar.setIndeterminate(true);
+        // Download Items from Firebase to an ArrayList
+        connectToFirebase();
 
-        // Create the RecyclerView in order to display the Item cardview
-        mRecyclerView = (RecyclerView) v.findViewById(R.id.item_recycler_view);
+        // Connect to all XML items
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.show_item_recycler_view);
+
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
         mRecyclerView.setHasFixedSize(true);
 
-        mLayoutManager = new LinearLayoutManager(getActivity());
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        // use a linear layout manager
+        mRecyclerLayoutManager = new LinearLayoutManager(getActivity());
+        mRecyclerView.setLayoutManager(mRecyclerLayoutManager);
 
-        this.initListItem();
-        mAdapter = new ItemRecyclerAdapter(listItem);
-        mRecyclerView.setAdapter(mAdapter);
-
-        if (mAdapter.getItemCount() == 0){
-            progressBar.setVisibility(View.GONE);
-            Toast.makeText(getContext(), "No items are on sale", Toast.LENGTH_SHORT).show();
-        }
-
-        return v;
+        // Specify an adapter
+        mShowItemRecyclerAdapter = new ShowItemRecyclerAdapter(mListItem);
+        mRecyclerView.setAdapter(mShowItemRecyclerAdapter);
+        return view;
     }
 
-    /**
-     * We retrieve the data from Firebase and save into a List<Item> in order to send to the Adapter
-     */
-    private void initListItem() {
+    private void connectToFirebase() {
         mFirebase.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
 
-                if (item.getUpForSale())
-                    listItem.add(item);
+                // Add only the users Items to the List for showing in the GUI
+                if (item.getIdSeller().equals(Utility.loggedInName)) {
+                    mListItem.add(item);
+                }
 
-                mAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
+                mShowItemRecyclerAdapter.notifyDataSetChanged();
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                Item item = dataSnapshot.getValue(Item.class);
 
-                if (item.getUpForSale())
-                    if (!listItem.isEmpty()){
-                        listItem.set(0, item);
-                    } else
-                        listItem.add(item);
-
-
-
-                mAdapter.notifyDataSetChanged();
-                Log.i("BidFragment", "Currentprice is updated");
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Item item = dataSnapshot.getValue(Item.class);
 
+                for (int i = 0; i < mListItem.size(); i++) {
+                    if (mListItem.get(i).getId().equals(item.getId())) {
+                        mListItem.remove(i);
+                        mShowItemRecyclerAdapter.notifyDataSetChanged();
+                        Log.i("ShowItems", dataSnapshot.child("title").getValue() + " is removed.");
+                    }
+                }
             }
 
             @Override
@@ -145,26 +125,30 @@ public class BidFragment extends Fragment {
     }
 
     /**
-     * Method for setting up the custom Toolbar for AddItemFragment
+     * Method for setting up the custom Toolbar
+     * @param view The view that holds all GUI element
      */
     @TargetApi(21)
-    private void setUpToolbar(View view) {
-        toolbar= (Toolbar) view.findViewById(R.id.toolbarBid);
+    private void setupToolbar(View view) {
+        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarShowItems);
 
         final DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
 
-        toolbar.setTitle("Bid");
+        toolbar.setTitle("Show added items");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
 
-        toolbar.setElevation(21);
+        toolbar.setElevation(10);
 
         toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // Open the Navigation drawer from the left
                 drawerLayout.openDrawer(Gravity.LEFT);
             }
         });
     }
+
+
 }

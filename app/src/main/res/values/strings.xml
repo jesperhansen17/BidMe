@@ -6,10 +6,21 @@
     <string name="password_hint">Password</string>
     <string name="error_invalid_pincode">Wrong pincode!</string>
 
+    <!-- Navigation View -->
+    <string name="navigationBidItem">Auction Room</string>
+    <string name="navigationAddItem">Add an item</string>
+    <string name="navigationShowItem">Show items</string>
+    <string name="navigationLogout">Logout</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+
+
+
     <!-- Main menu Fragment -->
     <string name="mainMenuFragmentHeader">Menu</string>
     <string name="mainMenuFragmentAddItem">Add item</string>
     <string name="mainMenuFragmentBidItem">Bid</string>
+    <string name="mainMenuFragmentShowItems">Show Items</string>
 
     <!-- Add ItemFragment -->
     <string name="itemFragmentHeader">Add item</string>
@@ -50,8 +61,11 @@
     <string name="bidFragmentTitle">Item name</string>
     <string name="bidFragmentPrice">Price</string>
     <string name="bidFragmentYourBid">Bid</string>
-    <string name="bidFragmentAddBidButton">Add +5KR</string>
-    <string name="bidFragmentRemoveBidButton">Remove -5KR</string>
+    <string name="bidFragmentAddBidButton">+ 5KR</string>
+    <string name="bidFragmentRemoveBidButton">- 5KR</string>
     <string name="bidFragmentConfirmBidButton">Bid</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

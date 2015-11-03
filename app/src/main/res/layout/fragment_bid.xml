@@ -1,14 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content">
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbarBid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:minHeight="?attr/actionBarSize"
-        android:background="?attr/colorPrimary" />
+ <android.support.v7.widget.Toolbar
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     android:id="@+id/toolbarBid"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:minHeight="?attr/actionBarSize"
+     android:background="?attr/colorPrimary" />
 
     <RelativeLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -33,48 +33,12 @@
             android:layout_height="match_parent"
             android:padding="16dp"/>
 
-        <!-- Floating Action Button - (+) Add -->
-        <!-- <android.support.design.widget.FloatingActionButton
-             android:id="@+id/addBidButton"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
-             android:layout_margin="16dp"
-             android:clickable="true"
-             android:layout_gravity="center"
-             android:src="@drawable/ic_action_add"
-             app:backgroundTint="#FF5252"
-             android:layout_alignParentBottom="true"
-             android:layout_alignParentLeft="true"/>
-
-         &lt;!&ndash; Floating Action Button - (-) Remove &ndash;&gt;
-         <android.support.design.widget.FloatingActionButton
-             android:id="@+id/removeBidButton"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
-             android:layout_margin="16dp"
-             android:clickable="true"
-             android:layout_weight="1"
-             android:layout_gravity="center"
-             android:src="@drawable/ic_remove"
-             app:backgroundTint="#FF5252"
-             android:layout_alignParentBottom="true"
-             android:layout_toRightOf="@+id/addBidButton"/>
-
-         &lt;!&ndash; Floating Action Button - (V) Check &ndash;&gt;
-         <android.support.design.widget.FloatingActionButton
-             android:id="@+id/checkBidButton"
-             android:layout_width="60dp"
-             android:layout_height="60dp"
-             android:layout_margin="16dp"
-             android:clickable="true"
-             android:layout_gravity="center"
-             android:src="@drawable/ic_done_white_18dp"
-             app:backgroundTint="#FF5252"
-             android:layout_alignParentBottom="true"
-             android:layout_alignParentRight="true"/>-->
-
     </RelativeLayout>
 
-</RelativeLayout>
+ </RelativeLayout>
+
+
+
+
 
 

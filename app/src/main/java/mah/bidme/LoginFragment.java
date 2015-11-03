@@ -6,6 +6,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -37,18 +39,20 @@ public class LoginFragment extends Fragment {
     // UI references.
     private EditText mUserView;
     private EditText mPinCodeView;
-    private View mProgressView;
-    private View mLoginFormView;
-
+    private ImageView mAppName;
 
     Firebase firebaseReferens;
     long fireBasePin, mEnteredPin;
-    String fireBaseUser;
-    ArrayList<String> users = new ArrayList<String>();
-
 
     public LoginFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -57,12 +61,12 @@ public class LoginFragment extends Fragment {
 
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
-        setUpToolbar(v);
         firebaseReferens = Utility.myFirebaseRef;
-        mLoginFormView = v.findViewById(R.id.login_form);
-        mProgressView = v.findViewById(R.id.login_progress);
         mUserView = (EditText) v.findViewById(R.id.username);
         mPinCodeView = (EditText) v.findViewById(R.id.pincode);
+        mAppName = (ImageView) v.findViewById(R.id.app_name);
+
+        mAppName.setImageResource(R.mipmap.bidme);
 
 
         firebaseReferens.addValueEventListener(new ValueEventListener() {
@@ -116,25 +120,12 @@ public class LoginFragment extends Fragment {
 
                     FragmentManager fm = getFragmentManager();
                     fm.beginTransaction()
-                            .replace(R.id.fragment_container, new MainMenuFragment())
-                            .addToBackStack("")
+                            .replace(R.id.fragment_container, new BidFragment())
                             .commit();
                 }
             }
         });
         return v;
-    }
-
-    /**
-     * Method for setting up the custom Toolbar for AddItemFragment
-     */
-    @TargetApi(21)
-    private void setUpToolbar(View view) {
-        Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarLogin);
-        toolbar.setTitle("Login to BidMe");
-        toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
-
-        toolbar.setElevation(10);
     }
 }
 
