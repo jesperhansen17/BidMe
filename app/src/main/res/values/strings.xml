@@ -5,7 +5,7 @@
     <string name="username_hint">Username</string>
     <string name="password_hint">Password</string>
     <string name="error_invalid_pincode">Wrong pincode!</string>
-
+    
     <!-- Navigation View -->
     <string name="navigationBidItem">Auction Room</string>
     <string name="navigationAddItem">Add an item</string>
