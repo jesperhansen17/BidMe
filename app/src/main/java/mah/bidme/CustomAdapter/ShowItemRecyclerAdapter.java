@@ -46,7 +46,7 @@ public class ShowItemRecyclerAdapter extends RecyclerView.Adapter<ShowItemRecycl
 
         holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
         holder.vItemTitle.setText(item.getTitle());
-        //holder.vItemPrice.setText(item.getStartedPrice());
+        holder.vItemPrice.setText(item.getDescription());
 
         holder.vRemoveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

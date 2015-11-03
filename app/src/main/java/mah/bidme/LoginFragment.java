@@ -76,7 +76,6 @@ public class LoginFragment extends Fragment {
                 fireBasePin = (long) dataSnapshot.child("pincode").getValue();
 
                 mSignInButton.setEnabled(true);
-                Toast.makeText(getContext(), "You can now enter the auction room!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Value of data changed " + "Pincode: " + fireBasePin);
             }
 
@@ -116,9 +115,6 @@ public class LoginFragment extends Fragment {
                     Utility.loggedInName = postRef.getKey();
                     userInfo.put("id", Utility.loggedInName);
                     postRef.setValue(userInfo);
-
-                    // Create a Toast to tell the user that he/she is logged in
-                    Toast.makeText(getContext(), "You are logged in", Toast.LENGTH_SHORT).show();
 
                     // Static method for removing the Keyboard
                     Utility.removeKeyboard(getActivity(), mPinCodeView);
