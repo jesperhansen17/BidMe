@@ -43,6 +43,7 @@ public class LoginFragment extends Fragment {
 
     Firebase firebaseReferens;
     long fireBasePin, mEnteredPin;
+    private Button mSignInButton;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -74,6 +75,8 @@ public class LoginFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fireBasePin = (long) dataSnapshot.child("pincode").getValue();
 
+                mSignInButton.setEnabled(true);
+                Toast.makeText(getContext(), "You can now enter the auction room!", Toast.LENGTH_SHORT).show();
                 Log.i(TAG, "Value of data changed " + "Pincode: " + fireBasePin);
             }
 
@@ -84,8 +87,10 @@ public class LoginFragment extends Fragment {
         });
 
 
-        Button SignInButton = (Button) v.findViewById(R.id.sign_in_button);
-        SignInButton.setOnClickListener(new View.OnClickListener() {
+        mSignInButton = (Button) v.findViewById(R.id.sign_in_button);
+        mSignInButton.setEnabled(false);
+
+        mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 int n = 100000000;

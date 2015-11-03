@@ -73,13 +73,10 @@ public class ItemFragment extends Fragment {
 
         // Retreive the EditText from the XML and set the text color of the Hint to GRAY
         mItemTitle = (EditText) view.findViewById(R.id.input_title);
-        mItemTitle.setHintTextColor(Color.GRAY);
 
         mItemDesc = (EditText) view.findViewById(R.id.input_desc);
-        mItemDesc.setHintTextColor(Color.GRAY);
 
         mItemPrice = (EditText) view.findViewById(R.id.input_price);
-        mItemPrice.setHintTextColor(Color.GRAY);
 
         // Retrieve the Buttons from the XML
         mAddBtn = (FloatingActionButton) view.findViewById(R.id.floating_button_add_item);
