@@ -1,3 +1,4 @@
+
 package mah.bidme.CustomAdapter;
 
 import android.support.v7.widget.RecyclerView;

@@ -63,8 +63,6 @@ public class LoginFragment extends Fragment {
 
         View v = inflater.inflate(R.layout.fragment_login, container, false);
         firebaseReferens = Utility.myFirebaseRef;
-        mLoginFormView = v.findViewById(R.id.login_form);
-        mProgressView = v.findViewById(R.id.login_progress);
         mUserView = (EditText) v.findViewById(R.id.username);
         mPinCodeView = (EditText) v.findViewById(R.id.pincode);
         mAppName = (ImageView) v.findViewById(R.id.app_name);
