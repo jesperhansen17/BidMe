@@ -2,11 +2,13 @@ package mah.bidme;
 
 
 import android.annotation.TargetApi;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -50,6 +52,7 @@ public class BidFragment extends Fragment {
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
+    private AlertDialog.Builder mBuilder;
 
     public BidFragment() {
         // Required empty public constructor
@@ -87,6 +90,8 @@ public class BidFragment extends Fragment {
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
 
+        mBuilder = new AlertDialog.Builder(this.getContext());
+
         return v;
     }
 
@@ -110,12 +115,33 @@ public class BidFragment extends Fragment {
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
                 Item item = dataSnapshot.getValue(Item.class);
 
+
                 if (item.getUpForSale())
                     if (!listItem.isEmpty()){
                         listItem.set(0, item);
                     } else
                         listItem.add(item);
 
+                if(item.isSold()){
+                    if (item.getIdBuyer() == Utility.loggedInName){
+                        mBuilder.setTitle("Congratulations!").setMessage("You won the auction for the item : \n\n"
+                                + "Title: " + item.getTitle()
+                                + "\nFinal price: " + item.getCurrentPrice());
+                    } else{
+                        mBuilder.setTitle("Oops...").setMessage("You missed the item : \n\n"
+                                + "Title: " + item.getTitle()
+                                + "\nFinal price: " + item.getCurrentPrice());
+                    }
+
+                    mBuilder.setCancelable(false)
+                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.dismiss();
+                                }
+                            });
+                    AlertDialog alert = mBuilder.create();
+                    alert.show();
+                }
 
                 /*Utility.vibratePhone(getActivity(), 100);*/
                 mAdapter.notifyDataSetChanged();
