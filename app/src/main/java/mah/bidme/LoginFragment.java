@@ -17,6 +17,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.firebase.client.DataSnapshot;
@@ -44,6 +45,7 @@ public class LoginFragment extends Fragment {
     Firebase firebaseReferens;
     long fireBasePin, mEnteredPin;
     private Button mSignInButton;
+    private ProgressBar mSPinner;
 
     public LoginFragment() {
         // Required empty public constructor
@@ -53,6 +55,7 @@ public class LoginFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+
         super.onCreate(savedInstanceState);
     }
 
@@ -60,11 +63,20 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-
         View v = inflater.inflate(R.layout.fragment_login, container, false);
+
+        // Make the progressbar visible when collecting pincode from Firebase
+        mSPinner = (ProgressBar) v.findViewById(R.id.login_progress);
+        mSPinner.setVisibility(View.VISIBLE);
+
         firebaseReferens = Utility.myFirebaseRef;
+
+        // Disable the EditText when pincode is downloaded
         mUserView = (EditText) v.findViewById(R.id.username);
+        mUserView.setEnabled(false);
         mPinCodeView = (EditText) v.findViewById(R.id.pincode);
+        mPinCodeView.setEnabled(false);
+
         mAppName = (ImageView) v.findViewById(R.id.app_name);
 
         mAppName.setImageResource(R.mipmap.bidme);
@@ -75,7 +87,10 @@ public class LoginFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 fireBasePin = (long) dataSnapshot.child("pincode").getValue();
 
+                mSPinner.setVisibility(View.GONE);
                 mSignInButton.setEnabled(true);
+                mUserView.setEnabled(true);
+                mPinCodeView.setEnabled(true);
                 Log.i(TAG, "Value of data changed " + "Pincode: " + fireBasePin);
             }
 
