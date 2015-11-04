@@ -117,9 +117,11 @@ public class BidFragment extends Fragment {
                         listItem.add(item);
 
 
-                Utility.vibratePhone(getActivity(), 100);
+                /*Utility.vibratePhone(getActivity(), 100);*/
                 mAdapter.notifyDataSetChanged();
+/*
                 Log.i("BidFragment", "Currentprice is updated");
+*/
             }
 
             @Override
