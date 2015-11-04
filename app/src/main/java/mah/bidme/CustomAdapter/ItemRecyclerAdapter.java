@@ -71,11 +71,7 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
         holder.vItemTitle.setText(item.getTitle());
         holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
-        holder.vItemYourBid.setText("Bid");
-
-        if(getItemCount() == 0){
-            Toast.makeText(mContext, "No items on sale!", Toast.LENGTH_SHORT).show();
-        }
+        holder.vItemYourBid.setText("Enter your bid...");
 
         currentPrice = item.getCurrentPrice();
         yourBid = currentPrice;

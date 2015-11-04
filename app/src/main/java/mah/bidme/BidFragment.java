@@ -93,6 +93,18 @@ public class BidFragment extends Fragment {
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
 
+        if (mAdapter.getItemCount() == 0){
+            mBuilder = new AlertDialog.Builder(mContext);
+            mBuilder.setTitle("No items on sale!");
+            mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog alert = mBuilder.create();
+            alert.show();
+        }
+
         return v;
     }
 
@@ -130,26 +142,22 @@ public class BidFragment extends Fragment {
                                 + "Title: " + item.getTitle()
                                 + "\nFinal price: " + item.getCurrentPrice());
                     } else{
-                        mBuilder.setTitle("Oops...").setMessage("You missed the item : \n\n"
+                        mBuilder.setTitle("Oops... Sorry").setMessage("You missed the item : \n\n"
                                 + "Title: " + item.getTitle()
                                 + "\nFinal price: " + item.getCurrentPrice());
                     }
 
-                    mBuilder.setCancelable(false)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    dialog.dismiss();
-                                }
-                            });
+                    mBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.dismiss();
+                        }
+                    });
                     AlertDialog alert = mBuilder.create();
                     alert.show();
                 }
 
                 /*Utility.vibratePhone(getActivity(), 100);*/
                 mAdapter.notifyDataSetChanged();
-/*
-                Log.i("BidFragment", "Currentprice is updated");
-*/
             }
 
             @Override

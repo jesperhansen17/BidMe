@@ -86,9 +86,9 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/borderlessButtonStyle"
                     android:padding="8dp"
+                    android:id="@+id/removeBidButton"
                     android:layout_marginRight="8dp"
-                    android:id="@+id/addBidButton"
-                    android:text="@string/bidFragmentAddBidButton"
+                    android:text="@string/bidFragmentRemoveBidButton"
                     android:textColor="@color/colorAccent" />
 
                 <Button
@@ -96,9 +96,9 @@
                     android:layout_height="wrap_content"
                     style="?android:attr/borderlessButtonStyle"
                     android:padding="8dp"
-                    android:id="@+id/removeBidButton"
-                    android:layout_toRightOf="@+id/addBidButton"
-                    android:text="@string/bidFragmentRemoveBidButton"
+                    android:id="@+id/addBidButton"
+                    android:layout_toRightOf="@+id/removeBidButton"
+                    android:text="@string/bidFragmentAddBidButton"
                     android:textColor="@color/colorAccent" />
 
                 <Button
