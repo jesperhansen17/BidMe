@@ -14,6 +14,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.Toolbar;
@@ -24,6 +25,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -45,7 +47,7 @@ import mah.bidme.model.Item;
 public class ItemFragment extends Fragment {
     private TextView mTitleOfView;
     private EditText mItemTitle, mItemPrice, mItemDesc;
-    private FloatingActionButton mAddBtn;
+    private Button mCancelBtn, mAddBtn;
     private String mTypeOfItem, mPhotoStr;
     private Firebase mFirebaseAddItem;
     private Spinner mCategorySpinner;
@@ -82,11 +84,11 @@ public class ItemFragment extends Fragment {
 
         mItemPrice = (EditText) view.findViewById(R.id.input_price);
 
-        // Retrieve the Buttons from the XML
-        mAddBtn = (FloatingActionButton) view.findViewById(R.id.floating_button_add_item);
+        mAddBtn = (Button) view.findViewById(R.id.addItemBtn);
+        mCancelBtn = (Button) view.findViewById(R.id.cancelItemBtn);
 
-        // Add listener to FAB
         mAddBtn.setOnClickListener(new AddItemListener());
+        mCancelBtn.setOnClickListener(new AddItemListener());
 
         // Retreive the Spinner
         mCategorySpinner = (Spinner) view.findViewById(R.id.input_spinner);
@@ -167,7 +169,7 @@ public class ItemFragment extends Fragment {
         Toolbar toolbar = (Toolbar) view.findViewById(R.id.toolbarAddItem);
 
         final DrawerLayout drawerLayout = (DrawerLayout) getActivity().findViewById(R.id.drawer_layout);
-        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
 
         toolbar.setTitle("Add item");
         toolbar.setTitleTextColor(getResources().getColor(R.color.colorTextIcons));
@@ -175,12 +177,11 @@ public class ItemFragment extends Fragment {
 
         toolbar.setElevation(10);
 
-        toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp);
+        toolbar.setNavigationIcon(R.drawable.arrow_back_white);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Open the Navigation drawer from the left
-                drawerLayout.openDrawer(Gravity.LEFT);
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
 
@@ -254,8 +255,12 @@ public class ItemFragment extends Fragment {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
-                case R.id.floating_button_add_item:
+                case R.id.addItemBtn:
                     addItemToFirebase();
+                    break;
+                case R.id.cancelItemBtn:
+                    FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.fragment_container, new ShowItems()).commit();
                     break;
             }
         }
@@ -304,11 +309,18 @@ public class ItemFragment extends Fragment {
 
                 // Create an AlertDialog
                 AlertDialog.Builder addItemAlertDialog = new AlertDialog.Builder(getActivity());
-                addItemAlertDialog.setTitle("Item added to Firebase");
-                addItemAlertDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                addItemAlertDialog.setTitle("Item have been added!");
+                addItemAlertDialog.setPositiveButton("Add another item", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         // Do nothing for now
+                    }
+                });
+                addItemAlertDialog.setNegativeButton("Show Items", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.fragment_container, new ShowItems()).commit();
                     }
                 });
                 addItemAlertDialog.create().show();

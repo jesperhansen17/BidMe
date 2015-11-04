@@ -6,10 +6,6 @@
         android:id="@+id/navigation_biditem"
         android:icon="@drawable/ic_timer"
         android:title="@string/navigationBidItem" />
-    <item
-        android:id="@+id/navigation_additem"
-        android:icon="@drawable/ic_note_add"
-        android:title="@string/navigationAddItem" />
     <item
         android:id="@+id/navigation_show_item"
         android:icon="@drawable/ic_list"

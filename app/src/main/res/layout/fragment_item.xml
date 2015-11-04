@@ -88,21 +88,32 @@
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
             android:layout_below="@+id/input_layout_price" />
 
-        <!-- Floating Action Button -->
-        <android.support.design.widget.FloatingActionButton
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/floating_button_add_item"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:elevation="10dp"
-            app:fabSize="normal"
-            android:src="@drawable/add_plus_white"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="16dp"
-            android:layout_marginBottom="16dp"
-            app:backgroundTint="@color/colorAccent"/>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentBottom="true">
+
+            <Button
+                android:id="@+id/cancelItemBtn"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Cancel"/>
+
+            <android.widget.Space
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content" />
+
+            <Button
+                android:id="@+id/addItemBtn"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="Add"/>
+        </LinearLayout>
 
     </RelativeLayout>
 

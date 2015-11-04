@@ -4,7 +4,9 @@ package mah.bidme;
 import android.annotation.TargetApi;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -40,6 +42,7 @@ public class ShowItems extends Fragment {
     private RecyclerView mRecyclerView;
     private ShowItemRecyclerAdapter mShowItemRecyclerAdapter;
     private RecyclerView.LayoutManager mRecyclerLayoutManager;
+    private FloatingActionButton mAddNewBtn;
 
     public ShowItems() {
         // Required empty public constructor
@@ -63,6 +66,21 @@ public class ShowItems extends Fragment {
 
         // Download Items from Firebase to an ArrayList
         connectToFirebase();
+
+        // Retrieve the Buttons from the XML
+        mAddNewBtn = (FloatingActionButton) view.findViewById(R.id.floating_button_add_new_item);
+
+        // Add listener to FAB
+        mAddNewBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                    fm.beginTransaction()
+                            .replace(R.id.fragment_container, new ItemFragment())
+                            .addToBackStack("ItemFragment")
+                            .commit();
+            }
+        });
 
         // Connect to all XML items
         mRecyclerView = (RecyclerView) view.findViewById(R.id.show_item_recycler_view);

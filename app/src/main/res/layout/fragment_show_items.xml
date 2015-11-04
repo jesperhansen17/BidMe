@@ -15,12 +15,28 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/toolbarShowItems">
+        android:layout_below="@+id/toolbarShowItems"
+        android:padding="16dp">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/show_item_recycler_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
+
+        <!-- Floating Action Button -->
+        <android.support.design.widget.FloatingActionButton
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/floating_button_add_new_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:elevation="10dp"
+            app:fabSize="normal"
+            android:src="@drawable/add_plus_white"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginRight="16dp"
+            android:layout_marginBottom="16dp"
+            app:backgroundTint="@color/colorAccent"/>
 
         </RelativeLayout>
 
