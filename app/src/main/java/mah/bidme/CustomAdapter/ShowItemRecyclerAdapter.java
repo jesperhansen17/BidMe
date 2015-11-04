@@ -46,6 +46,7 @@ public class ShowItemRecyclerAdapter extends RecyclerView.Adapter<ShowItemRecycl
         final Item item = mListItem.get(position);
 
         holder.vItemPicture.setImageBitmap(Utility.getPhotoImage(item.getImage()));
+        holder.vItemPicture.setScaleType(ImageView.ScaleType.FIT_XY);
         holder.vItemTitle.setText(item.getTitle());
         holder.vItemDesc.setText(item.getDescription());
 
