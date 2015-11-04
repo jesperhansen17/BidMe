@@ -2,6 +2,7 @@ package mah.bidme;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -51,6 +52,7 @@ public class ItemFragment extends Fragment {
     private boolean mSold = false;
     private boolean mUpForSale = false;
     private boolean mPhotoTaken;
+    private Context mContext;
 
     public ItemFragment() {
         // Required empty public constructor
@@ -61,6 +63,8 @@ public class ItemFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_item, container, false);
+
+        mContext = this.getContext();
 
         // Sets up the custom Toolbar
         setUpToolbar(view);
@@ -297,6 +301,18 @@ public class ItemFragment extends Fragment {
 
                 // Method for vibrate the phone 100 milliseconds
                 Utility.vibratePhone(getActivity(), 100);
+
+                // Create an AlertDialog
+                AlertDialog.Builder addItemAlertDialog = new AlertDialog.Builder(getActivity());
+                addItemAlertDialog.setTitle("Item added to Firebase");
+                addItemAlertDialog.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        // Do nothing for now
+                    }
+                });
+                addItemAlertDialog.create().show();
+
 
             } else {
                 Toast.makeText(getContext(), "Please take an image!", Toast.LENGTH_SHORT).show();
