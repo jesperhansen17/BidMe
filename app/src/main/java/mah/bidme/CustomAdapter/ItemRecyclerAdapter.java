@@ -33,7 +33,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
     private int yourBid;
     private Firebase mFirebase;
     private Context mContext;
-    private AlertDialog.Builder mBuilder;
 
     /**
      * Class constructor
@@ -73,7 +72,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
         holder.vItemTitle.setText(item.getTitle());
         holder.vItemPrice.setText(Integer.toString(item.getCurrentPrice()) + " SEK");
         holder.vItemYourBid.setText("Bid");
-        mBuilder = new AlertDialog.Builder(mContext);
 
         if(getItemCount() == 0){
             Toast.makeText(mContext, "No items on sale!", Toast.LENGTH_SHORT).show();
@@ -121,27 +119,6 @@ public class ItemRecyclerAdapter extends RecyclerView.Adapter<ItemRecyclerAdapte
             }
         });
 
-
-        if(item.isSold()){
-            if (item.getIdBuyer() == Utility.loggedInName){
-                mBuilder.setTitle("Congratulations!").setMessage("You won the auction for the item : \n\n"
-                        + "Title: " + item.getTitle()
-                        + "\nFinal price: " + item.getCurrentPrice());
-            } else{
-                mBuilder.setTitle("Oops...").setMessage("You missed the item : \n\n"
-                        + "Title: " + item.getTitle()
-                        + "\nFinal price: " + item.getCurrentPrice());
-            }
-
-            mBuilder.setCancelable(false)
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.dismiss();
-                        }
-                    });
-            AlertDialog alert = mBuilder.create();
-            alert.show();
-        }
 
     }
 

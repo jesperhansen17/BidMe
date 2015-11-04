@@ -2,6 +2,7 @@ package mah.bidme;
 
 
 import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -53,6 +54,7 @@ public class BidFragment extends Fragment {
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
     private AlertDialog.Builder mBuilder;
+    private Context mContext;
 
     public BidFragment() {
         // Required empty public constructor
@@ -72,6 +74,7 @@ public class BidFragment extends Fragment {
 
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_bid, container, false);
+        mContext = this.getContext();
 
         setUpToolbar(v);
 
@@ -89,8 +92,6 @@ public class BidFragment extends Fragment {
         this.initListItem();
         mAdapter = new ItemRecyclerAdapter(listItem);
         mRecyclerView.setAdapter(mAdapter);
-
-        mBuilder = new AlertDialog.Builder(this.getContext());
 
         return v;
     }
@@ -123,6 +124,7 @@ public class BidFragment extends Fragment {
                         listItem.add(item);
 
                 if(item.isSold()){
+                    mBuilder = new AlertDialog.Builder(mContext);
                     if (item.getIdBuyer() == Utility.loggedInName){
                         mBuilder.setTitle("Congratulations!").setMessage("You won the auction for the item : \n\n"
                                 + "Title: " + item.getTitle()
