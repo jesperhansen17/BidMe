@@ -61,7 +61,7 @@
                     android:id="@+id/pincode"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/password_hint"
+                    android:hint="@string/pincode_hint"
                     android:imeActionId="@+id/login"
                     android:imeActionLabel="pin to short"
                     android:imeOptions="actionUnspecified"
