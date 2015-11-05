@@ -49,7 +49,7 @@ public class BidFragment extends Fragment {
     private RecyclerView.LayoutManager mLayoutManager;
     private static String LOG_TAG = "CardViewActivity";
 
-    private ProgressBar progressBar;
+    //private ProgressBar progressBar;
     private Toolbar toolbar;
     private NavigationView navigationView;
     private DrawerLayout drawerLayout;
@@ -78,9 +78,9 @@ public class BidFragment extends Fragment {
 
         setUpToolbar(v);
 
-        progressBar = (ProgressBar) v.findViewById(R.id.item_progressbar);
+      /*progressBar = (ProgressBar) v.findViewById(R.id.item_progressbar);
         progressBar.setVisibility(v.VISIBLE);
-        progressBar.setIndeterminate(true);
+        progressBar.setIndeterminate(true);*/
 
         // Create the RecyclerView in order to display the Item cardview
         mRecyclerView = (RecyclerView) v.findViewById(R.id.item_recycler_view);
@@ -121,7 +121,7 @@ public class BidFragment extends Fragment {
                     listItem.add(item);
 
                 mAdapter.notifyDataSetChanged();
-                progressBar.setVisibility(View.GONE);
+                //progressBar.setVisibility(View.GONE);
             }
 
             @Override
