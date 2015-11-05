@@ -137,7 +137,7 @@ public class BidFragment extends Fragment {
 
                 if(item.isSold()){
                     mBuilder = new AlertDialog.Builder(mContext);
-                    if (item.getIdBuyer() == Utility.loggedInName){
+                    if (item.getIdBuyer().equals(Utility.loggedInName)){
                         mBuilder.setTitle("Congratulations!").setMessage("You won the auction for the item : \n\n"
                                 + "Title: " + item.getTitle()
                                 + "\nFinal price: " + item.getCurrentPrice());
