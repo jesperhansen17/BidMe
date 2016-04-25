@@ -21,7 +21,6 @@ Below is an concept picture of how the app can look (not final).
 ### Android Application 
 The Android application will contain several fragments. When the user starts up the application a login GUI is presented where the user add themselves to the bidding room. The main GUI can the user choose to add an item to the auction or choose to bid to a current item. Below is an concept image of the bidding GUI and the GUI for adding items. In the bidding GUI a clock counting down and the current price for the item is shown. The user have the choice to increase and decrease the bid and also confirm the bid, the amount for decreasing and increasing is not set yet. In the adding GUI the user can add item to the auction, we will start implementing that the user only will be able to add books. But we will add more items in future implementation.
 
-![Android Screen](https://github.com/FriendlyAppDA401A/BidMe/blob/master/images/highestBid.jpg)
-![Android GUI for adding item](https://github.com/FriendlyAppDA401A/BidMe/blob/master/images/addItem.jpg)
+![Android Screen](https://github.com/FriendlyAppDA401A/BidMe/blob/master/images/bidme_item.png)
 
    
