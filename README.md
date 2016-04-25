@@ -5,7 +5,6 @@ This application consist of a Android application and a Java application. Using 
 
 We are a group of five. And the group members are Petter Olsson, Mario Abou-raad, Karl Philip Karlsted, Kevin Kha and Jesper Hansen
 
-# Application Concept
 
 ## Introduction
 The concept with the auction application is to simplify and automate the auction procedure such as handling the items that are up for sale and collecting and managing the bids from interested buyers. This is done with the help of a public screen and second screen that is an application for Android smartphones.
